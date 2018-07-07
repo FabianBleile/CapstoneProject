@@ -179,6 +179,7 @@ public class MainActivity extends FragmentActivity implements ReceiveScreenFragm
             // Set the dynamic callback for URI requests.
             mNfcAdapter.setBeamPushUrisCallback(mFileUriCallback,this);
         }
+
          */
     }
 
