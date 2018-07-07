@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".SendScreenFragment"
+    android:focusableInTouchMode="true"
+    android:descendantFocusability="beforeDescendants">
+
+    <android.support.v4.widget.NestedScrollView
+
+        android:id="@+id/nestedScrollView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="16dp"
+        android:layout_marginEnd="48dp"
+        android:layout_marginLeft="48dp"
+        android:layout_marginRight="48dp"
+        android:layout_marginStart="48dp"
+        android:layout_marginTop="32dp"
+        android:fadingEdgeLength="32dp"
+        android:fillViewport="true"
+        android:requiresFadingEdge="vertical"
+        app:layout_constraintBottom_toTopOf="@+id/bt_ready"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:id="@+id/linearLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <EditText
+                android:id="@+id/et_send_message"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:layout_marginTop="32dp"
+                android:defaultFocusHighlightEnabled="false"
+                android:focusedByDefault="false"
+                android:hint="@string/et_send_message" />
+
+        </LinearLayout>
+    </android.support.v4.widget.NestedScrollView>
+
+    <Button
+        android:id="@+id/bt_ready"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:layout_gravity="top|center_horizontal"
+        android:layout_marginBottom="32dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginLeft="48dp"
+        android:layout_marginRight="48dp"
+        android:layout_marginStart="8dp"
+        android:background="@drawable/ic_circle_primary"
+        android:text="@string/label_bt_ready"
+        android:textColor="@android:color/background_light"
+        android:textSize="30sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+</android.support.constraint.ConstraintLayout>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Fast Contact Share</string>
+    <string name="title_settings">Einstellungen</string>
+    <string name="title_receive">Empfangen</string>
+    <string name="label_bt_send">senden</string>
+    <string name="tv_fist_name">Vorname</string>
+    <string name="tv_last_name">Nachname</string>
+    <string name="tv_phone_number">Handynummer</string>
+    <string name="tv_email_adress">E-Mail</string>
+    <string name="ctv_name">Name</string>
+    <string name="ctv_phone_number">Handynummer</string>
+    <string name="ctv_email">E-Mail</string>
+    <string name="et_insert_info">Gib hier deinen Account-Name an</string>
+    <string name="ctv_birthday">Geburtstag</string>
+    <string name="tv_send_message">Gib hier noch ein paar nette Worte auf den Weg ...</string>
+    <string name="title_send">Fertig!</string>
+</resources>

@@ -1,0 +1,38 @@
+<resources>
+    <string name="app_name">Fast Contact Share</string>
+    <string name="content_authority" translatable="false">com.fabianbleile.fordigitalimmigrants</string>
+
+    <string name="title_settings">Settings</string>
+    <string name="title_send">Send</string>
+    <string name="title_receive">Receive</string>
+
+    /*fragment send screen*/
+    <string name="label_bt_ready">Ready!</string>
+    <string name="et_send_message">Type some kind words in here ... </string>
+    <string name="ctv_name">Name</string>
+    <string name="ctv_birthday">Birthday</string>
+    <string name="ctv_phone_number">Phone Number</string>
+    <string name="ctv_email">E-Mail</string>
+    <string name="ctv_instagram" translatable="false">Instagram</string>
+    <string name="ctv_facebook" translatable="false">Facebook</string>
+    <string name="ctv_snapchat" translatable="false">Snapchat</string>
+    <string name="ctv_hometown" translatable="false">Hometown</string>
+    <string name="ctv_currentLocation" translatable="false">Locaction</string>
+    <string name="ctv_twitter" translatable="false">Twitter</string>
+    <string name="ctv_message" translatable="false">Message</string>
+
+    /*fragment settings screen*/
+    <string name="et_insert_info">Insert here</string>
+    <string name="tv_fist_name">First Name</string>
+    <string name="tv_last_name">Last Name</string>
+    <string name="tv_phone_number">Phone Number</string>
+    <string name="tv_email_adress">E-Mail</string>
+    <string name="bt_ok" translatable="false">OK</string>
+
+    /*Error Messages*/
+    <string name="error_noValueDefined">No information given for </string>
+    <string name="error_couldNotPutJsonObject">Could not put JsonObject</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>
