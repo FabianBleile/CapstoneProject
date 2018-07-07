@@ -170,19 +170,16 @@ public class MainActivity extends FragmentActivity implements ReceiveScreenFragm
         mIcons.add(R.string.ctv_twitter);
         mIcons.add(R.string.ctv_currentLocation);
 
-        if(isExternalStorageReadable() && isExternalStorageWritable()) {
+        /*if(isExternalStorageReadable() && isExternalStorageWritable()) {
             // Android Beam file transfer is available, continue
             mNfcAdapter = NfcAdapter.getDefaultAdapter(this);
 
             mNfcAdapter.enableReaderMode(this, null, NfcAdapter.FLAG_READER_SKIP_NDEF_CHECK, null);
-            /*
-         * Instantiate a new FileUriCallback to handle requests for
-         * URIs
-         */
             mFileUriCallback = new FileUriCallback();
             // Set the dynamic callback for URI requests.
             mNfcAdapter.setBeamPushUrisCallback(mFileUriCallback,this);
         }
+         */
     }
 
     private class FileUriCallback implements NfcAdapter.CreateBeamUrisCallback {
