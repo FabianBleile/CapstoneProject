@@ -51,9 +51,6 @@ public class ImageAdapter extends BaseAdapter {
 
         String iconDescription = mContext.getResources().getString(MainActivity.mIcons.get(position));
 
-
-        Log.e(MainActivity.mIcons.get(position) + "", "image source set");
-
         if(iconDescription == mContext.getResources().getString(R.string.ctv_facebook)){
             imageView.setImageResource(R.drawable.ic_facebook);
         } else if(iconDescription == mContext.getResources().getString(R.string.ctv_instagram)){

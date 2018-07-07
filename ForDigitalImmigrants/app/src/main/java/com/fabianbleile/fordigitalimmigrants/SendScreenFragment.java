@@ -7,6 +7,7 @@ import android.nfc.NfcAdapter;
 import android.nfc.NfcEvent;
 import android.os.Bundle;
 import android.os.Environment;
+import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -42,6 +43,8 @@ public class SendScreenFragment extends android.support.v4.app.Fragment implemen
 
     private ArrayList<CompoundButton> listCheckedSwitches = new ArrayList<>();
 
+    OnReadyButtonClickedInterface mCallback;
+
     private Button buttonReady;
     private Switch switchName;
     private Switch switchPhoneNumber;
@@ -62,6 +65,7 @@ public class SendScreenFragment extends android.support.v4.app.Fragment implemen
             Log.e(MainActivity.mTagHandmade, "File URI: "+ jsonDataUri);
             mFileUris.add(jsonDataUri);
 
+            /*
             ArrayList<String> mFileStrings = new ArrayList<String>();
             for (int i = 0; i < mFileUris.size(); i++) {
                 mFileStrings.add(mFileUris.get(i).toString());
@@ -69,7 +73,13 @@ public class SendScreenFragment extends android.support.v4.app.Fragment implemen
 
             Intent intent = new Intent(getActivity(),nfcPushActivity.class);
             intent.putStringArrayListExtra("mFileString" ,mFileStrings);
-            //startActivity(intent);
+            startActivity(intent);
+            */
+
+            //convert arrayList of Uris to Array of Uris
+            Uri[] fileUris = new Uri[mFileUris.size()];
+            mFileUris.toArray(fileUris);
+            mCallback.OnReadyButtonClicked(fileUris);
         }
     };
 
@@ -97,6 +107,21 @@ public class SendScreenFragment extends android.support.v4.app.Fragment implemen
         Bundle args = new Bundle();
         fragment.setArguments(args);
         return fragment;
+    }
+
+    public interface OnReadyButtonClickedInterface{
+        public void OnReadyButtonClicked(Uri[] fileUris);
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+
+        try {
+            mCallback = (OnReadyButtonClickedInterface) context;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(context.toString() + " must implement OnHeadlineSelectedListener");
+        }
     }
 
     @Override

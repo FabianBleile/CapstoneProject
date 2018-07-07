@@ -31,7 +31,7 @@ import com.fabianbleile.fordigitalimmigrants.dummy.DummyContent;
 import java.io.File;
 import java.util.ArrayList;
 
-public class MainActivity extends FragmentActivity implements ReceiveScreenFragment.OnListFragmentInteractionListener{
+public class MainActivity extends FragmentActivity implements ReceiveScreenFragment.OnListFragmentInteractionListener, SendScreenFragment.OnReadyButtonClickedInterface{
 
     public static final String mTagHandmade = "HANDMADETAG";
     public static ArrayList<Integer> mIcons = new ArrayList<Integer>();
@@ -41,6 +41,7 @@ public class MainActivity extends FragmentActivity implements ReceiveScreenFragm
     boolean mAndroidBeamAvailable = false;
     public static Uri[] mFileUris = new Uri[2];
     private FileUriCallback mFileUriCallback;
+    private ReaderModeCallback mReaderModeCallback;
 
     private static final int NUM_PAGES = 3;
     private ViewPager mPager;
@@ -116,6 +117,15 @@ public class MainActivity extends FragmentActivity implements ReceiveScreenFragm
 
     }
 
+    @Override
+    public void OnReadyButtonClicked(Uri[] fileUris) {
+        mFileUris = fileUris;
+        mNfcAdapter.disableReaderMode(this);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            mNfcAdapter.invokeBeam(this);
+        }
+    }
+
     /**
           * A simple pager adapter that represents 3 ScreenSlidePageFragment objects, in
           * sequence.
@@ -170,17 +180,17 @@ public class MainActivity extends FragmentActivity implements ReceiveScreenFragm
         mIcons.add(R.string.ctv_twitter);
         mIcons.add(R.string.ctv_currentLocation);
 
-        /*if(isExternalStorageReadable() && isExternalStorageWritable()) {
+        if(isExternalStorageReadable() && isExternalStorageWritable()) {
             // Android Beam file transfer is available, continue
             mNfcAdapter = NfcAdapter.getDefaultAdapter(this);
 
-            mNfcAdapter.enableReaderMode(this, null, NfcAdapter.FLAG_READER_SKIP_NDEF_CHECK, null);
-            mFileUriCallback = new FileUriCallback();
-            // Set the dynamic callback for URI requests.
-            mNfcAdapter.setBeamPushUrisCallback(mFileUriCallback,this);
+            if(mNfcAdapter != null){
+                mNfcAdapter.enableReaderMode(this, mReaderModeCallback, NfcAdapter.FLAG_READER_SKIP_NDEF_CHECK, null);
+                mFileUriCallback = new FileUriCallback();
+                // Set the dynamic callback for URI requests.
+                mNfcAdapter.setBeamPushUrisCallback(mFileUriCallback,this);
+            }
         }
-
-         */
     }
 
     private class FileUriCallback implements NfcAdapter.CreateBeamUrisCallback {
@@ -192,6 +202,15 @@ public class MainActivity extends FragmentActivity implements ReceiveScreenFragm
         @Override
         public Uri[] createBeamUris(NfcEvent nfcEvent) {
             return mFileUris;
+        }
+    }
+
+    private class ReaderModeCallback implements NfcAdapter.ReaderCallback {
+        public ReaderModeCallback() {
+        }
+
+        @Override
+        public void onTagDiscovered(Tag tag) {
         }
     }
 
