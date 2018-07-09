@@ -1,5 +1,6 @@
 package com.fabianbleile.fordigitalimmigrants;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -9,8 +10,10 @@ import android.nfc.NfcEvent;
 import android.nfc.Tag;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.os.Environment;
 import android.preference.PreferenceManager;
+import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.FragmentActivity;
@@ -18,30 +21,32 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.MenuItem;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.widget.Toast;
 
-import com.fabianbleile.fordigitalimmigrants.SendScreenFragment;
-import com.fabianbleile.fordigitalimmigrants.SettingsScreenFragment;
-import com.fabianbleile.fordigitalimmigrants.R;
 import com.fabianbleile.fordigitalimmigrants.dummy.DummyContent;
 
 import java.io.File;
 import java.util.ArrayList;
 
-public class MainActivity extends FragmentActivity implements ReceiveScreenFragment.OnListFragmentInteractionListener, SendScreenFragment.OnReadyButtonClickedInterface{
+public class MainActivity extends FragmentActivity implements ReceiveScreenFragment.OnListFragmentInteractionListener, SendScreenFragment.OnSendButtonClickedInterface{
 
     public static final String mTagHandmade = "HANDMADETAG";
     public static ArrayList<Integer> mIcons = new ArrayList<Integer>();
 
-    NfcAdapter mNfcAdapter;
-    // Flag to indicate that Android Beam is available
+    public NfcAdapter mNfcAdapter;
     boolean mAndroidBeamAvailable = false;
     public static Uri[] mFileUris = new Uri[2];
     private FileUriCallback mFileUriCallback;
     private ReaderModeCallback mReaderModeCallback;
+    private NdefPushCompleteCallback mNdefPushCompleteCallback;
+
+    // A File object containing the path to the transferred files
+    private String mParentPath;
+    // Incoming Intent
+    private Intent mNfcIntent;
 
     private static final int NUM_PAGES = 3;
     private ViewPager mPager;
@@ -118,11 +123,44 @@ public class MainActivity extends FragmentActivity implements ReceiveScreenFragm
     }
 
     @Override
-    public void OnReadyButtonClicked(Uri[] fileUris) {
+    public void OnSendButtonClickedStartSending(Uri[] fileUris) {
         mFileUris = fileUris;
         mNfcAdapter.disableReaderMode(this);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             mNfcAdapter.invokeBeam(this);
+        }
+
+        final Activity activity = this;
+
+        new CountDownTimer(1*20*1000, 1000) {
+            @Override
+            public void onTick(long l) {
+
+            }
+
+            @Override
+            public void onFinish() {
+                Toast.makeText(MainActivity.this, R.string.toast_timeIsUp, Toast.LENGTH_SHORT).show();
+                mNfcAdapter.enableReaderMode(activity, null, NfcAdapter.FLAG_READER_SKIP_NDEF_CHECK, null);
+            }
+        }.start();
+    }
+
+    @Override
+    public boolean OnSendButtonClickedCheckNfcSettings() {
+        if(mNfcAdapter != null){
+            if (!mNfcAdapter.isEnabled())
+            {
+                Toast.makeText(this, R.string.toast_enableNfc, Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(Settings.ACTION_NFC_SETTINGS));
+                return false;
+            } else {
+                return true;
+            }
+        } else {
+            // this case shouln't ever occur, but for safety reasons we check it
+            Toast.makeText(this, R.string.toast_deviceNoNfc, Toast.LENGTH_SHORT).show();
+            return false;
         }
     }
 
@@ -185,9 +223,13 @@ public class MainActivity extends FragmentActivity implements ReceiveScreenFragm
             mNfcAdapter = NfcAdapter.getDefaultAdapter(this);
 
             if(mNfcAdapter != null){
+                // Receiver mode
                 mNfcAdapter.enableReaderMode(this, mReaderModeCallback, NfcAdapter.FLAG_READER_SKIP_NDEF_CHECK, null);
-                mFileUriCallback = new FileUriCallback();
+                // set on callback when file pushed
+                mNdefPushCompleteCallback = new NdefPushCompleteCallback();
+                mNfcAdapter.setOnNdefPushCompleteCallback(mNdefPushCompleteCallback, this);
                 // Set the dynamic callback for URI requests.
+                mFileUriCallback = new FileUriCallback();
                 mNfcAdapter.setBeamPushUrisCallback(mFileUriCallback,this);
             }
         }
@@ -196,21 +238,24 @@ public class MainActivity extends FragmentActivity implements ReceiveScreenFragm
     private class FileUriCallback implements NfcAdapter.CreateBeamUrisCallback {
         public FileUriCallback() {
 
-        } /**
-                  * Create content URIs as needed to share with another device
-                  */
+        }
         @Override
         public Uri[] createBeamUris(NfcEvent nfcEvent) {
             return mFileUris;
         }
     }
-
     private class ReaderModeCallback implements NfcAdapter.ReaderCallback {
         public ReaderModeCallback() {
         }
 
         @Override
         public void onTagDiscovered(Tag tag) {
+        }
+    }
+    private class NdefPushCompleteCallback implements NfcAdapter.OnNdefPushCompleteCallback{
+        @Override
+        public void onNdefPushComplete(NfcEvent nfcEvent) {
+
         }
     }
 
@@ -230,12 +275,6 @@ public class MainActivity extends FragmentActivity implements ReceiveScreenFragm
         return preferences.getString(key, null);
     }
     //-------------------------------------------------------------------------------------------------------------------
-
-    // A File object containing the path to the transferred files
-    private String mParentPath;
-    // Incoming Intent
-    private Intent mIntent;
-
     /*
      * Called from onNewIntent() for a SINGLE_TOP Activity
      * or onCreate() for a new Activity. For onNewIntent(),
@@ -244,18 +283,18 @@ public class MainActivity extends FragmentActivity implements ReceiveScreenFragm
      *
      */
     private void handleViewIntent() {
-        mPager.setCurrentItem(2);
+        mPager.setCurrentItem(3);
 
         // Get the Intent action
-        mIntent = getIntent();
-        String action = mIntent.getAction();
+        mNfcIntent = getIntent();
+        String action = mNfcIntent.getAction();
         /*
          * For ACTION_VIEW, the Activity is being asked to display data.
          * Get the URI.
          */
         if (TextUtils.equals(action, Intent.ACTION_VIEW)) {
             // Get the URI from the Intent
-            Uri beamUri = mIntent.getData();
+            Uri beamUri = mNfcIntent.getData();
             /*
              * Test for the type of URI, by getting its scheme value
              */

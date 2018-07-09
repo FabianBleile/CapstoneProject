@@ -1,13 +1,10 @@
 package com.fabianbleile.fordigitalimmigrants;
 
 import android.content.Context;
-import android.content.Intent;
 import android.net.Uri;
 import android.nfc.NfcAdapter;
 import android.nfc.NfcEvent;
 import android.os.Bundle;
-import android.os.Environment;
-import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,9 +13,8 @@ import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.ScrollView;
+import android.widget.ProgressBar;
 import android.widget.Switch;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import org.json.JSONException;
@@ -27,13 +23,9 @@ import org.json.JSONObject;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.io.Writer;
-import java.net.URI;
-import java.net.URISyntaxException;
 import java.sql.Time;
 import java.util.ArrayList;
 
@@ -43,43 +35,28 @@ public class SendScreenFragment extends android.support.v4.app.Fragment implemen
 
     private ArrayList<CompoundButton> listCheckedSwitches = new ArrayList<>();
 
-    OnReadyButtonClickedInterface mCallback;
+    OnSendButtonClickedInterface mCallback;
 
-    private Button buttonReady;
-    private Switch switchName;
-    private Switch switchPhoneNumber;
-    private Switch switchEmail;
-    private Switch switchBirthday;
-    private Switch switchInstagram;
-    private Switch switchFacebook;
-    private Switch switchSnapchat;
+    private Button buttonSend;
+    private ProgressBar progressBarSend;
     private EditText etSendMessage;
     private static boolean msgShown = false;
 
-    private Button.OnClickListener buttonReadyOnClickListener = new Button.OnClickListener() {
+    private Button.OnClickListener buttonSendOnClickListener = new Button.OnClickListener() {
         @Override
         public void onClick(View view) {
-            JSONObject createdJsonObject = createJsonObject();
-            File requestFile = createJsonFile(createdJsonObject);
-            Uri jsonDataUri = Uri.fromFile(requestFile);
-            Log.e(MainActivity.mTagHandmade, "File URI: "+ jsonDataUri);
-            mFileUris.add(jsonDataUri);
+            if(mCallback.OnSendButtonClickedCheckNfcSettings()){
+                JSONObject createdJsonObject = createJsonObject();
+                File requestFile = createJsonFile(createdJsonObject);
+                Uri jsonDataUri = Uri.fromFile(requestFile);
+                Log.e(MainActivity.mTagHandmade, "File URI: "+ jsonDataUri);
+                mFileUris.add(jsonDataUri);
 
-            /*
-            ArrayList<String> mFileStrings = new ArrayList<String>();
-            for (int i = 0; i < mFileUris.size(); i++) {
-                mFileStrings.add(mFileUris.get(i).toString());
+                //convert arrayList of Uris to Array of Uris
+                Uri[] fileUris = new Uri[mFileUris.size()];
+                mFileUris.toArray(fileUris);
+                mCallback.OnSendButtonClickedStartSending(fileUris);
             }
-
-            Intent intent = new Intent(getActivity(),nfcPushActivity.class);
-            intent.putStringArrayListExtra("mFileString" ,mFileStrings);
-            startActivity(intent);
-            */
-
-            //convert arrayList of Uris to Array of Uris
-            Uri[] fileUris = new Uri[mFileUris.size()];
-            mFileUris.toArray(fileUris);
-            mCallback.OnReadyButtonClicked(fileUris);
         }
     };
 
@@ -109,8 +86,9 @@ public class SendScreenFragment extends android.support.v4.app.Fragment implemen
         return fragment;
     }
 
-    public interface OnReadyButtonClickedInterface{
-        public void OnReadyButtonClicked(Uri[] fileUris);
+    public interface OnSendButtonClickedInterface{
+        public void OnSendButtonClickedStartSending(Uri[] fileUris);
+        public boolean OnSendButtonClickedCheckNfcSettings();
     }
 
     @Override
@@ -118,7 +96,7 @@ public class SendScreenFragment extends android.support.v4.app.Fragment implemen
         super.onAttach(context);
 
         try {
-            mCallback = (OnReadyButtonClickedInterface) context;
+            mCallback = (OnSendButtonClickedInterface) context;
         } catch (ClassCastException e) {
             throw new ClassCastException(context.toString() + " must implement OnHeadlineSelectedListener");
         }
@@ -153,10 +131,12 @@ public class SendScreenFragment extends android.support.v4.app.Fragment implemen
                                 ViewGroup.LayoutParams.WRAP_CONTENT));
             }
             msgShown = true;
+
+            Toast.makeText(getContext(), "blablablab", Toast.LENGTH_SHORT).show();
         }
 
-        buttonReady = (Button) rootView.findViewById(R.id.bt_ready);
-        buttonReady.setOnClickListener(buttonReadyOnClickListener);
+        buttonSend = (Button) rootView.findViewById(R.id.bt_send);
+        buttonSend.setOnClickListener(buttonSendOnClickListener);
 
         return rootView;
     }

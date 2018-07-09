@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.fabianbleile.fordigitalimmigrants">
 
     <uses-sdk android:minSdkVersion="16" />
@@ -28,10 +29,11 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-            <intent-filter>
+            <intent-filter android:scheme="file"
+                tools:ignore="AppLinkUrlError">
                 <action android:name="android.intent.action.VIEW" />
-
                 <category android:name="android.intent.category.DEFAULT" />
+                <data android:mimeType="application/json" />
             </intent-filter>
         </activity>
 

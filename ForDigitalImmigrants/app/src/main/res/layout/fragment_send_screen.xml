@@ -22,7 +22,7 @@
         android:fadingEdgeLength="32dp"
         android:fillViewport="true"
         android:requiresFadingEdge="vertical"
-        app:layout_constraintBottom_toTopOf="@+id/bt_ready"
+        app:layout_constraintBottom_toTopOf="@+id/bt_send"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -46,22 +46,20 @@
         </LinearLayout>
     </android.support.v4.widget.NestedScrollView>
 
-    <Button
-        android:id="@+id/bt_ready"
-        android:layout_width="200dp"
-        android:layout_height="200dp"
-        android:layout_gravity="top|center_horizontal"
-        android:layout_marginBottom="32dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginLeft="48dp"
-        android:layout_marginRight="48dp"
-        android:layout_marginStart="8dp"
-        android:background="@drawable/ic_circle_primary"
-        android:text="@string/label_bt_ready"
-        android:textColor="@android:color/background_light"
-        android:textSize="30sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        <Button
+            android:id="@+id/bt_send"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:layout_gravity="top|center_horizontal"
+            android:background="@drawable/ic_circle_primary"
+            android:text="@string/label_bt_send"
+            android:textColor="@android:color/background_light"
+            android:textSize="30sp"
+            android:layout_marginBottom="32dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"/>
 
 </android.support.constraint.ConstraintLayout>
