@@ -125,7 +125,8 @@ public class MainActivity extends FragmentActivity implements ReceiveScreenFragm
     @Override
     public void OnSendButtonClickedStartSending(Uri[] fileUris) {
         mFileUris = fileUris;
-        mNfcAdapter.disableReaderMode(this);
+        //mNfcAdapter.disableReaderMode(this);
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             mNfcAdapter.invokeBeam(this);
         }
@@ -141,7 +142,7 @@ public class MainActivity extends FragmentActivity implements ReceiveScreenFragm
             @Override
             public void onFinish() {
                 Toast.makeText(MainActivity.this, R.string.toast_timeIsUp, Toast.LENGTH_SHORT).show();
-                mNfcAdapter.enableReaderMode(activity, null, NfcAdapter.FLAG_READER_SKIP_NDEF_CHECK, null);
+                //mNfcAdapter.enableReaderMode(activity, null, NfcAdapter.FLAG_READER_SKIP_NDEF_CHECK, null);
             }
         }.start();
     }
@@ -224,10 +225,10 @@ public class MainActivity extends FragmentActivity implements ReceiveScreenFragm
 
             if(mNfcAdapter != null){
                 // Receiver mode
-                mNfcAdapter.enableReaderMode(this, mReaderModeCallback, NfcAdapter.FLAG_READER_SKIP_NDEF_CHECK, null);
+                //mNfcAdapter.enableReaderMode(this, mReaderModeCallback, NfcAdapter.FLAG_READER_SKIP_NDEF_CHECK, null);
                 // set on callback when file pushed
-                mNdefPushCompleteCallback = new NdefPushCompleteCallback();
-                mNfcAdapter.setOnNdefPushCompleteCallback(mNdefPushCompleteCallback, this);
+                // mNdefPushCompleteCallback = new NdefPushCompleteCallback();
+                // mNfcAdapter.setOnNdefPushCompleteCallback(mNdefPushCompleteCallback, this);
                 // Set the dynamic callback for URI requests.
                 mFileUriCallback = new FileUriCallback();
                 mNfcAdapter.setBeamPushUrisCallback(mFileUriCallback,this);
@@ -255,7 +256,8 @@ public class MainActivity extends FragmentActivity implements ReceiveScreenFragm
     private class NdefPushCompleteCallback implements NfcAdapter.OnNdefPushCompleteCallback{
         @Override
         public void onNdefPushComplete(NfcEvent nfcEvent) {
-
+            //mNfcAdapter.enableReaderMode(MainActivity.this, mReaderModeCallback, NfcAdapter.FLAG_READER_SKIP_NDEF_CHECK, null);
+            Toast.makeText(MainActivity.this, R.string.toast_successfullPush, Toast.LENGTH_SHORT).show();
         }
     }
 

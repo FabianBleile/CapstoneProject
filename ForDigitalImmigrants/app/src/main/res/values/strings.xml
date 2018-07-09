@@ -37,4 +37,6 @@
     <string name="toast_timeIsUp">Time is up. Click Send to try again.</string>
     <string name="toast_enableNfc">Please activate NFC and press Back to return to the application!</string>
     <string name="toast_deviceNoNfc">Your device does not support Nfc.</string>
+    <string name="toast_successfullPush">Data pushed successfully</string>
+    <string name="toast_fileSaved">File saved!</string>
 </resources>

@@ -5,6 +5,7 @@ import android.net.Uri;
 import android.nfc.NfcAdapter;
 import android.nfc.NfcEvent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -40,7 +41,7 @@ public class SendScreenFragment extends android.support.v4.app.Fragment implemen
     private Button buttonSend;
     private ProgressBar progressBarSend;
     private EditText etSendMessage;
-    private static boolean msgShown = false;
+    private static boolean initializeOnlyOnce = false;
 
     private Button.OnClickListener buttonSendOnClickListener = new Button.OnClickListener() {
         @Override
@@ -103,6 +104,12 @@ public class SendScreenFragment extends android.support.v4.app.Fragment implemen
     }
 
     @Override
+    public void onDetach() {
+        super.onDetach();
+        initializeOnlyOnce = false;
+    }
+
+    @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
@@ -115,7 +122,8 @@ public class SendScreenFragment extends android.support.v4.app.Fragment implemen
 
         etSendMessage = rootView. findViewById(R.id.et_send_message);
 
-        if(!msgShown){
+
+        if(!initializeOnlyOnce){
             LinearLayout linearLayout = (LinearLayout)rootView.findViewById(R.id.linearLayout);
             for (int i = 0; i < MainActivity.mIcons.size(); i++) {
                 Switch switchView = new Switch(getContext());
@@ -130,21 +138,13 @@ public class SendScreenFragment extends android.support.v4.app.Fragment implemen
                                 ViewGroup.LayoutParams.MATCH_PARENT,
                                 ViewGroup.LayoutParams.WRAP_CONTENT));
             }
-            msgShown = true;
-
-            Toast.makeText(getContext(), "blablablab", Toast.LENGTH_SHORT).show();
+            initializeOnlyOnce = true;
         }
 
         buttonSend = (Button) rootView.findViewById(R.id.bt_send);
         buttonSend.setOnClickListener(buttonSendOnClickListener);
 
         return rootView;
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        msgShown = false;
     }
 
     private JSONObject createJsonObject(){
@@ -191,8 +191,7 @@ public class SendScreenFragment extends android.support.v4.app.Fragment implemen
             Writer output = new BufferedWriter(new FileWriter(nfcDataFile));
             output.write(jsonObject.toString());
             output.close();
-            Toast.makeText(getContext(), "Composition saved!", Toast.LENGTH_LONG).show();
-            Toast.makeText(getContext(), "" + nfcDataFile, Toast.LENGTH_LONG).show();
+            Toast.makeText(getContext(), R.string.toast_fileSaved, Toast.LENGTH_LONG).show();
 
 
         } catch (FileNotFoundException e) {

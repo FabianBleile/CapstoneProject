@@ -29,11 +29,9 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-            <intent-filter android:scheme="file"
-                tools:ignore="AppLinkUrlError">
+            <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
-                <data android:mimeType="application/json" />
             </intent-filter>
         </activity>
 
@@ -42,11 +40,6 @@
             android:authorities="@string/content_authority"
             android:exported="false" />
 
-        <activity
-            android:name=".nfcPushActivity"
-            android:parentActivityName=".MainActivity"
-            android:theme="@style/Theme.AppCompat.Dialog">
-        </activity>
     </application>
 
 </manifest>
