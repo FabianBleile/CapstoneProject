@@ -1,6 +1,5 @@
 package com.fabianbleile.fordigitalimmigrants;
 
-import android.arch.persistence.room.Room;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -8,6 +7,7 @@ import android.net.Uri;
 import android.nfc.NfcAdapter;
 import android.nfc.NfcEvent;
 import android.nfc.Tag;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
@@ -15,29 +15,33 @@ import android.preference.PreferenceManager;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.MenuItem;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 
-import com.fabianbleile.fordigitalimmigrants.SendScreenFragment;
-import com.fabianbleile.fordigitalimmigrants.SettingsScreenFragment;
-import com.fabianbleile.fordigitalimmigrants.R;
-import com.fabianbleile.fordigitalimmigrants.data.AppDatabase;
-import com.fabianbleile.fordigitalimmigrants.dummy.DummyContent;
+import com.fabianbleile.fordigitalimmigrants.data.Contact;
+import com.google.gson.Gson;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.File;
 import java.util.ArrayList;
 
-public class MainActivity extends FragmentActivity implements ReceiveScreenFragment.OnListFragmentInteractionListener, SendScreenFragment.OnReadyButtonClickedInterface{
+public class MainActivity extends FragmentActivity implements SendScreenFragment.OnReadyButtonClickedInterface{
 
     public static final String mTagHandmade = "HANDMADETAG";
     public static ArrayList<Integer> mIcons = new ArrayList<Integer>();
+
+    private Fragment sendFrag;
+    private Fragment settFrag;
+    private Fragment recFrag;
 
     NfcAdapter mNfcAdapter;
     // Flag to indicate that Android Beam is available
@@ -90,6 +94,7 @@ public class MainActivity extends FragmentActivity implements ReceiveScreenFragm
                     itemId = R.id.navigation_send;
                     break;
                 case 2 :
+                    test();
                     itemId = R.id.navigation_receive;
                     break;
             }
@@ -116,11 +121,6 @@ public class MainActivity extends FragmentActivity implements ReceiveScreenFragm
     }
 
     @Override
-    public void onListFragmentInteraction(DummyContent.DummyItem item) {
-
-    }
-
-    @Override
     public void OnReadyButtonClicked(Uri[] fileUris) {
         mFileUris = fileUris;
         mNfcAdapter.disableReaderMode(this);
@@ -142,11 +142,14 @@ public class MainActivity extends FragmentActivity implements ReceiveScreenFragm
         public Fragment getItem(int position) {
             switch (position){
                 case 0 :
-                    return new SettingsScreenFragment();
+                    settFrag = new SettingsScreenFragment();
+                    return settFrag;
                 case 1 :
-                    return new SendScreenFragment();
+                    sendFrag = new SendScreenFragment();
+                    return sendFrag;
                 case 2 :
-                    return new ReceiveScreenFragment();
+                    recFrag = new ReceiveScreenFragment();
+                    return recFrag;
                 default:
                     return null;
             }
@@ -163,9 +166,6 @@ public class MainActivity extends FragmentActivity implements ReceiveScreenFragm
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        AppDatabase db = Room.databaseBuilder(getApplicationContext(),
-                AppDatabase.class, "nfc-contacts-database").build();
 
         navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
@@ -310,5 +310,64 @@ public class MainActivity extends FragmentActivity implements ReceiveScreenFragm
 
     private void pushJsonToContentProvider(String parentPath){
         final File file = new File(parentPath);
+
+        try {
+            Gson gson = new Gson();
+            Contact contact = gson.fromJson(file.toString(), Contact.class);
+
+            ReceiveScreenFragment.viewModel.addItem(contact);
+
+        } catch (NullPointerException e){
+            Log.e("pushJsonToContProv", "File can not be parsed from String to Json to ContactObject");
+        }
+
+    }
+
+    private void test(){
+        addItem(String.valueOf(R.string.test_jsonString));
+    }
+
+    public void addItem(String string){
+        new buildContactAsyncTask().execute(string);
+    }
+
+    private static class buildContactAsyncTask extends AsyncTask<String, Contact, Contact> {
+
+        Contact contact; String name; String phonenumber; String email;
+        String birthday; String hometown; String instagram; String facebook;
+        String snapchat; String twitter; String location;
+
+        buildContactAsyncTask() {
+        }
+
+        @Override
+        protected Contact doInBackground(final String... params) {
+            try {
+                JSONObject jsonObject = new JSONObject(params[0]);
+                try { name = jsonObject.getString("Name");} catch (NullPointerException e){}
+                try { phonenumber = jsonObject.getString("Phonenumber"); } catch (NullPointerException e){}
+                try { email = jsonObject.getString("E-Mail"); } catch (NullPointerException e){}
+                try { birthday = jsonObject.getString("Birthday"); } catch (NullPointerException e){}
+                try { hometown = jsonObject.getString("Hometown"); } catch (NullPointerException e){}
+                try { instagram = jsonObject.getString("Instagram"); } catch (NullPointerException e){}
+                try { facebook = jsonObject.getString("Facebook"); } catch (NullPointerException e){}
+                try { snapchat = jsonObject.getString("Snapchat"); } catch (NullPointerException e){}
+                try { twitter = jsonObject.getString("Twitter"); } catch (NullPointerException e){}
+                try { location = jsonObject.getString("Location"); } catch (NullPointerException e){}
+                int cid = Integer.parseInt(null);
+
+                contact = new Contact(cid, name, phonenumber, email, birthday, hometown, instagram, facebook, snapchat, twitter, location);
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            return contact;
+        }
+
+        @Override
+        protected void onPostExecute(Contact contact) {
+            super.onPostExecute(contact);
+            ReceiveScreenFragment.onFileIncome(contact);
+        }
     }
 }

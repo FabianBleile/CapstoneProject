@@ -39,9 +39,9 @@
 
     /*Test Json*/
     <string name="test_jsonString">{
-        "Name":"Beate Bleile",
-        "E-Mail":"beate.bleile@web.de",
-        "Message":"",
-        "Handynummer":"+7382919373"}
+        {\"Name\":\"Beate Bleile\",
+        \"E-Mail\":\"beate.bleile@web.de\",
+        \"Message\":\"\",
+        \"Handynummer\":\"+7382919373\"}
     </string>
 </resources>

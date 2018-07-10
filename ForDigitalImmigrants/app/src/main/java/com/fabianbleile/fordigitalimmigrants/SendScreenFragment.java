@@ -1,14 +1,10 @@
 package com.fabianbleile.fordigitalimmigrants;
 
 import android.content.Context;
-import android.content.Intent;
 import android.net.Uri;
 import android.nfc.NfcAdapter;
 import android.nfc.NfcEvent;
 import android.os.Bundle;
-import android.os.Environment;
-import android.support.annotation.NonNull;
-import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,9 +13,7 @@ import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.ScrollView;
 import android.widget.Switch;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import org.json.JSONException;
@@ -28,14 +22,9 @@ import org.json.JSONObject;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.io.Serializable;
 import java.io.Writer;
-import java.net.URI;
-import java.net.URISyntaxException;
 import java.sql.Time;
 import java.util.ArrayList;
 
@@ -117,6 +106,12 @@ public class SendScreenFragment extends android.support.v4.app.Fragment implemen
     }
 
     @Override
+    public void onDetach() {
+        super.onDetach();
+        mCallback = null;
+    }
+
+    @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
@@ -171,7 +166,7 @@ public class SendScreenFragment extends android.support.v4.app.Fragment implemen
             }
         }
         try {
-            if(etSendMessage.getText().equals("") == false){
+            if(!(etSendMessage.getText().toString() == "")){
                 jsonObject.put(getResources().getString(R.string.ctv_message), etSendMessage.getText());
             }
         } catch (JSONException e) {
@@ -221,7 +216,7 @@ public class SendScreenFragment extends android.support.v4.app.Fragment implemen
         fileName = time.toString();
         //Replace (:) with (_)
         fileName = fileName.replaceAll(":", "_");
-        fileName = "nfcSharedData_" + fileName + ".json";
+        fileName = "nfcSharedData_" + fileName + ".txt";
 
         return fileName;
     }

@@ -1,5 +1,6 @@
 package com.fabianbleile.fordigitalimmigrants.data;
 
+import android.arch.lifecycle.LiveData;
 import android.arch.persistence.room.Dao;
 import android.arch.persistence.room.Delete;
 import android.arch.persistence.room.Insert;
@@ -10,7 +11,7 @@ import java.util.List;
 @Dao
 public interface ContactDao {
     @Query("SELECT * FROM contact")
-    List<Contact> getAll();
+    LiveData<List<Contact>> getAll();
 
     @Query("SELECT * FROM contact WHERE cid IN (:userIds)")
     List<Contact> loadAllByIds(int[] userIds);
