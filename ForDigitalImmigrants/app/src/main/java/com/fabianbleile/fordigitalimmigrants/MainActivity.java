@@ -1,5 +1,6 @@
 package com.fabianbleile.fordigitalimmigrants;
 
+import android.arch.persistence.room.Room;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -11,6 +12,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.preference.PreferenceManager;
+import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.FragmentActivity;
@@ -26,6 +28,7 @@ import android.support.v4.app.FragmentManager;
 import com.fabianbleile.fordigitalimmigrants.SendScreenFragment;
 import com.fabianbleile.fordigitalimmigrants.SettingsScreenFragment;
 import com.fabianbleile.fordigitalimmigrants.R;
+import com.fabianbleile.fordigitalimmigrants.data.AppDatabase;
 import com.fabianbleile.fordigitalimmigrants.dummy.DummyContent;
 
 import java.io.File;
@@ -161,6 +164,9 @@ public class MainActivity extends FragmentActivity implements ReceiveScreenFragm
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        AppDatabase db = Room.databaseBuilder(getApplicationContext(),
+                AppDatabase.class, "nfc-contacts-database").build();
+
         navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
@@ -185,10 +191,14 @@ public class MainActivity extends FragmentActivity implements ReceiveScreenFragm
             mNfcAdapter = NfcAdapter.getDefaultAdapter(this);
 
             if(mNfcAdapter != null){
-                mNfcAdapter.enableReaderMode(this, mReaderModeCallback, NfcAdapter.FLAG_READER_SKIP_NDEF_CHECK, null);
-                mFileUriCallback = new FileUriCallback();
-                // Set the dynamic callback for URI requests.
-                mNfcAdapter.setBeamPushUrisCallback(mFileUriCallback,this);
+                if(mNfcAdapter.isEnabled()){
+                    mNfcAdapter.enableReaderMode(this, mReaderModeCallback, NfcAdapter.FLAG_READER_SKIP_NDEF_CHECK, null);
+                    mFileUriCallback = new FileUriCallback();
+                    // Set the dynamic callback for URI requests.
+                    mNfcAdapter.setBeamPushUrisCallback(mFileUriCallback,this);
+                } else {
+                    startActivity(new Intent(Settings.ACTION_NFC_SETTINGS));
+                }
             }
         }
     }
@@ -231,6 +241,28 @@ public class MainActivity extends FragmentActivity implements ReceiveScreenFragm
     }
     //-------------------------------------------------------------------------------------------------------------------
 
+
+    //Method to check whether external media available and writable. This is adapted from
+    //   http://developer.android.com/guide/topics/data/data-storage.html#filesExternal */
+    /* Checks if external storage is available for read and write */
+    public boolean isExternalStorageWritable() {
+        String state = Environment.getExternalStorageState();
+        if (Environment.MEDIA_MOUNTED.equals(state)) {
+            return true;
+        }
+        return false;
+    }
+
+    /* Checks if external storage is available to at least read */
+    public boolean isExternalStorageReadable() {
+        String state = Environment.getExternalStorageState();
+        if (Environment.MEDIA_MOUNTED.equals(state) ||
+                Environment.MEDIA_MOUNTED_READ_ONLY.equals(state)) {
+            return true;
+        }
+        return false;
+    }
+
     // A File object containing the path to the transferred files
     private String mParentPath;
     // Incoming Intent
@@ -263,6 +295,8 @@ public class MainActivity extends FragmentActivity implements ReceiveScreenFragm
                 mParentPath = handleFileUri(beamUri);
             }
         }
+
+        pushJsonToContentProvider(mParentPath);
     }
 
     private String handleFileUri(Uri beamUri) {
@@ -274,24 +308,7 @@ public class MainActivity extends FragmentActivity implements ReceiveScreenFragm
         return copiedFile.getParent();
     }
 
-    //Method to check whether external media available and writable. This is adapted from
-    //   http://developer.android.com/guide/topics/data/data-storage.html#filesExternal */
-    /* Checks if external storage is available for read and write */
-    public boolean isExternalStorageWritable() {
-        String state = Environment.getExternalStorageState();
-        if (Environment.MEDIA_MOUNTED.equals(state)) {
-            return true;
-        }
-        return false;
-    }
-
-    /* Checks if external storage is available to at least read */
-    public boolean isExternalStorageReadable() {
-        String state = Environment.getExternalStorageState();
-        if (Environment.MEDIA_MOUNTED.equals(state) ||
-                Environment.MEDIA_MOUNTED_READ_ONLY.equals(state)) {
-            return true;
-        }
-        return false;
+    private void pushJsonToContentProvider(String parentPath){
+        final File file = new File(parentPath);
     }
 }

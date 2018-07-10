@@ -7,6 +7,7 @@ import android.nfc.NfcAdapter;
 import android.nfc.NfcEvent;
 import android.os.Bundle;
 import android.os.Environment;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -31,6 +32,7 @@ import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.io.Serializable;
 import java.io.Writer;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -42,6 +44,7 @@ public class SendScreenFragment extends android.support.v4.app.Fragment implemen
     public ArrayList<Uri> mFileUris = new ArrayList<Uri>();
 
     private ArrayList<CompoundButton> listCheckedSwitches = new ArrayList<>();
+    private LinearLayout linearLayout;
 
     OnReadyButtonClickedInterface mCallback;
 
@@ -64,17 +67,6 @@ public class SendScreenFragment extends android.support.v4.app.Fragment implemen
             Uri jsonDataUri = Uri.fromFile(requestFile);
             Log.e(MainActivity.mTagHandmade, "File URI: "+ jsonDataUri);
             mFileUris.add(jsonDataUri);
-
-            /*
-            ArrayList<String> mFileStrings = new ArrayList<String>();
-            for (int i = 0; i < mFileUris.size(); i++) {
-                mFileStrings.add(mFileUris.get(i).toString());
-            }
-
-            Intent intent = new Intent(getActivity(),nfcPushActivity.class);
-            intent.putStringArrayListExtra("mFileString" ,mFileStrings);
-            startActivity(intent);
-            */
 
             //convert arrayList of Uris to Array of Uris
             Uri[] fileUris = new Uri[mFileUris.size()];
@@ -137,34 +129,28 @@ public class SendScreenFragment extends android.support.v4.app.Fragment implemen
 
         etSendMessage = rootView. findViewById(R.id.et_send_message);
 
-        if(!msgShown){
-            LinearLayout linearLayout = (LinearLayout)rootView.findViewById(R.id.linearLayout);
-            for (int i = 0; i < MainActivity.mIcons.size(); i++) {
-                Switch switchView = new Switch(getContext());
-                switchView.setId(MainActivity.mIcons.get(i));
-                switchView.setText(getResources().getText(MainActivity.mIcons.get(i)));
-                switchView.setTextSize(18);
-                switchView.setOnCheckedChangeListener(switchSendOnCheckedListener);
-                switchView.setPadding(32,32,32,32);
+            if(!msgShown){
+                linearLayout = (LinearLayout)rootView.findViewById(R.id.linearLayout);
+                for (int i = 0; i < MainActivity.mIcons.size(); i++) {
+                    Switch switchView = new Switch(getContext());
+                    switchView.setId(MainActivity.mIcons.get(i));
+                    switchView.setText(getResources().getText(MainActivity.mIcons.get(i)));
+                    switchView.setTextSize(18);
+                    switchView.setOnCheckedChangeListener(switchSendOnCheckedListener);
+                    switchView.setPadding(32,32,32,32);
 
-                linearLayout.addView(switchView,
-                        new LinearLayout.LayoutParams(
-                                ViewGroup.LayoutParams.MATCH_PARENT,
-                                ViewGroup.LayoutParams.WRAP_CONTENT));
+                    linearLayout.addView(switchView,
+                            new LinearLayout.LayoutParams(
+                                    ViewGroup.LayoutParams.MATCH_PARENT,
+                                    ViewGroup.LayoutParams.WRAP_CONTENT));
+                }
+                msgShown = true;
             }
-            msgShown = true;
-        }
 
         buttonReady = (Button) rootView.findViewById(R.id.bt_ready);
         buttonReady.setOnClickListener(buttonReadyOnClickListener);
 
         return rootView;
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        msgShown = false;
     }
 
     private JSONObject createJsonObject(){

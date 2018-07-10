@@ -33,6 +33,15 @@
     <string name="error_noValueDefined">No information given for </string>
     <string name="error_couldNotPutJsonObject">Could not put JsonObject</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    /*Toast Messages*/
+
+
+
+    /*Test Json*/
+    <string name="test_jsonString">{
+        "Name":"Beate Bleile",
+        "E-Mail":"beate.bleile@web.de",
+        "Message":"",
+        "Handynummer":"+7382919373"}
+    </string>
 </resources>
