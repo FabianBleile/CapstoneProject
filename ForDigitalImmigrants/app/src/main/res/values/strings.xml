@@ -22,12 +22,16 @@
     <string name="ctv_message" translatable="false">Message</string>
 
     /*fragment settings screen*/
-    <string name="et_insert_info">Insert here</string>
     <string name="tv_fist_name">First Name</string>
     <string name="tv_last_name">Last Name</string>
     <string name="tv_phone_number">Phone Number</string>
     <string name="tv_email_adress">E-Mail</string>
+
+    /*Alert dialog*/
     <string name="bt_ok" translatable="false">OK</string>
+    <string name="bt_cncl" translatable="false">CANCEL</string>
+    <string name="et_insert_info">Insert here</string>
+    <string name="tv_delete_info">Sure to delete the contact from your friend list?</string>
 
     /*Error Messages*/
     <string name="error_noValueDefined">No information given for </string>

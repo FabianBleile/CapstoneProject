@@ -1,27 +1,16 @@
 package com.fabianbleile.fordigitalimmigrants;
 
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.DialogInterface;
-import android.content.SharedPreferences;
-import android.nfc.NfcAdapter;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.autofill.AutofillValue;
 import android.widget.AdapterView;
-import android.widget.BaseAdapter;
 import android.widget.EditText;
 import android.widget.GridView;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.fabianbleile.fordigitalimmigrants.Adapter.ImageAdapter;
-
-import java.util.ArrayList;
 
 public class SettingsScreenFragment extends android.support.v4.app.Fragment {
 
@@ -71,7 +60,7 @@ public class SettingsScreenFragment extends android.support.v4.app.Fragment {
     private void createSettingsAlertDialog(final View view, final int i){
         AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(getActivity());
         LayoutInflater inflater = this.getLayoutInflater();
-        final View dialogView = inflater.inflate(R.layout.custom_dialog, null);
+        final View dialogView = inflater.inflate(R.layout.alert_dialog_settings, null);
         dialogBuilder.setView(dialogView);
 
         etInsertInfo = (EditText) dialogView.findViewById(R.id.et_insert_info);

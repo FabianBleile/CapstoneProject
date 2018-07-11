@@ -11,8 +11,8 @@
     <string name="ctv_name">Name</string>
     <string name="ctv_phone_number">Handynummer</string>
     <string name="ctv_email">E-Mail</string>
-    <string name="et_insert_info">Gib hier deinen Account-Name an</string>
     <string name="ctv_birthday">Geburtstag</string>
     <string name="tv_send_message">Gib hier noch ein paar nette Worte auf den Weg ...</string>
     <string name="title_send">Fertig!</string>
+    <string name="et_insert_info">Infos hier rein.</string>
 </resources>
