@@ -26,17 +26,22 @@ import android.util.Log;
 import android.view.MenuItem;
 
 import com.fabianbleile.fordigitalimmigrants.data.Contact;
-import com.google.gson.Gson;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 
 public class MainActivity extends FragmentActivity implements SendScreenFragment.OnReadyButtonClickedInterface{
 
     public static final String mTagHandmade = "HANDMADETAG";
+    public static Context mContext;
     public static ArrayList<Integer> mIcons = new ArrayList<Integer>();
 
     private Fragment sendFrag;
@@ -167,6 +172,8 @@ public class MainActivity extends FragmentActivity implements SendScreenFragment
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        mContext = getApplicationContext();
+
         navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
@@ -175,15 +182,9 @@ public class MainActivity extends FragmentActivity implements SendScreenFragment
         mPager.setAdapter(mPagerAdapter);
         mPager.addOnPageChangeListener(viewPageOnPageListener);
 
-        mIcons.add(R.string.ctv_name);
-        mIcons.add(R.string.ctv_phone_number);
-        mIcons.add(R.string.ctv_email);
-        mIcons.add(R.string.ctv_birthday);
-        mIcons.add(R.string.ctv_hometown);
-        mIcons.add(R.string.ctv_instagram);
-        mIcons.add(R.string.ctv_facebook);
-        mIcons.add(R.string.ctv_snapchat);
-        mIcons.add(R.string.ctv_twitter);
+        mIcons.add(R.string.ctv_name); mIcons.add(R.string.ctv_phone_number); mIcons.add(R.string.ctv_email);
+        mIcons.add(R.string.ctv_birthday); mIcons.add(R.string.ctv_hometown); mIcons.add(R.string.ctv_instagram);
+        mIcons.add(R.string.ctv_facebook); mIcons.add(R.string.ctv_snapchat); mIcons.add(R.string.ctv_twitter);
         mIcons.add(R.string.ctv_currentLocation);
 
         if(isExternalStorageReadable() && isExternalStorageWritable()) {
@@ -206,9 +207,7 @@ public class MainActivity extends FragmentActivity implements SendScreenFragment
     private class FileUriCallback implements NfcAdapter.CreateBeamUrisCallback {
         public FileUriCallback() {
 
-        } /**
-                  * Create content URIs as needed to share with another device
-                  */
+        }
         @Override
         public Uri[] createBeamUris(NfcEvent nfcEvent) {
             return mFileUris;
@@ -240,8 +239,6 @@ public class MainActivity extends FragmentActivity implements SendScreenFragment
         return preferences.getString(key, null);
     }
     //-------------------------------------------------------------------------------------------------------------------
-
-
     //Method to check whether external media available and writable. This is adapted from
     //   http://developer.android.com/guide/topics/data/data-storage.html#filesExternal */
     /* Checks if external storage is available for read and write */
@@ -263,79 +260,110 @@ public class MainActivity extends FragmentActivity implements SendScreenFragment
         return false;
     }
 
+    //-------------------------------------------------------------------------------------------------------------------
+
     // A File object containing the path to the transferred files
     private String mParentPath;
     // Incoming Intent
     private Intent mIntent;
 
-    /*
-     * Called from onNewIntent() for a SINGLE_TOP Activity
-     * or onCreate() for a new Activity. For onNewIntent(),
-     * remember to call setIntent() to store the most
-     * current Intent
-     *
-     */
-    private void handleViewIntent() {
-        mPager.setCurrentItem(2);
-
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
         // Get the Intent action
         mIntent = getIntent();
+        setIntent(mIntent);
         String action = mIntent.getAction();
+
         /*
          * For ACTION_VIEW, the Activity is being asked to display data.
          * Get the URI.
          */
         if (TextUtils.equals(action, Intent.ACTION_VIEW)) {
-            // Get the URI from the Intent
-            Uri beamUri = mIntent.getData();
+            handleViewIntent();
+        }
+    }
+
+    /*
+         * Called from onNewIntent() for a SINGLE_TOP Activity
+         * or onCreate() for a new Activity. For onNewIntent(),
+         * remember to call setIntent() to store the most
+         * current Intent
+         *
+         */
+    private void handleViewIntent() {
+        //show receive Fragment (kind of a test to show the user it is going to be processed immiediately)
+        mPager.setCurrentItem(2);
+
+        // Get the URI from the Intent
+        Uri beamUri = mIntent.getData();
             /*
              * Test for the type of URI, by getting its scheme value
              */
-            if (TextUtils.equals(beamUri.getScheme(), "file")) {
-                mParentPath = handleFileUri(beamUri);
+        if (TextUtils.equals(beamUri.getScheme(), "file")) {
+            // Get the path part of the URI
+            String fileName = beamUri.getPath();
+            // Create a File object for this filename
+            final File copiedFile = new File(fileName);
+            mParentPath = copiedFile.getParent();
+            //start AsyncTask to read from file
+            new readFromFileAsyncTask().execute(fileName);
+        }
+    }
+
+    private static class readFromFileAsyncTask extends AsyncTask<String, Void, String> {
+
+        readFromFileAsyncTask() {}
+
+        @Override
+        protected String doInBackground(String... strings) {
+            String ret = "";
+
+            try {
+                InputStream inputStream = mContext.openFileInput(strings[0]);
+
+                if ( inputStream != null ) {
+                    InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
+                    BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
+                    String receiveString = "";
+                    StringBuilder stringBuilder = new StringBuilder();
+
+                    while ( (receiveString = bufferedReader.readLine()) != null ) {
+                        stringBuilder.append(receiveString);
+                    }
+
+                    inputStream.close();
+                    ret = stringBuilder.toString();
+                }
+            } catch (FileNotFoundException e) {
+                Log.e("readFromFileAsyncTask", "File not found: " + e.toString());
+            } catch (IOException e) {
+                Log.e("readFromFileAsyncTask", "Can not read file: " + e.toString());
             }
+
+            return ret;
         }
 
-        pushJsonToContentProvider(mParentPath);
-    }
-
-    private String handleFileUri(Uri beamUri) {
-        // Get the path part of the URI
-        String fileName = beamUri.getPath();
-        // Create a File object for this filename
-        File copiedFile = new File(fileName);
-        // Get a string containing the file's parent directory
-        return copiedFile.getParent();
-    }
-
-    private void pushJsonToContentProvider(String parentPath){
-        final File file = new File(parentPath);
-
-        try {
-            Gson gson = new Gson();
-            Contact contact = gson.fromJson(file.toString(), Contact.class);
-
-            ReceiveScreenFragment.viewModel.addItem(contact);
-
-        } catch (NullPointerException e){
-            Log.e("pushJsonToContProv", "File can not be parsed from String to Json to ContactObject");
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+            new buildContactAsyncTask().execute(s);
         }
 
     }
 
+    // test (if notification cannot be opened)
     private void test(){
-        addItem(String.valueOf(R.string.test_jsonString));
+        String test = getResources().getString(R.string.test_jsonString);
+        new buildContactAsyncTask().execute(test);
     }
 
-    public void addItem(String string){
-        new buildContactAsyncTask().execute(string);
-    }
+    private static class buildContactAsyncTask extends AsyncTask<String, Void, Contact> {
 
-    private static class buildContactAsyncTask extends AsyncTask<String, Contact, Contact> {
-
-        Contact contact; String name; String phonenumber; String email;
+        Contact contact; int cid; String name; String phonenumber; String email;
         String birthday; String hometown; String instagram; String facebook;
-        String snapchat; String twitter; String location;
+        String snapchat; String twitter; String location; String message;
+        JSONObject jsonObject;
 
         buildContactAsyncTask() {
         }
@@ -343,30 +371,41 @@ public class MainActivity extends FragmentActivity implements SendScreenFragment
         @Override
         protected Contact doInBackground(final String... params) {
             try {
-                JSONObject jsonObject = new JSONObject(params[0]);
-                try { name = jsonObject.getString("Name");} catch (NullPointerException e){}
-                try { phonenumber = jsonObject.getString("Phonenumber"); } catch (NullPointerException e){}
-                try { email = jsonObject.getString("E-Mail"); } catch (NullPointerException e){}
-                try { birthday = jsonObject.getString("Birthday"); } catch (NullPointerException e){}
-                try { hometown = jsonObject.getString("Hometown"); } catch (NullPointerException e){}
-                try { instagram = jsonObject.getString("Instagram"); } catch (NullPointerException e){}
-                try { facebook = jsonObject.getString("Facebook"); } catch (NullPointerException e){}
-                try { snapchat = jsonObject.getString("Snapchat"); } catch (NullPointerException e){}
-                try { twitter = jsonObject.getString("Twitter"); } catch (NullPointerException e){}
-                try { location = jsonObject.getString("Location"); } catch (NullPointerException e){}
-                int cid = Integer.parseInt(null);
+                jsonObject = new JSONObject(params[0]);
+            } catch (JSONException e) { e.printStackTrace(); }
 
-                contact = new Contact(cid, name, phonenumber, email, birthday, hometown, instagram, facebook, snapchat, twitter, location);
+            if(jsonObject != null){
+                try { name = jsonObject.getString("Name");} catch (NullPointerException e){name = "not given";} catch (JSONException e){}
+                try { phonenumber = jsonObject.getString("Phonenumber"); } catch (NullPointerException e){phonenumber = "not given";} catch (JSONException e){}
+                try { email = jsonObject.getString("E-Mail"); } catch (NullPointerException e){email = "not given";} catch (JSONException e){}
+                try { birthday = jsonObject.getString("Birthday"); } catch (NullPointerException e){birthday = "not given";} catch (JSONException e){}
+                try { hometown = jsonObject.getString("Hometown"); } catch (NullPointerException e){hometown = "not given";} catch (JSONException e){}
+                try { instagram = jsonObject.getString("Instagram"); } catch (NullPointerException e){instagram = "not given";} catch (JSONException e){}
+                try { facebook = jsonObject.getString("Facebook"); } catch (NullPointerException e){facebook = "not given";} catch (JSONException e){}
+                try { snapchat = jsonObject.getString("Snapchat"); } catch (NullPointerException e){snapchat = "not given";} catch (JSONException e){}
+                try { twitter = jsonObject.getString("Twitter"); } catch (NullPointerException e){twitter = "not given";} catch (JSONException e){}
+                try { location = jsonObject.getString("Location"); } catch (NullPointerException e){location = "not given";} catch (JSONException e){}
+                try { message = jsonObject.getString("Message"); } catch (NullPointerException e){message = "not given";} catch (JSONException e){}
 
-            } catch (JSONException e) {
-                e.printStackTrace();
+                if(getDefaults("contactListCounter", mContext) != null){
+                    setDefaults("contactListCounter", String.valueOf(cid + 1), mContext);
+                } else { setDefaults("contactListCounter", String.valueOf(0), mContext); }
+
+                cid = Integer.parseInt(getDefaults("contactListCounter", mContext));
             }
+
+            Log.e("doInBackground",  "     "+ cid + "     "+ name + "     "+ phonenumber + "     "+ email +
+                    "     "+ birthday + "     "+ hometown + "     "+ instagram + "     "+ facebook + "     "+ twitter +
+                    "     "+ snapchat + "     "+ location + "     ");
+            contact = new Contact(name, phonenumber, email, birthday, hometown, instagram, facebook, snapchat, twitter, location);
+
             return contact;
         }
 
         @Override
         protected void onPostExecute(Contact contact) {
             super.onPostExecute(contact);
+            Log.e("onPostExecute",  "     "+ contact);
             ReceiveScreenFragment.onFileIncome(contact);
         }
     }

@@ -7,8 +7,6 @@ import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
-import com.fabianbleile.fordigitalimmigrants.MainActivity;
-
 import java.util.List;
 
 public class ContactListViewModel extends AndroidViewModel {
@@ -43,7 +41,7 @@ public class ContactListViewModel extends AndroidViewModel {
 
         @Override
         protected Void doInBackground(final Contact... params) {
-            Log.e(MainActivity.mTagHandmade, ""+db);
+            Log.e("insertAsyncTask", params[0] + "     "+db);
             db.contactDao().insertContact(params[0]);
             return null;
         }

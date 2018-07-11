@@ -38,10 +38,12 @@
 
 
     /*Test Json*/
-    <string name="test_jsonString">{
-        {\"Name\":\"Beate Bleile\",
+    <string name="test_jsonString">
+        {
+        \"Name\":\"Beate Bleile\",
+        \"Handynummer\":\"7382919373\",
         \"E-Mail\":\"beate.bleile@web.de\",
-        \"Message\":\"\",
-        \"Handynummer\":\"+7382919373\"}
+        \"Message\":\"\"
+        }
     </string>
 </resources>

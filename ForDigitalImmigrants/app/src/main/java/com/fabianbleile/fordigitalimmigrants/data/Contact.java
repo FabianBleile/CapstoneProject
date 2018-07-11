@@ -7,8 +7,8 @@ import android.arch.persistence.room.PrimaryKey;
 
 @Entity
 public class Contact {
-    @PrimaryKey
-    private int cid;
+    @PrimaryKey(autoGenerate = true)
+    private Integer cid;
 
     @ColumnInfo(name = "name")
     private String name;
@@ -40,8 +40,7 @@ public class Contact {
     @ColumnInfo(name = "location")
     private String location;
 
-    public Contact(int cid, String name, String phonenumber, String email, String birthday, String hometown, String instagram, String facebook, String snapchat, String twitter, String location) {
-        this.cid = cid;
+    public Contact(String name, String phonenumber, String email, String birthday, String hometown, String instagram, String facebook, String snapchat, String twitter, String location) {
         this.name = name;
         this.phonenumber = phonenumber;
         this.email = email;
@@ -54,10 +53,10 @@ public class Contact {
         this.location = location;
     }
 
-    public int getCid() {
+    public Integer getCid() {
         return cid;
     }
-    public void setCid(int cid) {
+    public void setCid(Integer cid) {
         this.cid = cid;
     }
     public String getName() {
