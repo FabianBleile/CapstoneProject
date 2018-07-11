@@ -81,6 +81,8 @@ public class ContactListRecyclerViewAdapter extends RecyclerView.Adapter<Contact
         private TextView twitterTextView;
         private TextView locationTextView;
 
+        
+
 
 
         RecyclerViewHolder(View view) {

@@ -9,10 +9,10 @@
     /*fragment send screen*/
     <string name="label_bt_ready">Ready!</string>
     <string name="et_send_message">Type some kind words in here ... </string>
-    <string name="ctv_name">Name</string>
-    <string name="ctv_birthday">Birthday</string>
-    <string name="ctv_phone_number">Phone Number</string>
-    <string name="ctv_email">E-Mail</string>
+    <string name="ctv_name" translatable="false">Name</string>
+    <string name="ctv_birthday" translatable="false">Birthday</string>
+    <string name="ctv_phone_number" translatable="false">Phone Number</string>
+    <string name="ctv_email" translatable="false">E-Mail</string>
     <string name="ctv_instagram" translatable="false">Instagram</string>
     <string name="ctv_facebook" translatable="false">Facebook</string>
     <string name="ctv_snapchat" translatable="false">Snapchat</string>
@@ -41,9 +41,9 @@
     <string name="test_jsonString">
         {
         \"Name\":\"Beate Bleile\",
-        \"Handynummer\":\"7382919373\",
+        \"Phone Number\":\"neuestestestset Element... sollte jz ganz oben sein\",
         \"E-Mail\":\"beate.bleile@web.de\",
-        \"Message\":\"\"
+        \"Message\":\"Hey there I am using this app\"
         }
     </string>
 </resources>

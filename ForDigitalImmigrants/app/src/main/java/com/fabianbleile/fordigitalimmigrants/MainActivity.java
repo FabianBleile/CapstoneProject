@@ -24,6 +24,7 @@ import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.fabianbleile.fordigitalimmigrants.data.Contact;
 
@@ -358,12 +359,13 @@ public class MainActivity extends FragmentActivity implements SendScreenFragment
         new buildContactAsyncTask().execute(test);
     }
 
+    public static String message;
+
     private static class buildContactAsyncTask extends AsyncTask<String, Void, Contact> {
 
         Contact contact; int cid; String name; String phonenumber; String email;
         String birthday; String hometown; String instagram; String facebook;
-        String snapchat; String twitter; String location; String message;
-        JSONObject jsonObject;
+        String snapchat; String twitter; String location; JSONObject jsonObject;
 
         buildContactAsyncTask() {
         }
@@ -375,8 +377,10 @@ public class MainActivity extends FragmentActivity implements SendScreenFragment
             } catch (JSONException e) { e.printStackTrace(); }
 
             if(jsonObject != null){
+                try { message = jsonObject.getString("Message"); } catch (NullPointerException e){message = "not given";} catch (JSONException e){}
+
                 try { name = jsonObject.getString("Name");} catch (NullPointerException e){name = "not given";} catch (JSONException e){}
-                try { phonenumber = jsonObject.getString("Phonenumber"); } catch (NullPointerException e){phonenumber = "not given";} catch (JSONException e){}
+                try { phonenumber = jsonObject.getString("Phone Number"); } catch (NullPointerException e){phonenumber = "not given";} catch (JSONException e){}
                 try { email = jsonObject.getString("E-Mail"); } catch (NullPointerException e){email = "not given";} catch (JSONException e){}
                 try { birthday = jsonObject.getString("Birthday"); } catch (NullPointerException e){birthday = "not given";} catch (JSONException e){}
                 try { hometown = jsonObject.getString("Hometown"); } catch (NullPointerException e){hometown = "not given";} catch (JSONException e){}
@@ -385,18 +389,8 @@ public class MainActivity extends FragmentActivity implements SendScreenFragment
                 try { snapchat = jsonObject.getString("Snapchat"); } catch (NullPointerException e){snapchat = "not given";} catch (JSONException e){}
                 try { twitter = jsonObject.getString("Twitter"); } catch (NullPointerException e){twitter = "not given";} catch (JSONException e){}
                 try { location = jsonObject.getString("Location"); } catch (NullPointerException e){location = "not given";} catch (JSONException e){}
-                try { message = jsonObject.getString("Message"); } catch (NullPointerException e){message = "not given";} catch (JSONException e){}
-
-                if(getDefaults("contactListCounter", mContext) != null){
-                    setDefaults("contactListCounter", String.valueOf(cid + 1), mContext);
-                } else { setDefaults("contactListCounter", String.valueOf(0), mContext); }
-
-                cid = Integer.parseInt(getDefaults("contactListCounter", mContext));
             }
 
-            Log.e("doInBackground",  "     "+ cid + "     "+ name + "     "+ phonenumber + "     "+ email +
-                    "     "+ birthday + "     "+ hometown + "     "+ instagram + "     "+ facebook + "     "+ twitter +
-                    "     "+ snapchat + "     "+ location + "     ");
             contact = new Contact(name, phonenumber, email, birthday, hometown, instagram, facebook, snapchat, twitter, location);
 
             return contact;
@@ -405,8 +399,8 @@ public class MainActivity extends FragmentActivity implements SendScreenFragment
         @Override
         protected void onPostExecute(Contact contact) {
             super.onPostExecute(contact);
-            Log.e("onPostExecute",  "     "+ contact);
             ReceiveScreenFragment.onFileIncome(contact);
+            Toast.makeText(mContext, "" + message, Toast.LENGTH_SHORT).show();
         }
     }
 }

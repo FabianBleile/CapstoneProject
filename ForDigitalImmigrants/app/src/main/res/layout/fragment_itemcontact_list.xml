@@ -11,5 +11,6 @@
     android:paddingRight="32dp"
     android:paddingTop="32dp"
     app:layoutManager="LinearLayoutManager"
+    app:reverseLayout="false"
     tools:context=".ReceiveScreenFragment"
     tools:listitem="@layout/fragment_itemcontact" />

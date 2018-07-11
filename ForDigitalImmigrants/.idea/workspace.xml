@@ -6,7 +6,7 @@
     </shared>
   </component>
   <component name="AndroidLogFilters">
-    <option name="TOOL_WINDOW_LOG_LEVEL" value="debug" />
+    <option name="TOOL_WINDOW_LOG_LEVEL" value="warn" />
     <option name="TOOL_WINDOW_CONFIGURED_FILTER" value="Show only selected application" />
   </component>
   <component name="ChangeListManager">
@@ -38,91 +38,56 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="375">
-      <file leaf-file-name="MainActivity.java" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/fabianbleile/fordigitalimmigrants/MainActivity.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="171">
-              <caret line="387" column="61" lean-forward="false" selection-start-line="387" selection-start-column="61" selection-end-line="387" selection-end-column="61" />
-              <folding>
-                <element signature="imports" expanded="true" />
-                <element signature="e#4827#4828#0" expanded="true" />
-                <element signature="e#4860#4861#0" expanded="true" />
-                <element signature="e#5453#5454#0" expanded="true" />
-                <element signature="e#5493#5494#0" expanded="true" />
-                <element signature="class#FileUriCallback#0;class#MainActivity#0" expanded="false" />
-                <element signature="method#FileUriCallback#0;class#FileUriCallback#0;class#MainActivity#0" expanded="false" />
-                <element signature="e#7600#7601#0" expanded="true" />
-                <element signature="e#7640#7641#0" expanded="true" />
-                <element signature="class#ReaderModeCallback#0;class#MainActivity#0" expanded="false" />
-                <element signature="method#setDefaults#0;class#MainActivity#0" expanded="false" />
-                <element signature="method#getDefaults#0;class#MainActivity#0" expanded="false" />
-                <element signature="method#isExternalStorageWritable#0;class#MainActivity#0" expanded="false" />
-                <element signature="method#isExternalStorageReadable#0;class#MainActivity#0" expanded="false" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="strings.xml" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/res/values/strings.xml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="515">
-              <caret line="42" column="34" lean-forward="false" selection-start-line="42" selection-start-column="34" selection-end-line="42" selection-end-column="34" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="SettingsScreenFragment.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/fabianbleile/fordigitalimmigrants/SettingsScreenFragment.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="84">
-              <caret line="25" column="13" lean-forward="false" selection-start-line="25" selection-start-column="13" selection-end-line="25" selection-end-column="13" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="ReceiveScreenFragment.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/fabianbleile/fordigitalimmigrants/ReceiveScreenFragment.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1386">
-              <caret line="86" column="53" lean-forward="false" selection-start-line="86" selection-start-column="53" selection-end-line="87" selection-end-column="49" />
+            <state relative-caret-position="198">
+              <caret line="47" column="92" lean-forward="true" selection-start-line="47" selection-start-column="92" selection-end-line="47" selection-end-column="92" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#1553#1554#0" expanded="true" />
-                <element signature="e#1603#1604#0" expanded="true" />
+                <element signature="e#3375#3376#0" expanded="true" />
+                <element signature="e#3417#3418#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ContactListViewModel.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/fabianbleile/fordigitalimmigrants/data/ContactListViewModel.java">
+      <file leaf-file-name="fragment_itemcontact.xml" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_itemcontact.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="651">
-              <caret line="44" column="0" lean-forward="false" selection-start-line="44" selection-start-column="0" selection-end-line="44" selection-end-column="0" />
-              <folding />
+            <state relative-caret-position="2929">
+              <caret line="148" column="45" lean-forward="false" selection-start-line="148" selection-start-column="45" selection-end-line="148" selection-end-column="45" />
+              <folding>
+                <element signature="e#1800#1820#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+          <provider editor-type-id="android-designer2">
+            <state />
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="RecyclerItemTouchHelper.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/fabianbleile/fordigitalimmigrants/Adapter/RecyclerItemTouchHelper.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="212">
+              <caret line="23" column="91" lean-forward="false" selection-start-line="23" selection-start-column="91" selection-end-line="23" selection-end-column="91" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Contact.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/fabianbleile/fordigitalimmigrants/data/Contact.java">
+      <file leaf-file-name="ContactListRecyclerViewAdapter.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/fabianbleile/fordigitalimmigrants/Adapter/ContactListRecyclerViewAdapter.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="861">
-              <caret line="43" column="8" lean-forward="false" selection-start-line="43" selection-start-column="8" selection-end-line="43" selection-end-column="8" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ContactDao_Impl.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/build/generated/source/apt/debug/com/fabianbleile/fordigitalimmigrants/data/ContactDao_Impl.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2289">
-              <caret line="129" column="0" lean-forward="false" selection-start-line="129" selection-start-column="0" selection-end-line="129" selection-end-column="0" />
-              <folding />
+            <state relative-caret-position="527">
+              <caret line="83" column="8" lean-forward="false" selection-start-line="83" selection-start-column="8" selection-end-line="83" selection-end-column="8" />
+              <folding>
+                <element signature="e#2089#2090#0" expanded="true" />
+                <element signature="e#2135#2136#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -2158,20 +2123,22 @@
         <option value="$PROJECT_DIR$/app/src/main/java/com/fabianbleile/fordigitalimmigrants/data/NfcDataDbHelper.java" />
         <option value="$PROJECT_DIR$/build.gradle" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/fabianbleile/fordigitalimmigrants/data/ContactViewModel.java" />
-        <option value="$PROJECT_DIR$/app/src/main/res/layout/fragment_itemcontact.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/fabianbleile/fordigitalimmigrants/data/AppDatabase.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/fabianbleile/fordigitalimmigrants/Adapter/itemContactViewAdapter.java" />
         <option value="$PROJECT_DIR$/app/build.gradle" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/fabianbleile/fordigitalimmigrants/Adapter/ContactListRecyclerViewAdapter.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/fabianbleile/fordigitalimmigrants/SendScreenFragment.java" />
         <option value="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/fabianbleile/fordigitalimmigrants/data/ContactDao.java" />
         <option value="$PROJECT_DIR$/app/build/generated/source/apt/debug/com/fabianbleile/fordigitalimmigrants/data/ContactDao_Impl.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/fabianbleile/fordigitalimmigrants/ReceiveScreenFragment.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/fabianbleile/fordigitalimmigrants/data/ContactListViewModel.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/fabianbleile/fordigitalimmigrants/data/Contact.java" />
-        <option value="$PROJECT_DIR$/app/src/main/res/values/strings.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/fabianbleile/fordigitalimmigrants/MainActivity.java" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layout/fragment_itemcontact_list.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/res/values/strings.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/fabianbleile/fordigitalimmigrants/data/AppDatabase.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/fabianbleile/fordigitalimmigrants/ReceiveScreenFragment.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/fabianbleile/fordigitalimmigrants/Adapter/RecyclerItemTouchHelper.java" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layout/fragment_itemcontact.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/fabianbleile/fordigitalimmigrants/Adapter/ContactListRecyclerViewAdapter.java" />
       </list>
     </option>
   </component>
@@ -2200,6 +2167,39 @@
           <expand>
             <path>
               <item name="ForDigitalImmigrants" type="1abcf292:AndroidViewProjectNode" />
+              <item name="app" type="feadf853:AndroidModuleNode" />
+            </path>
+            <path>
+              <item name="ForDigitalImmigrants" type="1abcf292:AndroidViewProjectNode" />
+              <item name="app" type="feadf853:AndroidModuleNode" />
+              <item name="java" type="edd41e36:AndroidSourceTypeNode" />
+            </path>
+            <path>
+              <item name="ForDigitalImmigrants" type="1abcf292:AndroidViewProjectNode" />
+              <item name="app" type="feadf853:AndroidModuleNode" />
+              <item name="java" type="edd41e36:AndroidSourceTypeNode" />
+              <item name="fordigitalimmigrants" type="cbb59c9e:AndroidPsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="ForDigitalImmigrants" type="1abcf292:AndroidViewProjectNode" />
+              <item name="app" type="feadf853:AndroidModuleNode" />
+              <item name="java" type="edd41e36:AndroidSourceTypeNode" />
+              <item name="fordigitalimmigrants" type="cbb59c9e:AndroidPsiDirectoryNode" />
+              <item name="Adapter" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="ForDigitalImmigrants" type="1abcf292:AndroidViewProjectNode" />
+              <item name="app" type="feadf853:AndroidModuleNode" />
+              <item name="res" type="d4f16f75:AndroidResFolderNode" />
+            </path>
+            <path>
+              <item name="ForDigitalImmigrants" type="1abcf292:AndroidViewProjectNode" />
+              <item name="app" type="feadf853:AndroidModuleNode" />
+              <item name="res" type="d4f16f75:AndroidResFolderNode" />
+              <item name="layout" type="ddeffd01:AndroidResFolderTypeNode" />
+            </path>
+            <path>
+              <item name="ForDigitalImmigrants" type="1abcf292:AndroidViewProjectNode" />
               <item name="Gradle Scripts" type="ae0cef3a:AndroidBuildScriptsGroupNode" />
             </path>
           </expand>
@@ -2216,7 +2216,7 @@
     <property name="android.sdk.path" value="$USER_HOME$/AppData/Local/Android/Sdk" />
     <property name="settings.editor.selected.configurable" value="android.sdk-updates" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
-    <property name="device.picker.selection" value="Pixel_2_XL_API_28" />
+    <property name="device.picker.selection" value="ce03171331247cdc0c" />
   </component>
   <component name="RecentsManager">
     <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
@@ -2391,13 +2391,14 @@
     <frame x="-9" y="-9" width="1938" height="1048" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info id="Android Profiler" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Android Profiler" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Palette&#9;" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Image Layers" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Build Variants" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.16004297" sideWeight="0.50453514" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3295583" sideWeight="0.5021482" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3295583" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -2421,7 +2422,6 @@
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="StringPreview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
@@ -2433,13 +2433,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="jar://$USER_HOME$/AppData/Local/Android/Sdk/platforms/android-28/android.jar!/android/nfc/NfcAdapter.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="349">
-          <caret line="129" column="21" lean-forward="false" selection-start-line="129" selection-start-column="21" selection-end-line="129" selection-end-column="21" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/fabianbleile/fordigitalimmigrants/nfcPushActivity.java" />
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/fabianbleile/fordigitalimmigrants/Adapter/ImageAdapter.java">
       <provider selected="true" editor-type-id="text-editor">
@@ -2466,19 +2459,36 @@
           <caret line="297" column="21" lean-forward="false" selection-start-line="297" selection-start-column="21" selection-end-line="297" selection-end-column="21" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#4827#4828#0" expanded="true" />
-            <element signature="e#4860#4861#0" expanded="true" />
-            <element signature="e#5453#5454#0" expanded="true" />
-            <element signature="e#5493#5494#0" expanded="true" />
+            <element signature="e#1546#1555#0" expanded="true" />
+            <element signature="e#2400#3023#0" expanded="true" />
+            <element signature="e#3022#3023#0" expanded="true" />
+            <element signature="e#4856#4857#0" expanded="true" />
+            <element signature="e#4889#4890#0" expanded="true" />
+            <element signature="e#5482#5483#0" expanded="true" />
+            <element signature="e#5522#5523#0" expanded="true" />
+            <element signature="e#6296#6313#0" expanded="true" />
+            <element signature="e#6327#6352#0" expanded="true" />
+            <element signature="e#6366#6384#0" expanded="true" />
+            <element signature="e#6406#6427#0" expanded="true" />
+            <element signature="e#6441#6462#0" expanded="true" />
+            <element signature="e#6476#6498#0" expanded="true" />
+            <element signature="e#6520#6541#0" expanded="true" />
+            <element signature="e#6555#6576#0" expanded="true" />
+            <element signature="e#6590#6610#0" expanded="true" />
+            <element signature="e#6632#6660#0" expanded="true" />
             <element signature="class#FileUriCallback#0;class#MainActivity#0" expanded="false" />
             <element signature="method#FileUriCallback#0;class#FileUriCallback#0;class#MainActivity#0" expanded="false" />
-            <element signature="e#7600#7601#0" expanded="true" />
-            <element signature="e#7640#7641#0" expanded="true" />
+            <element signature="e#7629#7630#0" expanded="true" />
+            <element signature="e#7669#7670#0" expanded="true" />
             <element signature="class#ReaderModeCallback#0;class#MainActivity#0" expanded="false" />
             <element signature="method#setDefaults#0;class#MainActivity#0" expanded="false" />
             <element signature="method#getDefaults#0;class#MainActivity#0" expanded="false" />
             <element signature="method#isExternalStorageWritable#0;class#MainActivity#0" expanded="false" />
             <element signature="method#isExternalStorageReadable#0;class#MainActivity#0" expanded="false" />
+            <element signature="method#handleViewIntent#0;class#MainActivity#0" expanded="false" />
+            <element signature="class#readFromFileAsyncTask#0;class#MainActivity#0" expanded="false" />
+            <element signature="method#doInBackground#0;class#readFromFileAsyncTask#0;class#MainActivity#0" expanded="false" />
+            <element signature="e#12872#12922#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -2489,19 +2499,36 @@
           <caret line="48" column="0" lean-forward="false" selection-start-line="48" selection-start-column="0" selection-end-line="48" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#4827#4828#0" expanded="true" />
-            <element signature="e#4860#4861#0" expanded="true" />
-            <element signature="e#5453#5454#0" expanded="true" />
-            <element signature="e#5493#5494#0" expanded="true" />
+            <element signature="e#1546#1555#0" expanded="true" />
+            <element signature="e#2400#3023#0" expanded="true" />
+            <element signature="e#3022#3023#0" expanded="true" />
+            <element signature="e#4856#4857#0" expanded="true" />
+            <element signature="e#4889#4890#0" expanded="true" />
+            <element signature="e#5482#5483#0" expanded="true" />
+            <element signature="e#5522#5523#0" expanded="true" />
+            <element signature="e#6296#6313#0" expanded="true" />
+            <element signature="e#6327#6352#0" expanded="true" />
+            <element signature="e#6366#6384#0" expanded="true" />
+            <element signature="e#6406#6427#0" expanded="true" />
+            <element signature="e#6441#6462#0" expanded="true" />
+            <element signature="e#6476#6498#0" expanded="true" />
+            <element signature="e#6520#6541#0" expanded="true" />
+            <element signature="e#6555#6576#0" expanded="true" />
+            <element signature="e#6590#6610#0" expanded="true" />
+            <element signature="e#6632#6660#0" expanded="true" />
             <element signature="class#FileUriCallback#0;class#MainActivity#0" expanded="false" />
             <element signature="method#FileUriCallback#0;class#FileUriCallback#0;class#MainActivity#0" expanded="false" />
-            <element signature="e#7600#7601#0" expanded="true" />
-            <element signature="e#7640#7641#0" expanded="true" />
+            <element signature="e#7629#7630#0" expanded="true" />
+            <element signature="e#7669#7670#0" expanded="true" />
             <element signature="class#ReaderModeCallback#0;class#MainActivity#0" expanded="false" />
             <element signature="method#setDefaults#0;class#MainActivity#0" expanded="false" />
             <element signature="method#getDefaults#0;class#MainActivity#0" expanded="false" />
             <element signature="method#isExternalStorageWritable#0;class#MainActivity#0" expanded="false" />
             <element signature="method#isExternalStorageReadable#0;class#MainActivity#0" expanded="false" />
+            <element signature="method#handleViewIntent#0;class#MainActivity#0" expanded="false" />
+            <element signature="class#readFromFileAsyncTask#0;class#MainActivity#0" expanded="false" />
+            <element signature="method#doInBackground#0;class#readFromFileAsyncTask#0;class#MainActivity#0" expanded="false" />
+            <element signature="e#12872#12922#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -2528,19 +2555,36 @@
           <caret line="48" column="0" lean-forward="false" selection-start-line="48" selection-start-column="0" selection-end-line="48" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#4827#4828#0" expanded="true" />
-            <element signature="e#4860#4861#0" expanded="true" />
-            <element signature="e#5453#5454#0" expanded="true" />
-            <element signature="e#5493#5494#0" expanded="true" />
+            <element signature="e#1546#1555#0" expanded="true" />
+            <element signature="e#2400#3023#0" expanded="true" />
+            <element signature="e#3022#3023#0" expanded="true" />
+            <element signature="e#4856#4857#0" expanded="true" />
+            <element signature="e#4889#4890#0" expanded="true" />
+            <element signature="e#5482#5483#0" expanded="true" />
+            <element signature="e#5522#5523#0" expanded="true" />
+            <element signature="e#6296#6313#0" expanded="true" />
+            <element signature="e#6327#6352#0" expanded="true" />
+            <element signature="e#6366#6384#0" expanded="true" />
+            <element signature="e#6406#6427#0" expanded="true" />
+            <element signature="e#6441#6462#0" expanded="true" />
+            <element signature="e#6476#6498#0" expanded="true" />
+            <element signature="e#6520#6541#0" expanded="true" />
+            <element signature="e#6555#6576#0" expanded="true" />
+            <element signature="e#6590#6610#0" expanded="true" />
+            <element signature="e#6632#6660#0" expanded="true" />
             <element signature="class#FileUriCallback#0;class#MainActivity#0" expanded="false" />
             <element signature="method#FileUriCallback#0;class#FileUriCallback#0;class#MainActivity#0" expanded="false" />
-            <element signature="e#7600#7601#0" expanded="true" />
-            <element signature="e#7640#7641#0" expanded="true" />
+            <element signature="e#7629#7630#0" expanded="true" />
+            <element signature="e#7669#7670#0" expanded="true" />
             <element signature="class#ReaderModeCallback#0;class#MainActivity#0" expanded="false" />
             <element signature="method#setDefaults#0;class#MainActivity#0" expanded="false" />
             <element signature="method#getDefaults#0;class#MainActivity#0" expanded="false" />
             <element signature="method#isExternalStorageWritable#0;class#MainActivity#0" expanded="false" />
             <element signature="method#isExternalStorageReadable#0;class#MainActivity#0" expanded="false" />
+            <element signature="method#handleViewIntent#0;class#MainActivity#0" expanded="false" />
+            <element signature="class#readFromFileAsyncTask#0;class#MainActivity#0" expanded="false" />
+            <element signature="method#doInBackground#0;class#readFromFileAsyncTask#0;class#MainActivity#0" expanded="false" />
+            <element signature="e#12872#12922#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -2559,19 +2603,36 @@
           <caret line="182" column="0" lean-forward="false" selection-start-line="182" selection-start-column="0" selection-end-line="182" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#4827#4828#0" expanded="true" />
-            <element signature="e#4860#4861#0" expanded="true" />
-            <element signature="e#5453#5454#0" expanded="true" />
-            <element signature="e#5493#5494#0" expanded="true" />
+            <element signature="e#1546#1555#0" expanded="true" />
+            <element signature="e#2400#3023#0" expanded="true" />
+            <element signature="e#3022#3023#0" expanded="true" />
+            <element signature="e#4856#4857#0" expanded="true" />
+            <element signature="e#4889#4890#0" expanded="true" />
+            <element signature="e#5482#5483#0" expanded="true" />
+            <element signature="e#5522#5523#0" expanded="true" />
+            <element signature="e#6296#6313#0" expanded="true" />
+            <element signature="e#6327#6352#0" expanded="true" />
+            <element signature="e#6366#6384#0" expanded="true" />
+            <element signature="e#6406#6427#0" expanded="true" />
+            <element signature="e#6441#6462#0" expanded="true" />
+            <element signature="e#6476#6498#0" expanded="true" />
+            <element signature="e#6520#6541#0" expanded="true" />
+            <element signature="e#6555#6576#0" expanded="true" />
+            <element signature="e#6590#6610#0" expanded="true" />
+            <element signature="e#6632#6660#0" expanded="true" />
             <element signature="class#FileUriCallback#0;class#MainActivity#0" expanded="false" />
             <element signature="method#FileUriCallback#0;class#FileUriCallback#0;class#MainActivity#0" expanded="false" />
-            <element signature="e#7600#7601#0" expanded="true" />
-            <element signature="e#7640#7641#0" expanded="true" />
+            <element signature="e#7629#7630#0" expanded="true" />
+            <element signature="e#7669#7670#0" expanded="true" />
             <element signature="class#ReaderModeCallback#0;class#MainActivity#0" expanded="false" />
             <element signature="method#setDefaults#0;class#MainActivity#0" expanded="false" />
             <element signature="method#getDefaults#0;class#MainActivity#0" expanded="false" />
             <element signature="method#isExternalStorageWritable#0;class#MainActivity#0" expanded="false" />
             <element signature="method#isExternalStorageReadable#0;class#MainActivity#0" expanded="false" />
+            <element signature="method#handleViewIntent#0;class#MainActivity#0" expanded="false" />
+            <element signature="class#readFromFileAsyncTask#0;class#MainActivity#0" expanded="false" />
+            <element signature="method#doInBackground#0;class#readFromFileAsyncTask#0;class#MainActivity#0" expanded="false" />
+            <element signature="e#12872#12922#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -2582,19 +2643,36 @@
           <caret line="181" column="0" lean-forward="false" selection-start-line="181" selection-start-column="0" selection-end-line="181" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#4827#4828#0" expanded="true" />
-            <element signature="e#4860#4861#0" expanded="true" />
-            <element signature="e#5453#5454#0" expanded="true" />
-            <element signature="e#5493#5494#0" expanded="true" />
+            <element signature="e#1546#1555#0" expanded="true" />
+            <element signature="e#2400#3023#0" expanded="true" />
+            <element signature="e#3022#3023#0" expanded="true" />
+            <element signature="e#4856#4857#0" expanded="true" />
+            <element signature="e#4889#4890#0" expanded="true" />
+            <element signature="e#5482#5483#0" expanded="true" />
+            <element signature="e#5522#5523#0" expanded="true" />
+            <element signature="e#6296#6313#0" expanded="true" />
+            <element signature="e#6327#6352#0" expanded="true" />
+            <element signature="e#6366#6384#0" expanded="true" />
+            <element signature="e#6406#6427#0" expanded="true" />
+            <element signature="e#6441#6462#0" expanded="true" />
+            <element signature="e#6476#6498#0" expanded="true" />
+            <element signature="e#6520#6541#0" expanded="true" />
+            <element signature="e#6555#6576#0" expanded="true" />
+            <element signature="e#6590#6610#0" expanded="true" />
+            <element signature="e#6632#6660#0" expanded="true" />
             <element signature="class#FileUriCallback#0;class#MainActivity#0" expanded="false" />
             <element signature="method#FileUriCallback#0;class#FileUriCallback#0;class#MainActivity#0" expanded="false" />
-            <element signature="e#7600#7601#0" expanded="true" />
-            <element signature="e#7640#7641#0" expanded="true" />
+            <element signature="e#7629#7630#0" expanded="true" />
+            <element signature="e#7669#7670#0" expanded="true" />
             <element signature="class#ReaderModeCallback#0;class#MainActivity#0" expanded="false" />
             <element signature="method#setDefaults#0;class#MainActivity#0" expanded="false" />
             <element signature="method#getDefaults#0;class#MainActivity#0" expanded="false" />
             <element signature="method#isExternalStorageWritable#0;class#MainActivity#0" expanded="false" />
             <element signature="method#isExternalStorageReadable#0;class#MainActivity#0" expanded="false" />
+            <element signature="method#handleViewIntent#0;class#MainActivity#0" expanded="false" />
+            <element signature="class#readFromFileAsyncTask#0;class#MainActivity#0" expanded="false" />
+            <element signature="method#doInBackground#0;class#readFromFileAsyncTask#0;class#MainActivity#0" expanded="false" />
+            <element signature="e#12872#12922#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -2614,8 +2692,8 @@
           <caret line="69" column="70" lean-forward="false" selection-start-line="69" selection-start-column="70" selection-end-line="69" selection-end-column="70" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#1553#1554#0" expanded="true" />
-            <element signature="e#1603#1604#0" expanded="true" />
+            <element signature="e#3375#3376#0" expanded="true" />
+            <element signature="e#3417#3418#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -2648,19 +2726,36 @@
           <caret line="50" column="6" lean-forward="false" selection-start-line="50" selection-start-column="6" selection-end-line="50" selection-end-column="6" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#4827#4828#0" expanded="true" />
-            <element signature="e#4860#4861#0" expanded="true" />
-            <element signature="e#5453#5454#0" expanded="true" />
-            <element signature="e#5493#5494#0" expanded="true" />
+            <element signature="e#1546#1555#0" expanded="true" />
+            <element signature="e#2400#3023#0" expanded="true" />
+            <element signature="e#3022#3023#0" expanded="true" />
+            <element signature="e#4856#4857#0" expanded="true" />
+            <element signature="e#4889#4890#0" expanded="true" />
+            <element signature="e#5482#5483#0" expanded="true" />
+            <element signature="e#5522#5523#0" expanded="true" />
+            <element signature="e#6296#6313#0" expanded="true" />
+            <element signature="e#6327#6352#0" expanded="true" />
+            <element signature="e#6366#6384#0" expanded="true" />
+            <element signature="e#6406#6427#0" expanded="true" />
+            <element signature="e#6441#6462#0" expanded="true" />
+            <element signature="e#6476#6498#0" expanded="true" />
+            <element signature="e#6520#6541#0" expanded="true" />
+            <element signature="e#6555#6576#0" expanded="true" />
+            <element signature="e#6590#6610#0" expanded="true" />
+            <element signature="e#6632#6660#0" expanded="true" />
             <element signature="class#FileUriCallback#0;class#MainActivity#0" expanded="false" />
             <element signature="method#FileUriCallback#0;class#FileUriCallback#0;class#MainActivity#0" expanded="false" />
-            <element signature="e#7600#7601#0" expanded="true" />
-            <element signature="e#7640#7641#0" expanded="true" />
+            <element signature="e#7629#7630#0" expanded="true" />
+            <element signature="e#7669#7670#0" expanded="true" />
             <element signature="class#ReaderModeCallback#0;class#MainActivity#0" expanded="false" />
             <element signature="method#setDefaults#0;class#MainActivity#0" expanded="false" />
             <element signature="method#getDefaults#0;class#MainActivity#0" expanded="false" />
             <element signature="method#isExternalStorageWritable#0;class#MainActivity#0" expanded="false" />
             <element signature="method#isExternalStorageReadable#0;class#MainActivity#0" expanded="false" />
+            <element signature="method#handleViewIntent#0;class#MainActivity#0" expanded="false" />
+            <element signature="class#readFromFileAsyncTask#0;class#MainActivity#0" expanded="false" />
+            <element signature="method#doInBackground#0;class#readFromFileAsyncTask#0;class#MainActivity#0" expanded="false" />
+            <element signature="e#12872#12922#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -2671,19 +2766,36 @@
           <caret line="182" column="0" lean-forward="false" selection-start-line="182" selection-start-column="0" selection-end-line="182" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#4827#4828#0" expanded="true" />
-            <element signature="e#4860#4861#0" expanded="true" />
-            <element signature="e#5453#5454#0" expanded="true" />
-            <element signature="e#5493#5494#0" expanded="true" />
+            <element signature="e#1546#1555#0" expanded="true" />
+            <element signature="e#2400#3023#0" expanded="true" />
+            <element signature="e#3022#3023#0" expanded="true" />
+            <element signature="e#4856#4857#0" expanded="true" />
+            <element signature="e#4889#4890#0" expanded="true" />
+            <element signature="e#5482#5483#0" expanded="true" />
+            <element signature="e#5522#5523#0" expanded="true" />
+            <element signature="e#6296#6313#0" expanded="true" />
+            <element signature="e#6327#6352#0" expanded="true" />
+            <element signature="e#6366#6384#0" expanded="true" />
+            <element signature="e#6406#6427#0" expanded="true" />
+            <element signature="e#6441#6462#0" expanded="true" />
+            <element signature="e#6476#6498#0" expanded="true" />
+            <element signature="e#6520#6541#0" expanded="true" />
+            <element signature="e#6555#6576#0" expanded="true" />
+            <element signature="e#6590#6610#0" expanded="true" />
+            <element signature="e#6632#6660#0" expanded="true" />
             <element signature="class#FileUriCallback#0;class#MainActivity#0" expanded="false" />
             <element signature="method#FileUriCallback#0;class#FileUriCallback#0;class#MainActivity#0" expanded="false" />
-            <element signature="e#7600#7601#0" expanded="true" />
-            <element signature="e#7640#7641#0" expanded="true" />
+            <element signature="e#7629#7630#0" expanded="true" />
+            <element signature="e#7669#7670#0" expanded="true" />
             <element signature="class#ReaderModeCallback#0;class#MainActivity#0" expanded="false" />
             <element signature="method#setDefaults#0;class#MainActivity#0" expanded="false" />
             <element signature="method#getDefaults#0;class#MainActivity#0" expanded="false" />
             <element signature="method#isExternalStorageWritable#0;class#MainActivity#0" expanded="false" />
             <element signature="method#isExternalStorageReadable#0;class#MainActivity#0" expanded="false" />
+            <element signature="method#handleViewIntent#0;class#MainActivity#0" expanded="false" />
+            <element signature="class#readFromFileAsyncTask#0;class#MainActivity#0" expanded="false" />
+            <element signature="method#doInBackground#0;class#readFromFileAsyncTask#0;class#MainActivity#0" expanded="false" />
+            <element signature="e#12872#12922#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -2694,19 +2806,36 @@
           <caret line="181" column="0" lean-forward="false" selection-start-line="181" selection-start-column="0" selection-end-line="181" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#4827#4828#0" expanded="true" />
-            <element signature="e#4860#4861#0" expanded="true" />
-            <element signature="e#5453#5454#0" expanded="true" />
-            <element signature="e#5493#5494#0" expanded="true" />
+            <element signature="e#1546#1555#0" expanded="true" />
+            <element signature="e#2400#3023#0" expanded="true" />
+            <element signature="e#3022#3023#0" expanded="true" />
+            <element signature="e#4856#4857#0" expanded="true" />
+            <element signature="e#4889#4890#0" expanded="true" />
+            <element signature="e#5482#5483#0" expanded="true" />
+            <element signature="e#5522#5523#0" expanded="true" />
+            <element signature="e#6296#6313#0" expanded="true" />
+            <element signature="e#6327#6352#0" expanded="true" />
+            <element signature="e#6366#6384#0" expanded="true" />
+            <element signature="e#6406#6427#0" expanded="true" />
+            <element signature="e#6441#6462#0" expanded="true" />
+            <element signature="e#6476#6498#0" expanded="true" />
+            <element signature="e#6520#6541#0" expanded="true" />
+            <element signature="e#6555#6576#0" expanded="true" />
+            <element signature="e#6590#6610#0" expanded="true" />
+            <element signature="e#6632#6660#0" expanded="true" />
             <element signature="class#FileUriCallback#0;class#MainActivity#0" expanded="false" />
             <element signature="method#FileUriCallback#0;class#FileUriCallback#0;class#MainActivity#0" expanded="false" />
-            <element signature="e#7600#7601#0" expanded="true" />
-            <element signature="e#7640#7641#0" expanded="true" />
+            <element signature="e#7629#7630#0" expanded="true" />
+            <element signature="e#7669#7670#0" expanded="true" />
             <element signature="class#ReaderModeCallback#0;class#MainActivity#0" expanded="false" />
             <element signature="method#setDefaults#0;class#MainActivity#0" expanded="false" />
             <element signature="method#getDefaults#0;class#MainActivity#0" expanded="false" />
             <element signature="method#isExternalStorageWritable#0;class#MainActivity#0" expanded="false" />
             <element signature="method#isExternalStorageReadable#0;class#MainActivity#0" expanded="false" />
+            <element signature="method#handleViewIntent#0;class#MainActivity#0" expanded="false" />
+            <element signature="class#readFromFileAsyncTask#0;class#MainActivity#0" expanded="false" />
+            <element signature="method#doInBackground#0;class#readFromFileAsyncTask#0;class#MainActivity#0" expanded="false" />
+            <element signature="e#12872#12922#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -2751,26 +2880,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_itemcontact.xml">
-      <provider editor-type-id="text-editor">
-        <state relative-caret-position="-147">
-          <caret line="131" column="0" lean-forward="false" selection-start-line="131" selection-start-column="0" selection-end-line="131" selection-end-column="0" />
-        </state>
-      </provider>
-      <provider selected="true" editor-type-id="android-designer2">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_itemcontact_list.xml">
-      <provider editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-      <provider selected="true" editor-type-id="android-designer2">
-        <state />
-      </provider>
-    </entry>
     <entry file="jar://$USER_HOME$/AppData/Local/Android/Sdk/platforms/android-28/android.jar!/android/view/View.class">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="279">
@@ -2795,13 +2904,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/fabianbleile/fordigitalimmigrants/Adapter/ContactListRecyclerViewAdapter.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="94">
-          <caret line="61" column="32" lean-forward="false" selection-start-line="61" selection-start-column="32" selection-end-line="61" selection-end-column="32" />
-        </state>
-      </provider>
-    </entry>
     <entry file="android-dummy://D:/AndroidStudioProjects/CapstoneProject/ForDigitalImmigrants/app/Translations Editor">
       <provider selected="true" editor-type-id="string-resource-editor">
         <state />
@@ -2822,14 +2924,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/fabianbleile/fordigitalimmigrants/data/AppDatabase.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="399">
-          <caret line="22" column="35" lean-forward="false" selection-start-line="22" selection-start-column="35" selection-end-line="22" selection-end-column="35" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/fabianbleile/fordigitalimmigrants/SettingsScreenFragment.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="84">
@@ -2842,6 +2936,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="21">
           <caret line="11" column="7" lean-forward="false" selection-start-line="11" selection-start-column="7" selection-end-line="11" selection-end-column="7" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -2856,34 +2951,6 @@
         <state />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/fabianbleile/fordigitalimmigrants/ReceiveScreenFragment.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1386">
-          <caret line="86" column="53" lean-forward="false" selection-start-line="86" selection-start-column="53" selection-end-line="87" selection-end-column="49" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#1553#1554#0" expanded="true" />
-            <element signature="e#1603#1604#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/fabianbleile/fordigitalimmigrants/data/ContactListViewModel.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="651">
-          <caret line="44" column="0" lean-forward="false" selection-start-line="44" selection-start-column="0" selection-end-line="44" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/build/generated/source/apt/debug/com/fabianbleile/fordigitalimmigrants/data/ContactDao_Impl.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2289">
-          <caret line="129" column="0" lean-forward="false" selection-start-line="129" selection-start-column="0" selection-end-line="129" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/fabianbleile/fordigitalimmigrants/data/Contact.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="861">
@@ -2894,31 +2961,129 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/values/strings.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="515">
-          <caret line="42" column="34" lean-forward="false" selection-start-line="42" selection-start-column="34" selection-end-line="42" selection-end-column="34" />
+        <state relative-caret-position="578">
+          <caret line="43" column="42" lean-forward="false" selection-start-line="43" selection-start-column="42" selection-end-line="43" selection-end-column="42" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/build/generated/source/apt/debug/com/fabianbleile/fordigitalimmigrants/data/ContactDao_Impl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="355">
+          <caret line="151" column="0" lean-forward="false" selection-start-line="151" selection-start-column="0" selection-end-line="151" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/fabianbleile/fordigitalimmigrants/MainActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="171">
-          <caret line="387" column="61" lean-forward="false" selection-start-line="387" selection-start-column="61" selection-end-line="387" selection-end-column="61" />
+        <state relative-caret-position="2216">
+          <caret line="390" column="150" lean-forward="false" selection-start-line="390" selection-start-column="150" selection-end-line="390" selection-end-column="150" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#4827#4828#0" expanded="true" />
-            <element signature="e#4860#4861#0" expanded="true" />
-            <element signature="e#5453#5454#0" expanded="true" />
-            <element signature="e#5493#5494#0" expanded="true" />
+            <element signature="e#1546#1555#0" expanded="true" />
+            <element signature="e#2400#3023#0" expanded="true" />
+            <element signature="e#3022#3023#0" expanded="true" />
+            <element signature="e#4856#4857#0" expanded="true" />
+            <element signature="e#4889#4890#0" expanded="true" />
+            <element signature="e#5482#5483#0" expanded="true" />
+            <element signature="e#5522#5523#0" expanded="true" />
+            <element signature="e#6296#6313#0" expanded="true" />
+            <element signature="e#6327#6352#0" expanded="true" />
+            <element signature="e#6366#6384#0" expanded="true" />
+            <element signature="e#6406#6427#0" expanded="true" />
+            <element signature="e#6441#6462#0" expanded="true" />
+            <element signature="e#6476#6498#0" expanded="true" />
+            <element signature="e#6520#6541#0" expanded="true" />
+            <element signature="e#6555#6576#0" expanded="true" />
+            <element signature="e#6590#6610#0" expanded="true" />
+            <element signature="e#6632#6660#0" expanded="true" />
             <element signature="class#FileUriCallback#0;class#MainActivity#0" expanded="false" />
             <element signature="method#FileUriCallback#0;class#FileUriCallback#0;class#MainActivity#0" expanded="false" />
-            <element signature="e#7600#7601#0" expanded="true" />
-            <element signature="e#7640#7641#0" expanded="true" />
+            <element signature="e#7629#7630#0" expanded="true" />
+            <element signature="e#7669#7670#0" expanded="true" />
             <element signature="class#ReaderModeCallback#0;class#MainActivity#0" expanded="false" />
             <element signature="method#setDefaults#0;class#MainActivity#0" expanded="false" />
             <element signature="method#getDefaults#0;class#MainActivity#0" expanded="false" />
             <element signature="method#isExternalStorageWritable#0;class#MainActivity#0" expanded="false" />
             <element signature="method#isExternalStorageReadable#0;class#MainActivity#0" expanded="false" />
+            <element signature="method#handleViewIntent#0;class#MainActivity#0" expanded="false" />
+            <element signature="class#readFromFileAsyncTask#0;class#MainActivity#0" expanded="false" />
+            <element signature="method#doInBackground#0;class#readFromFileAsyncTask#0;class#MainActivity#0" expanded="false" />
+            <element signature="e#12872#12922#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/fabianbleile/fordigitalimmigrants/data/AppDatabase.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="330">
+          <caret line="19" column="24" lean-forward="false" selection-start-line="19" selection-start-column="24" selection-end-line="19" selection-end-column="24" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/fabianbleile/fordigitalimmigrants/data/ContactListViewModel.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="168">
+          <caret line="21" column="41" lean-forward="false" selection-start-line="21" selection-start-column="41" selection-end-line="21" selection-end-column="41" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_itemcontact_list.xml">
+      <provider editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+      <provider selected="true" editor-type-id="android-designer2">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_itemcontact.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2929">
+          <caret line="148" column="45" lean-forward="false" selection-start-line="148" selection-start-column="45" selection-end-line="148" selection-end-column="45" />
+          <folding>
+            <element signature="e#1800#1820#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+      <provider editor-type-id="android-designer2">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/fabianbleile/fordigitalimmigrants/ReceiveScreenFragment.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="198">
+          <caret line="47" column="92" lean-forward="true" selection-start-line="47" selection-start-column="92" selection-end-line="47" selection-end-column="92" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#3375#3376#0" expanded="true" />
+            <element signature="e#3417#3418#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/fabianbleile/fordigitalimmigrants/Adapter/RecyclerItemTouchHelper.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="212">
+          <caret line="23" column="91" lean-forward="false" selection-start-line="23" selection-start-column="91" selection-end-line="23" selection-end-column="91" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/fabianbleile/fordigitalimmigrants/Adapter/ContactListRecyclerViewAdapter.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="527">
+          <caret line="83" column="8" lean-forward="false" selection-start-line="83" selection-start-column="8" selection-end-line="83" selection-end-column="8" />
+          <folding>
+            <element signature="e#2089#2090#0" expanded="true" />
+            <element signature="e#2135#2136#0" expanded="true" />
           </folding>
         </state>
       </provider>

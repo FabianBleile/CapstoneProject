@@ -8,7 +8,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -44,6 +44,9 @@ public class ReceiveScreenFragment extends Fragment implements View.OnLongClickL
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        ItemTouchHelper.SimpleCallback itemTouchHelperCallback = new RecyclerItemTouchHelper(0, ItemTouchHelper.LEFT, this);
+        new ItemTouchHelper(itemTouchHelperCallback).attachToRecyclerView(recyclerView);
     }
 
     @Override
@@ -60,7 +63,11 @@ public class ReceiveScreenFragment extends Fragment implements View.OnLongClickL
                 new ContactListRecyclerViewAdapter(
                         new ArrayList<Contact>(), this);
 
-        recyclerView.setLayoutManager(new LinearLayoutManager(context));
+        LinearLayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
+        mLayoutManager.setReverseLayout(true);
+        mLayoutManager.setStackFromEnd(true);
+
+        recyclerView.setLayoutManager(mLayoutManager);
 
         recyclerView.setAdapter(recyclerViewAdapter);
 
@@ -70,6 +77,7 @@ public class ReceiveScreenFragment extends Fragment implements View.OnLongClickL
             @Override
             public void onChanged(@Nullable List<Contact> contacts) {
                 recyclerViewAdapter.notifyDataChange(contacts);
+                recyclerView.smoothScrollToPosition(recyclerViewAdapter.getItemCount() + 1);
             }
         });
 
@@ -85,7 +93,6 @@ public class ReceiveScreenFragment extends Fragment implements View.OnLongClickL
     }
 
     public static void onFileIncome(Contact contact){
-        Log.e("onFileIncome",  "     "+ contact);
         viewModel.addItem(contact);
     }
 }
