@@ -4,9 +4,11 @@ package com.fabianbleile.fordigitalimmigrants.data;
 import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.PrimaryKey;
+import android.os.Parcel;
+import android.os.Parcelable;
 
 @Entity
-public class Contact {
+public class Contact implements Parcelable{
     @PrimaryKey(autoGenerate = true)
     private Integer cid;
 
@@ -118,5 +120,50 @@ public class Contact {
     }
     public void setLocation(String location) {
         this.location = location;
+    }
+
+    // this is used to regenerate your object. All Parcelables must have a CREATOR that implements these two methods
+    public static final Parcelable.Creator<Contact> CREATOR = new Parcelable.Creator<Contact>() {
+        @Override
+        public Contact createFromParcel(Parcel parcel) {
+            return new Contact(parcel);
+        }
+
+        @Override
+        public Contact[] newArray(int size) {
+            return new Contact[size];
+        }
+    };
+
+    private Contact(Parcel parcel) {
+        this.name = parcel.readString();
+        this.phonenumber = parcel.readString();
+        this.email = parcel.readString();
+        this.birthday = parcel.readString();
+        this.hometown = parcel.readString();
+        this.instagram = parcel.readString();
+        this.facebook = parcel.readString();
+        this.snapchat = parcel.readString();
+        this.twitter = parcel.readString();
+        this.location = parcel.readString();
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeString(name);
+        parcel.writeString(phonenumber);
+        parcel.writeString(email);
+        parcel.writeString(birthday);
+        parcel.writeString(hometown);
+        parcel.writeString(instagram);
+        parcel.writeString(facebook);
+        parcel.writeString(snapchat);
+        parcel.writeString(twitter);
+        parcel.writeString(location);
     }
 }

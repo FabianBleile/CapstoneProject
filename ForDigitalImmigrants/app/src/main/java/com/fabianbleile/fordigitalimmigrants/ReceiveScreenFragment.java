@@ -5,18 +5,17 @@ import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.graphics.Color;
+import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.annotation.Nullable;
 import android.support.design.widget.CoordinatorLayout;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.fabianbleile.fordigitalimmigrants.Adapter.ContactListRecyclerViewAdapter;
@@ -26,7 +25,7 @@ import com.fabianbleile.fordigitalimmigrants.data.ContactListViewModel;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ReceiveScreenFragment extends Fragment implements View.OnLongClickListener {
+public class ReceiveScreenFragment extends Fragment implements View.OnLongClickListener, View.OnClickListener {
 
     public static ContactListViewModel viewModel;
     private ContactListRecyclerViewAdapter recyclerViewAdapter;
@@ -67,7 +66,7 @@ public class ReceiveScreenFragment extends Fragment implements View.OnLongClickL
 
         recyclerViewAdapter =
                 new ContactListRecyclerViewAdapter(
-                        new ArrayList<Contact>(), this);
+                        new ArrayList<Contact>(), this, this);
 
         LinearLayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
         mLayoutManager.setReverseLayout(true);
@@ -90,36 +89,23 @@ public class ReceiveScreenFragment extends Fragment implements View.OnLongClickL
         return view;
     }
 
-    @Override
-    public boolean onLongClick(View view) {
-        Toast.makeText(getContext(), "OnLongClick funktioniert", Toast.LENGTH_SHORT).show();
-
-        createSettingsAlertDialog((Contact) view.getTag());
-        return true;
-    }
-
     public static void onFileIncome(Contact contact){
         viewModel.addItem(contact);
     }
 
 
     // Undo functionality
-    public void onItemDeleted(RecyclerView.ViewHolder viewHolder, int direction, int position) {
-        if (viewHolder instanceof ContactListRecyclerViewAdapter.RecyclerViewHolder) {
-            // get the removed item name to display it in snack bar
-            List<Contact> contacts = viewModel.getContactList().getValue();
-            final Contact contact = contacts.get(viewHolder.getAdapterPosition());
-            String name = contact.getName();
-
+    public void onItemDeleted(Contact contact) {
             // backup of removed item for undo purpose
             final Contact deletedItem = contact;
 
             // remove the item from recycler view
             viewModel.deleteItem(contact);
 
+            /*
             // showing snack bar with Undo option
             Snackbar snackbar = Snackbar
-                    .make(coordinatorLayout, name + " removed from cart!", Snackbar.LENGTH_LONG);
+                    .make(coordinatorLayout, contact.getName() + " removed from cart!", Snackbar.LENGTH_LONG);
             snackbar.setAction("UNDO", new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -130,33 +116,41 @@ public class ReceiveScreenFragment extends Fragment implements View.OnLongClickL
             });
             snackbar.setActionTextColor(Color.YELLOW);
             snackbar.show();
-        }
+             */
     }
 
-    //creates AlertDialog for entering the information
-    private void createSettingsAlertDialog(final Contact contact){
-        final AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(getActivity());
-        LayoutInflater inflater = this.getLayoutInflater();
-        final View dialogView = inflater.inflate(R.layout.alert_dialog_receive, null);
-        dialogBuilder.setView(dialogView);
+    //creates AlertDialog for safe delete
+    public void createDeleteAlertDialog(final Contact contact) {
+        new AlertDialog.Builder(getContext())
+                .setTitle(getActivity().getResources().getString(R.string.message_delete_info) + " " + contact.getName())
+                .setCancelable(true)
+                .setPositiveButton(R.string.bt_cncl, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                })
+                .setNegativeButton(R.string.bt_ok, new DialogInterface.OnClickListener() {
 
-        TextView textView = (TextView) dialogView.findViewById(R.id.tv_delete_info);
-        textView.setText(getResources().getText(R.string.tv_delete_info));
+                    public void onClick(DialogInterface dialog, int which) {
+                        onItemDeleted(contact);
+                    }
+                }).show();
+    }
 
-        dialogBuilder.setCancelable(true);
-        dialogBuilder.setTitle(contact.getName());
-        dialogBuilder.setPositiveButton(R.string.bt_cncl, new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.dismiss();
-            }
-        });
-        dialogBuilder.setNegativeButton(R.string.bt_ok, new DialogInterface.OnClickListener() {
+    @Override
+    public boolean onLongClick(View view) {
+        Toast.makeText(getContext(), "OnLongClick funktioniert", Toast.LENGTH_SHORT).show();
 
-            public void onClick(DialogInterface dialog, int which) {
-                viewModel.deleteItem(contact);
-            }
-        });
-        AlertDialog ad = dialogBuilder.create();
-        ad.show();
+        createDeleteAlertDialog((Contact) view.getTag());
+        return true;
+    }
+
+    @Override
+    public void onClick(View view) {
+        Contact selectedContact = (Contact) view.getTag();
+        Intent intent = new Intent(getContext(), DetailActivity.class);
+        intent.putExtra("selectedContact", (Parcelable) selectedContact);
+
+        startActivity(intent);
     }
 }

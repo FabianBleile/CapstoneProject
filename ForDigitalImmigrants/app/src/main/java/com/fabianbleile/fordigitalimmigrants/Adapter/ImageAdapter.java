@@ -13,14 +13,20 @@ import android.widget.TextView;
 
 import com.fabianbleile.fordigitalimmigrants.MainActivity;
 import com.fabianbleile.fordigitalimmigrants.R;
-import com.fabianbleile.fordigitalimmigrants.SettingsScreenFragment;
-
-import static com.fabianbleile.fordigitalimmigrants.R.string.ctv_facebook;
+import com.fabianbleile.fordigitalimmigrants.data.Contact;
 
 public class ImageAdapter extends BaseAdapter {
     private Context mContext;
-    public ImageAdapter(Context c) {
+    private Contact mContact;
+    private boolean useContact;
+
+    public ImageAdapter(Context c, boolean useContact, Contact contact) {
+        Log.e("Test", contact + "");
         mContext = c;
+        this.useContact = useContact;
+        if(this.useContact){
+            mContact = contact;
+        }
     }
 
     @Override
@@ -41,6 +47,7 @@ public class ImageAdapter extends BaseAdapter {
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
     @Override
     public View getView(int position, View view, ViewGroup viewGroup) {
+
         int layoutIdForListItem = R.layout.grid_view_item;
         LayoutInflater inflater = LayoutInflater.from(mContext);
         View rootView = inflater.inflate(layoutIdForListItem,viewGroup,false);
@@ -65,8 +72,25 @@ public class ImageAdapter extends BaseAdapter {
             textViewCapitalIcon.setText(iconCapitalLetter);
         }
         textViewBubbleDescription.setText(iconDescription);
-        textViewBubbleContent.setText(MainActivity.getDefaults(iconDescription, mContext));
         rootView.setTag(iconDescription);
+
+        if(mContact != null){
+            String[] mFriendsIconContentLink = {
+                    mContact.getName(),
+                    mContact.getPhonenumber(),
+                    mContact.getEmail(),
+                    mContact.getBirthday(),
+                    mContact.getHometown(),
+                    mContact.getInstagram(),
+                    mContact.getFacebook(),
+                    mContact.getSnapchat(),
+                    mContact.getTwitter(),
+                    mContact.getLocation()
+            };
+            textViewBubbleContent.setText(mFriendsIconContentLink[position]);
+        } else {
+            textViewBubbleContent.setText(MainActivity.getDefaults(iconDescription, mContext));
+        }
 
         return rootView;
     }

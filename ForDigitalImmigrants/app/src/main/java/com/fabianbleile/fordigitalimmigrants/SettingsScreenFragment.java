@@ -11,6 +11,7 @@ import android.widget.EditText;
 import android.widget.GridView;
 
 import com.fabianbleile.fordigitalimmigrants.Adapter.ImageAdapter;
+import com.fabianbleile.fordigitalimmigrants.data.Contact;
 
 public class SettingsScreenFragment extends android.support.v4.app.Fragment {
 
@@ -38,7 +39,11 @@ public class SettingsScreenFragment extends android.support.v4.app.Fragment {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-         mImageAdapter = new ImageAdapter(getActivity());
+        mImageAdapter = new ImageAdapter(
+                getActivity(),
+                false,
+                new Contact(null,null,null,null, null,
+                        null,null,null,null,null));
 
         super.onCreate(savedInstanceState);
     }

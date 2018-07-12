@@ -109,6 +109,7 @@ public class SendScreenFragment extends android.support.v4.app.Fragment implemen
     public void onDetach() {
         super.onDetach();
         mCallback = null;
+        msgShown = false;
     }
 
     @Override

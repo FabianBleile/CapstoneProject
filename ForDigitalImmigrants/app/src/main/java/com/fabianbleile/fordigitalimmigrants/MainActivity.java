@@ -182,6 +182,7 @@ public class MainActivity extends FragmentActivity implements SendScreenFragment
         mPagerAdapter = new ScreenSlidePagerAdapter(getSupportFragmentManager());
         mPager.setAdapter(mPagerAdapter);
         mPager.addOnPageChangeListener(viewPageOnPageListener);
+        mPager.setCurrentItem(1);
 
         mIcons.add(R.string.ctv_name); mIcons.add(R.string.ctv_phone_number); mIcons.add(R.string.ctv_email);
         mIcons.add(R.string.ctv_birthday); mIcons.add(R.string.ctv_hometown); mIcons.add(R.string.ctv_instagram);

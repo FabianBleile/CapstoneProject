@@ -1,11 +1,12 @@
 package com.fabianbleile.fordigitalimmigrants.Adapter;
 
 import android.support.annotation.NonNull;
-import android.support.v7.widget.CardView;
+import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -18,11 +19,13 @@ public class ContactListRecyclerViewAdapter extends RecyclerView.Adapter<Contact
 
     private List<Contact> contactModelList;
     public static Contact mContact;
-    private View.OnLongClickListener longClickListener;
+    private View.OnLongClickListener onLongClickListener;
+    private View.OnClickListener onClickListener;
 
-    public ContactListRecyclerViewAdapter(List<Contact> contactModelList, View.OnLongClickListener longClickListener){
+    public ContactListRecyclerViewAdapter(List<Contact> contactModelList, View.OnLongClickListener onLongClickListener, View.OnClickListener onClickListener){
         this.contactModelList = contactModelList;
-        this.longClickListener = longClickListener;
+        this.onLongClickListener = onLongClickListener;
+        this.onClickListener = onClickListener;
     }
 
     @NonNull
@@ -36,9 +39,12 @@ public class ContactListRecyclerViewAdapter extends RecyclerView.Adapter<Contact
     public void onBindViewHolder(final RecyclerViewHolder holder, int position) {
 
         mContact = contactModelList.get(position);
-        holder.cardView.setOnLongClickListener(longClickListener);
+        holder.imageView.setImageResource(iconColors[position % 7]);
+        holder.constraintLayout.setOnClickListener(onClickListener);
+        holder.constraintLayout.setOnLongClickListener(onLongClickListener);
         holder.nameTextView.setText(mContact.getName());
-        holder.itemView.setTag(mContact);
+        holder.captitalLetterTextView.setText(mContact.getName().substring(0,1));
+        holder.imageView.setTag(mContact);
 
     }
 
@@ -63,7 +69,9 @@ public class ContactListRecyclerViewAdapter extends RecyclerView.Adapter<Contact
     public static class RecyclerViewHolder extends RecyclerView.ViewHolder {
 
         private TextView nameTextView;
-        private CardView cardView;
+        private ImageView imageView;
+        private TextView captitalLetterTextView;
+        private ConstraintLayout constraintLayout;
 
         public RelativeLayout viewBackground, viewForeground;
 
@@ -73,10 +81,22 @@ public class ContactListRecyclerViewAdapter extends RecyclerView.Adapter<Contact
             super(view);
 
             nameTextView = (TextView) view.findViewById(R.id.name);
-            cardView = (CardView) view.findViewById(R.id.cardView);
+            imageView = (ImageView) view.findViewById(R.id.iv_contact_item);
+            captitalLetterTextView = (TextView) view.findViewById(R.id.tv_capital_icon);
+            constraintLayout = (ConstraintLayout) view.findViewById(R.id.constraintLayout);
             view.setTag(mContact);
 
         }
 
     }
+
+    private static final int[] iconColors = {
+            R.drawable.ic_circle_primary,
+            R.drawable.ic_circle_500_1,
+            R.drawable.ic_circle_500_5,
+            R.drawable.ic_circle_500_6,
+            R.drawable.ic_circle_500_2,
+            R.drawable.ic_circle_500_3,
+            R.drawable.ic_circle_500_7
+    };
 }
