@@ -1,4 +1,4 @@
-package com.fabianbleile.fordigitalimmigrants;
+package com.fabianbleile.fordigitalimmigrants.Fragment;
 
 import android.app.AlertDialog;
 import android.arch.lifecycle.Observer;
@@ -19,6 +19,8 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.fabianbleile.fordigitalimmigrants.Adapter.ContactListRecyclerViewAdapter;
+import com.fabianbleile.fordigitalimmigrants.DetailActivity;
+import com.fabianbleile.fordigitalimmigrants.R;
 import com.fabianbleile.fordigitalimmigrants.data.Contact;
 import com.fabianbleile.fordigitalimmigrants.data.ContactListViewModel;
 
@@ -139,9 +141,11 @@ public class ReceiveScreenFragment extends Fragment implements View.OnLongClickL
 
     @Override
     public boolean onLongClick(View view) {
-        Toast.makeText(getContext(), "OnLongClick funktioniert", Toast.LENGTH_SHORT).show();
-
-        createDeleteAlertDialog((Contact) view.getTag());
+        if(view.getTag() instanceof Contact && view.getTag() != null){
+            createDeleteAlertDialog((Contact) view.getTag());
+        } else {
+            Toast.makeText(getContext(), "" + view.getTag(), Toast.LENGTH_SHORT).show();
+        }
         return true;
     }
 

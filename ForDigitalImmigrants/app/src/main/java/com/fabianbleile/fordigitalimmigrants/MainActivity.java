@@ -1,12 +1,18 @@
 package com.fabianbleile.fordigitalimmigrants;
 
+import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
+import android.graphics.Color;
+import android.location.Address;
+import android.location.Geocoder;
+import android.location.Location;
 import android.net.Uri;
 import android.nfc.NfcAdapter;
 import android.nfc.NfcEvent;
-import android.nfc.Tag;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -15,6 +21,9 @@ import android.preference.PreferenceManager;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
+import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.Snackbar;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
@@ -24,9 +33,16 @@ import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.MenuItem;
-import android.widget.Toast;
+import android.view.View;
 
+import com.fabianbleile.fordigitalimmigrants.Fragment.ReceiveScreenFragment;
+import com.fabianbleile.fordigitalimmigrants.Fragment.SendScreenFragment;
+import com.fabianbleile.fordigitalimmigrants.Fragment.SettingsScreenFragment;
 import com.fabianbleile.fordigitalimmigrants.data.Contact;
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.gson.Gson;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -38,27 +54,25 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
 
-public class MainActivity extends FragmentActivity implements SendScreenFragment.OnReadyButtonClickedInterface{
+public class MainActivity extends FragmentActivity implements SendScreenFragment.OnReadyButtonClickedInterface {
 
     public static final String mTagHandmade = "HANDMADETAG";
-    public static Context mContext;
-    public static ArrayList<Integer> mIcons = new ArrayList<Integer>();
+    public Context mContext;
+    public static ArrayList<Integer> mIcons = new ArrayList<>();
 
-    private Fragment sendFrag;
-    private Fragment settFrag;
-    private Fragment recFrag;
-
-    NfcAdapter mNfcAdapter;
-    // Flag to indicate that Android Beam is available
-    boolean mAndroidBeamAvailable = false;
-    public static Uri[] mFileUris = new Uri[2];
-    private FileUriCallback mFileUriCallback;
-    private ReaderModeCallback mReaderModeCallback;
+    //Google Service
+    private FusedLocationProviderClient mFusedLocationClient;
 
     private static final int NUM_PAGES = 3;
     private ViewPager mPager;
-    private PagerAdapter mPagerAdapter;
+    private CoordinatorLayout coordinatorLayout;
+
+    // NFC
+    NfcAdapter mNfcAdapter;
+    public static Uri[] mFileUris = new Uri[1];
 
     //-------------------------------------------------------------------------------------------------------------------
     //This part handles all the navigation through the menu and the fragments
@@ -92,15 +106,14 @@ public class MainActivity extends FragmentActivity implements SendScreenFragment
         @Override
         public void onPageSelected(int i) {
             int itemId = -1;
-            switch (i){
-                case 0 :
+            switch (i) {
+                case 0:
                     itemId = R.id.navigation_settings;
                     break;
-                case 1 :
+                case 1:
                     itemId = R.id.navigation_send;
                     break;
-                case 2 :
-                    test();
+                case 2:
                     itemId = R.id.navigation_receive;
                     break;
             }
@@ -113,6 +126,9 @@ public class MainActivity extends FragmentActivity implements SendScreenFragment
 
         }
     };
+
+    public MainActivity() {
+    }
 
     @Override
     public void onBackPressed() {
@@ -140,22 +156,19 @@ public class MainActivity extends FragmentActivity implements SendScreenFragment
           * sequence.
           */
     private class ScreenSlidePagerAdapter extends FragmentStatePagerAdapter {
-        public ScreenSlidePagerAdapter(FragmentManager fm) {
+        private ScreenSlidePagerAdapter(FragmentManager fm) {
             super(fm);
         }
 
         @Override
         public Fragment getItem(int position) {
-            switch (position){
-                case 0 :
-                    settFrag = new SettingsScreenFragment();
-                    return settFrag;
-                case 1 :
-                    sendFrag = new SendScreenFragment();
-                    return sendFrag;
-                case 2 :
-                    recFrag = new ReceiveScreenFragment();
-                    return recFrag;
+            switch (position) {
+                case 0:
+                    return new SettingsScreenFragment();
+                case 1:
+                    return new SendScreenFragment();
+                case 2:
+                    return new ReceiveScreenFragment();
                 default:
                     return null;
             }
@@ -175,30 +188,43 @@ public class MainActivity extends FragmentActivity implements SendScreenFragment
 
         mContext = getApplicationContext();
 
-        navigation = (BottomNavigationView) findViewById(R.id.navigation);
+        navigation = this.findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
-        mPager = (ViewPager) findViewById(R.id.viewPager);
-        mPagerAdapter = new ScreenSlidePagerAdapter(getSupportFragmentManager());
+        coordinatorLayout = findViewById(R.id.coordinatorLayout);
+
+        mPager = findViewById(R.id.viewPager);
+        PagerAdapter mPagerAdapter = new ScreenSlidePagerAdapter(getSupportFragmentManager());
         mPager.setAdapter(mPagerAdapter);
         mPager.addOnPageChangeListener(viewPageOnPageListener);
         mPager.setCurrentItem(1);
 
-        mIcons.add(R.string.ctv_name); mIcons.add(R.string.ctv_phone_number); mIcons.add(R.string.ctv_email);
-        mIcons.add(R.string.ctv_birthday); mIcons.add(R.string.ctv_hometown); mIcons.add(R.string.ctv_instagram);
-        mIcons.add(R.string.ctv_facebook); mIcons.add(R.string.ctv_snapchat); mIcons.add(R.string.ctv_twitter);
+        mIcons.add(R.string.ctv_name);
+        mIcons.add(R.string.ctv_phone_number);
+        mIcons.add(R.string.ctv_email);
+        mIcons.add(R.string.ctv_birthday);
+        mIcons.add(R.string.ctv_hometown);
+        mIcons.add(R.string.ctv_instagram);
+        mIcons.add(R.string.ctv_facebook);
+        mIcons.add(R.string.ctv_snapchat);
+        mIcons.add(R.string.ctv_twitter);
         mIcons.add(R.string.ctv_currentLocation);
 
-        if(isExternalStorageReadable() && isExternalStorageWritable()) {
+        mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
+        getLastKnownLocation();
+
+        if (isExternalStorageReadable() && isExternalStorageWritable()) {
             // Android Beam file transfer is available, continue
             mNfcAdapter = NfcAdapter.getDefaultAdapter(this);
 
-            if(mNfcAdapter != null){
-                if(mNfcAdapter.isEnabled()){
-                    mNfcAdapter.enableReaderMode(this, mReaderModeCallback, NfcAdapter.FLAG_READER_SKIP_NDEF_CHECK, null);
-                    mFileUriCallback = new FileUriCallback();
+            if (mNfcAdapter != null) {
+                if (mNfcAdapter.isEnabled()) {
+                    // setup push complete callback
+                    PushCompleteCallback mPushCompleteCallback = new PushCompleteCallback();
+                    mNfcAdapter.setOnNdefPushCompleteCallback(mPushCompleteCallback, this);
                     // Set the dynamic callback for URI requests.
-                    mNfcAdapter.setBeamPushUrisCallback(mFileUriCallback,this);
+                    FileUriCallback mFileUriCallback = new FileUriCallback();
+                    mNfcAdapter.setBeamPushUrisCallback(mFileUriCallback, this);
                 } else {
                     startActivity(new Intent(Settings.ACTION_NFC_SETTINGS));
                 }
@@ -206,8 +232,46 @@ public class MainActivity extends FragmentActivity implements SendScreenFragment
         }
     }
 
+    private void getLastKnownLocation() {
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            mFusedLocationClient.getLastLocation()
+                    .addOnSuccessListener(this, new OnSuccessListener<Location>() {
+                        @Override
+                        public void onSuccess(Location location) {
+                            // Got last known location. In some rare situations this can be null.
+                            if (location != null) {
+                                // Logic to handle location object
+                                Geocoder geocoder;
+                                geocoder = new Geocoder(getApplicationContext(), Locale.getDefault());
+                                String Location = "";
+
+                                try {
+                                    List<Address> addresses = geocoder.getFromLocation(location.getLatitude(), location.getLongitude(), 1); // Here 1 represent max location result to returned, by documents it recommended 1 to 5
+                                    String place = addresses.get(0).getFeatureName();
+                                    String city = addresses.get(0).getLocality();
+                                    String country = addresses.get(0).getCountryName();
+                                    Location = place + ", " + city + ", " + country;
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
+
+
+                                setDefaults("Location", Location, getApplicationContext());
+                            }
+                        }
+                    });
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+        }
+
+    }
+
     private class FileUriCallback implements NfcAdapter.CreateBeamUrisCallback {
-        public FileUriCallback() {
+        private FileUriCallback() {
 
         }
         @Override
@@ -216,13 +280,46 @@ public class MainActivity extends FragmentActivity implements SendScreenFragment
         }
     }
 
-    private class ReaderModeCallback implements NfcAdapter.ReaderCallback {
-        public ReaderModeCallback() {
-        }
-
+    private class PushCompleteCallback implements NfcAdapter.OnNdefPushCompleteCallback{
         @Override
-        public void onTagDiscovered(Tag tag) {
+        public void onNdefPushComplete(NfcEvent nfcEvent) {
+            // show Snackbar
+            showSnackbarForDefaultFile();
+            Thread thread = new Thread(){
+                @Override
+                public void run() {
+                    try {
+                        Thread.sleep(3500);
+                        // As I am using LENGTH_LONG in Snackbar
+                        File file = new File(mFileUris[0].getPath());
+                        if (!file.delete())
+                            if (file.exists()) {
+                                if (!file.getCanonicalFile().delete())
+                                    if (file.exists()) {
+                                        getApplicationContext().deleteFile(file.getName());
+                                    }
+                            }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            };
+            thread.start();
         }
+    }
+
+    private void showSnackbarForDefaultFile() {
+        Snackbar snackbar = Snackbar
+                .make(coordinatorLayout, getResources().getText(R.string.question_setDefaultFile), Snackbar.LENGTH_LONG);
+        snackbar.setAction(getResources().getText(R.string.yes), new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // yes is selected, store the file as default
+                setDefaults("defaultFilePath", mFileUris[0].getPath(), getApplicationContext());
+            }
+        });
+        snackbar.setActionTextColor(Color.MAGENTA);
+        snackbar.show();
     }
 
 
@@ -241,31 +338,21 @@ public class MainActivity extends FragmentActivity implements SendScreenFragment
         return preferences.getString(key, null);
     }
     //-------------------------------------------------------------------------------------------------------------------
-    //Method to check whether external media available and writable. This is adapted from
-    //   http://developer.android.com/guide/topics/data/data-storage.html#filesExternal */
-    /* Checks if external storage is available for read and write */
+    //Method to check whether external media available and writable.
     public boolean isExternalStorageWritable() {
         String state = Environment.getExternalStorageState();
-        if (Environment.MEDIA_MOUNTED.equals(state)) {
-            return true;
-        }
-        return false;
+        return Environment.MEDIA_MOUNTED.equals(state);
     }
 
     /* Checks if external storage is available to at least read */
     public boolean isExternalStorageReadable() {
         String state = Environment.getExternalStorageState();
-        if (Environment.MEDIA_MOUNTED.equals(state) ||
-                Environment.MEDIA_MOUNTED_READ_ONLY.equals(state)) {
-            return true;
-        }
-        return false;
+        return Environment.MEDIA_MOUNTED.equals(state) ||
+                Environment.MEDIA_MOUNTED_READ_ONLY.equals(state);
     }
 
     //-------------------------------------------------------------------------------------------------------------------
 
-    // A File object containing the path to the transferred files
-    private String mParentPath;
     // Incoming Intent
     private Intent mIntent;
 
@@ -281,18 +368,15 @@ public class MainActivity extends FragmentActivity implements SendScreenFragment
          * For ACTION_VIEW, the Activity is being asked to display data.
          * Get the URI.
          */
-        if (TextUtils.equals(action, Intent.ACTION_VIEW)) {
-            handleViewIntent();
-        }
+        //if (TextUtils.equals(action, Intent.ACTION_VIEW)) {
+        handleViewIntent();
+        //}
     }
 
     /*
-         * Called from onNewIntent() for a SINGLE_TOP Activity
-         * or onCreate() for a new Activity. For onNewIntent(),
-         * remember to call setIntent() to store the most
-         * current Intent
-         *
-         */
+     * handleViewIntent called from onNewIntent() for a SINGLE_TOP Activity or onCreate() for a new Activity.
+     * For onNewIntent(), remember to call setIntent() to store the most current Intent
+     */
     private void handleViewIntent() {
         //show receive Fragment (kind of a test to show the user it is going to be processed immiediately)
         mPager.setCurrentItem(2);
@@ -307,22 +391,26 @@ public class MainActivity extends FragmentActivity implements SendScreenFragment
             String fileName = beamUri.getPath();
             // Create a File object for this filename
             final File copiedFile = new File(fileName);
-            mParentPath = copiedFile.getParent();
+            String mParentPath = copiedFile.getParent();
             //start AsyncTask to read from file
-            new readFromFileAsyncTask().execute(fileName);
+            new readFromFileAsyncTask(mContext).execute(fileName);
         }
     }
 
-    private static class readFromFileAsyncTask extends AsyncTask<String, Void, String> {
+    private static class readFromFileAsyncTask extends AsyncTask<String, Context, String> {
 
-        readFromFileAsyncTask() {}
+        @SuppressLint("StaticFieldLeak")
+        Context context;
+        readFromFileAsyncTask(Context context) {
+            this.context = context;
+        }
 
         @Override
         protected String doInBackground(String... strings) {
             String ret = "";
 
             try {
-                InputStream inputStream = mContext.openFileInput(strings[0]);
+                InputStream inputStream = context.openFileInput(strings[0]);
 
                 if ( inputStream != null ) {
                     InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
@@ -349,11 +437,24 @@ public class MainActivity extends FragmentActivity implements SendScreenFragment
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
-            new buildContactAsyncTask().execute(s);
+            getContactFromJsoString(s);
         }
 
     }
 
+    private static void getContactFromJsoString(String s){
+        // gson deserialization
+        Gson gson = new Gson();
+        Contact contact = gson.fromJson(s, Contact.class);
+
+        // to Reiceive Fragment
+        ReceiveScreenFragment.onFileIncome(contact);
+    }
+
+
+
+
+    //---------------------------------------------------------------------------------------------------------------------------------
     // test (if notification cannot be opened)
     private void test(){
         String test = getResources().getString(R.string.test_jsonString);
@@ -364,7 +465,7 @@ public class MainActivity extends FragmentActivity implements SendScreenFragment
 
     private static class buildContactAsyncTask extends AsyncTask<String, Void, Contact> {
 
-        Contact contact; int cid; String name; String phonenumber; String email;
+        Contact contact; String name; String phonenumber; String email;
         String birthday; String hometown; String instagram; String facebook;
         String snapchat; String twitter; String location; JSONObject jsonObject;
 
@@ -378,8 +479,6 @@ public class MainActivity extends FragmentActivity implements SendScreenFragment
             } catch (JSONException e) { e.printStackTrace(); }
 
             if(jsonObject != null){
-                try { message = jsonObject.getString("Message"); } catch (NullPointerException e){message = "not given";} catch (JSONException e){}
-
                 try { name = jsonObject.getString("Name");} catch (NullPointerException e){name = "not given";} catch (JSONException e){}
                 try { phonenumber = jsonObject.getString("Phone Number"); } catch (NullPointerException e){phonenumber = "not given";} catch (JSONException e){}
                 try { email = jsonObject.getString("E-Mail"); } catch (NullPointerException e){email = "not given";} catch (JSONException e){}
@@ -401,7 +500,7 @@ public class MainActivity extends FragmentActivity implements SendScreenFragment
         protected void onPostExecute(Contact contact) {
             super.onPostExecute(contact);
             ReceiveScreenFragment.onFileIncome(contact);
-            Toast.makeText(mContext, "" + message, Toast.LENGTH_SHORT).show();
         }
     }
+    //---------------------------------------------------------------------------------------------------------------------------------
 }

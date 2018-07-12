@@ -13,8 +13,8 @@ public interface ContactDao {
     @Query("SELECT * FROM contact")
     LiveData<List<Contact>> getAll();
 
-    @Query("SELECT * FROM contact WHERE cid IN (:userIds)")
-    List<Contact> loadAllByIds(int[] userIds);
+    @Query("SELECT * FROM contact WHERE cid IN (:contactIds)")
+    List<Contact> loadAllByIds(int[] contactIds);
 
     @Query("SELECT * FROM contact WHERE name LIKE :first AND "
             + "phonenumber LIKE :last LIMIT 1")

@@ -1,32 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/constraintLayout"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:descendantFocusability="beforeDescendants"
-    android:focusableInTouchMode="true"
-    tools:context=".Fragment.SendScreenFragment">
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="8dp"
+        android:paddingEnd="32dp"
+        android:paddingLeft="32dp"
+        android:paddingRight="32dp"
+        android:paddingStart="32dp"
+        android:text="@string/configure" />
+
+    <EditText
+        android:id="@+id/appwidget_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="8dp"
+        android:paddingEnd="32dp"
+        android:paddingLeft="32dp"
+        android:paddingRight="32dp"
+        android:paddingStart="32dp"
+        android:paddingTop="8dp"
+        android:inputType="text" />
 
     <android.support.v4.widget.NestedScrollView
 
         android:id="@+id/nestedScrollView"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginBottom="16dp"
-        android:layout_marginEnd="48dp"
-        android:layout_marginLeft="48dp"
-        android:layout_marginRight="48dp"
-        android:layout_marginStart="48dp"
-        android:layout_marginTop="32dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:fadingEdgeLength="32dp"
         android:fillViewport="true"
-        android:requiresFadingEdge="vertical"
-        app:layout_constraintBottom_toTopOf="@+id/bt_ready"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:requiresFadingEdge="vertical">
 
         <LinearLayout
             android:id="@+id/linearLayout"
@@ -35,7 +43,7 @@
             android:orientation="vertical">
 
             <Switch
-                android:id="@+id/ctv_name"
+                android:id="@+id/ctv_name_widget"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingBottom="8dp"
@@ -48,7 +56,7 @@
                 android:textSize="18sp" />
 
             <Switch
-                android:id="@+id/ctv_phone_number"
+                android:id="@+id/ctv_phone_number_widget"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingBottom="8dp"
@@ -61,7 +69,7 @@
                 android:textSize="18sp" />
 
             <Switch
-                android:id="@+id/ctv_email"
+                android:id="@+id/ctv_email_widget"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingBottom="8dp"
@@ -74,7 +82,7 @@
                 android:textSize="18sp" />
 
             <Switch
-                android:id="@+id/ctv_birthday"
+                android:id="@+id/ctv_birthday_widget"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingBottom="8dp"
@@ -87,7 +95,7 @@
                 android:textSize="18sp" />
 
             <Switch
-                android:id="@+id/ctv_hometown"
+                android:id="@+id/ctv_hometown_widget"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingBottom="8dp"
@@ -100,7 +108,7 @@
                 android:textSize="18sp" />
 
             <Switch
-                android:id="@+id/ctv_instagram"
+                android:id="@+id/ctv_instagram_widget"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingBottom="8dp"
@@ -113,7 +121,7 @@
                 android:textSize="18sp" />
 
             <Switch
-                android:id="@+id/ctv_facebook"
+                android:id="@+id/ctv_facebook_widget"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingBottom="8dp"
@@ -126,7 +134,7 @@
                 android:textSize="18sp" />
 
             <Switch
-                android:id="@+id/ctv_snapchat"
+                android:id="@+id/ctv_snapchat_widget"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingBottom="8dp"
@@ -139,7 +147,7 @@
                 android:textSize="18sp" />
 
             <Switch
-                android:id="@+id/ctv_twitter"
+                android:id="@+id/ctv_twitter_widget"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingBottom="8dp"
@@ -152,7 +160,7 @@
                 android:textSize="18sp" />
 
             <Switch
-                android:id="@+id/ctv_currentLocation"
+                android:id="@+id/ctv_currentLocation_widget"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingBottom="8dp"
@@ -169,21 +177,11 @@
     </android.support.v4.widget.NestedScrollView>
 
     <Button
-        android:id="@+id/bt_ready"
-        android:layout_width="200dp"
-        android:layout_height="200dp"
-        android:layout_gravity="top|center_horizontal"
-        android:layout_marginBottom="32dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginLeft="48dp"
-        android:layout_marginRight="48dp"
-        android:layout_marginStart="8dp"
-        android:background="@drawable/ic_circle_primary"
-        android:text="@string/label_bt_ready"
-        android:textColor="@android:color/background_light"
-        android:textSize="30sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        android:id="@+id/add_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right|end"
+        android:layout_marginTop="8dp"
+        android:text="@string/add_widget" />
 
-</android.support.constraint.ConstraintLayout>
+</LinearLayout>

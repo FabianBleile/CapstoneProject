@@ -17,7 +17,7 @@
     <string name="ctv_facebook" translatable="false">Facebook</string>
     <string name="ctv_snapchat" translatable="false">Snapchat</string>
     <string name="ctv_hometown" translatable="false">Hometown</string>
-    <string name="ctv_currentLocation" translatable="false">Locaction</string>
+    <string name="ctv_currentLocation" translatable="false">Location</string>
     <string name="ctv_twitter" translatable="false">Twitter</string>
     <string name="ctv_message" translatable="false">Message</string>
 
@@ -38,7 +38,8 @@
     <string name="error_couldNotPutJsonObject">Could not put JsonObject</string>
 
     /*Toast Messages*/
-
+    <string name="yes">YES</string>
+    <string name="question_setDefaultFile">Set last file as default file for a even faster access from widget?</string>
 
     /*Test Json*/
     <string name="test_jsonString">
@@ -50,4 +51,7 @@
         }
     </string>
     <string name="title_activity_detail">DetailActivity</string>
+    <string name="appwidget_text">EXAMPLE</string>
+    <string name="configure">Configure</string>
+    <string name="add_widget">Add widget</string>
 </resources>

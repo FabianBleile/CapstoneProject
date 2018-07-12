@@ -44,7 +44,7 @@ public class ContactListRecyclerViewAdapter extends RecyclerView.Adapter<Contact
         holder.constraintLayout.setOnLongClickListener(onLongClickListener);
         holder.nameTextView.setText(mContact.getName());
         holder.captitalLetterTextView.setText(mContact.getName().substring(0,1));
-        holder.imageView.setTag(mContact);
+        holder.imageView.setTag(mContact.getCid());
 
     }
 
