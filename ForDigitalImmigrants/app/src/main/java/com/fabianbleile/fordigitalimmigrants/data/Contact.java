@@ -42,7 +42,8 @@ public class Contact implements Parcelable{
     @ColumnInfo(name = "location")
     private String location;
 
-    public Contact(String name, String phonenumber, String email, String birthday, String hometown, String instagram, String facebook, String snapchat, String twitter, String location) {
+    public Contact(String birthday, String email, String facebook, String hometown, String instagram,
+                   String location, String name, String phonenumber, String snapchat, String twitter) {
         this.name = name;
         this.phonenumber = phonenumber;
         this.email = email;

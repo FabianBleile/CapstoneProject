@@ -2,8 +2,6 @@ package com.fabianbleile.fordigitalimmigrants.Fragment;
 
 import android.content.Context;
 import android.net.Uri;
-import android.nfc.NfcAdapter;
-import android.nfc.NfcEvent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -12,23 +10,15 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.Switch;
-import android.widget.Toast;
 
 import com.fabianbleile.fordigitalimmigrants.MainActivity;
 import com.fabianbleile.fordigitalimmigrants.R;
 import com.fabianbleile.fordigitalimmigrants.data.Contact;
 import com.google.gson.Gson;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.Writer;
-import java.sql.Time;
 import java.util.ArrayList;
 
-public class SendScreenFragment extends android.support.v4.app.Fragment implements NfcAdapter.OnNdefPushCompleteCallback{
+public class SendScreenFragment extends android.support.v4.app.Fragment {
 
     public ArrayList<Uri> mFileUris = new ArrayList<Uri>();
 
@@ -53,13 +43,10 @@ public class SendScreenFragment extends android.support.v4.app.Fragment implemen
         @Override
         public void onClick(View view) {
             Contact contact = getShareContact();
-            File requestFile = createTxtFile(contact);
-            Uri fileUri = Uri.fromFile(requestFile);
-            Log.e(MainActivity.mTagHandmade, "File URI: "+ fileUri);
-            mFileUris.add(fileUri);
-            Uri[] fileUris = new Uri[mFileUris.size()];
-            mFileUris.toArray(fileUris);
-            mCallback.OnReadyButtonClicked(fileUris);
+            Gson gson = new Gson();
+            String contactString = gson.toJson(contact);
+
+            mCallback.OnReadyButtonClicked(contactString);
         }
     };
 
@@ -90,7 +77,7 @@ public class SendScreenFragment extends android.support.v4.app.Fragment implemen
     }
 
     public interface OnReadyButtonClickedInterface{
-        public void OnReadyButtonClicked(Uri[] fileUris);
+        public void OnReadyButtonClicked(String fileUris);
     }
 
     @Override
@@ -192,60 +179,9 @@ public class SendScreenFragment extends android.support.v4.app.Fragment implemen
             slocation = value;
         }
 
-        contact = new Contact(sname, sphonenumber, semail, sbirthday, shometown, sinstagram, sfacebook, ssnapchat, stwitter, slocation);
+        contact = new Contact(sbirthday, semail, sfacebook, shometown, sinstagram, slocation, sname, sphonenumber, ssnapchat, stwitter);
         Log.e("contact", contact.toString());
 
         return contact;
-    }
-
-    //create json file to send
-    public File createTxtFile(Contact contact) {
-        File pathToExternalStorage = getContext().getExternalFilesDir(null);
-        //to this path add a new directory path and create new App dir (InstroList) in /documents Dir
-        File appDirectory = new File(pathToExternalStorage.getAbsolutePath()  + "/sharedPersonalData");
-        // have the object build the directory structure, if needed.
-        appDirectory.mkdirs();
-        // create new file with path and name
-        File nfcDataFile = new File (appDirectory, makeNewFileName());
-        //make gson from contactObject
-        Gson gson = new Gson();
-        String jsonString = gson.toJson(contact);
-
-        try {
-            Writer output = new BufferedWriter(new FileWriter(nfcDataFile));
-            output.write(jsonString);
-            output.close();
-            Toast.makeText(getContext(), "Composition saved!", Toast.LENGTH_LONG).show();
-            Toast.makeText(getContext(), "" + nfcDataFile, Toast.LENGTH_LONG).show();
-
-
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-            Log.i(MainActivity.mTagHandmade, "******* File not found. Did you" +
-                    " add a WRITE_EXTERNAL_STORAGE permission to the   manifest?");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        nfcDataFile.setReadable(true, false);
-
-        return nfcDataFile;
-    }
-
-    private String makeNewFileName() {
-        // creates a new file name
-        String fileName;
-        Time time = new Time(System.currentTimeMillis());
-        fileName = time.toString();
-        //Replace (:) with (_)
-        fileName = fileName.replaceAll(":", "_");
-        fileName = "FastContactShare" + fileName + ".txt";
-
-        return fileName;
-    }
-
-    @Override
-    public void onNdefPushComplete(NfcEvent nfcEvent) {
-        //do something
     }
 }

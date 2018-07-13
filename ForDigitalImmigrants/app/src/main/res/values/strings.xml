@@ -41,15 +41,20 @@
     <string name="yes">YES</string>
     <string name="question_setDefaultFile">Set last file as default file for a even faster access from widget?</string>
 
-    /*Test Json*/
-    <string name="test_jsonString">
-        {
-        \"Name\":\"Beate Bleile\",
-        \"Phone Number\":\"neuestestestset Element... sollte jz ganz oben sein\",
-        \"E-Mail\":\"beate.bleile@web.de\",
-        \"Message\":\"Hey there I am using this app\"
-        }
-    </string>
+    /*Gson*//*Gson*/
+    <string name="id_name" translatable="false">name</string>
+    <string name="id_birthday" translatable="false">birthday</string>
+    <string name="id_phone_number" translatable="false">phonenumber</string>
+    <string name="id_email" translatable="false">email</string>
+    <string name="id_instagram" translatable="false">instagram</string>
+    <string name="id_facebook" translatable="false">facebook</string>
+    <string name="id_snapchat" translatable="false">snapchat</string>
+    <string name="id_hometown" translatable="false">hometown</string>
+    <string name="id_currentLocation" translatable="false">location</string>
+    <string name="id_twitter" translatable="false">twitter</string>
+
+
+
     <string name="title_activity_detail">DetailActivity</string>
     <string name="appwidget_text">EXAMPLE</string>
     <string name="configure">Configure</string>
