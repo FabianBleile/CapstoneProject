@@ -100,25 +100,8 @@ public class ReceiveScreenFragment extends Fragment implements View.OnLongClickL
     public void onItemDeleted(Contact contact) {
             // backup of removed item for undo purpose
             final Contact deletedItem = contact;
-
             // remove the item from recycler view
             viewModel.deleteItem(contact);
-
-            /*
-            // showing snack bar with Undo option
-            Snackbar snackbar = Snackbar
-                    .make(coordinatorLayout, contact.getName() + " removed from cart!", Snackbar.LENGTH_LONG);
-            snackbar.setAction("UNDO", new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-
-                    // undo is selected, restore the deleted item
-                    viewModel.addItem(deletedItem);
-                }
-            });
-            snackbar.setActionTextColor(Color.YELLOW);
-            snackbar.show();
-             */
     }
 
     //creates AlertDialog for safe delete
@@ -152,8 +135,12 @@ public class ReceiveScreenFragment extends Fragment implements View.OnLongClickL
     @Override
     public void onClick(View view) {
         Contact selectedContact = (Contact) view.getTag();
+
+        Bundle b = new Bundle();
+        b.putParcelable("selectedContact", (Parcelable) selectedContact);
         Intent intent = new Intent(getContext(), DetailActivity.class);
-        intent.putExtra("selectedContact", (Parcelable) selectedContact);
+        intent.putExtra("bundle",b);
+        intent.setAction(Intent.ACTION_ATTACH_DATA);
 
         startActivity(intent);
     }

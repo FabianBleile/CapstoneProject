@@ -154,45 +154,46 @@ public class SendScreenFragment extends android.support.v4.app.Fragment implemen
             String key = name.getText().toString();
             String value = MainActivity.getDefaults(key, getActivity());
             sname = value;
-        } else if (phonenumber.isChecked()){
+        } if (phonenumber.isChecked()){
             String key = phonenumber.getText().toString();
             String value = MainActivity.getDefaults(key, getActivity());
             sphonenumber = value;
-        } else if (email.isChecked()){
+        } if (email.isChecked()){
             String key = email.getText().toString();
             String value = MainActivity.getDefaults(key, getActivity());
             semail = value;
-        } else if (birthday.isChecked()){
+        } if (birthday.isChecked()){
             String key = birthday.getText().toString();
             String value = MainActivity.getDefaults(key, getActivity());
             sbirthday = value;
-        } else if (hometown.isChecked()){
+        } if (hometown.isChecked()){
             String key = hometown.getText().toString();
             String value = MainActivity.getDefaults(key, getActivity());
             shometown = value;
-        } else if (instagram.isChecked()){
+        } if (instagram.isChecked()){
             String key = instagram.getText().toString();
             String value = MainActivity.getDefaults(key, getActivity());
             sinstagram = value;
-        } else if (facebook.isChecked()){
+        } if (facebook.isChecked()){
             String key = facebook.getText().toString();
             String value = MainActivity.getDefaults(key, getActivity());
             sfacebook = value;
-        } else if (snapchat.isChecked()){
+        } if (snapchat.isChecked()){
             String key = snapchat.getText().toString();
             String value = MainActivity.getDefaults(key, getActivity());
             ssnapchat = value;
-        } else if (twitter.isChecked()){
+        } if (twitter.isChecked()){
             String key = twitter.getText().toString();
             String value = MainActivity.getDefaults(key, getActivity());
             stwitter = value;
-        } else if (location.isChecked()){
+        } if (location.isChecked()){
             String key = location.getText().toString();
             String value = MainActivity.getDefaults(key, getActivity());
             slocation = value;
         }
 
         contact = new Contact(sname, sphonenumber, semail, sbirthday, shometown, sinstagram, sfacebook, ssnapchat, stwitter, slocation);
+        Log.e("contact", contact.toString());
 
         return contact;
     }

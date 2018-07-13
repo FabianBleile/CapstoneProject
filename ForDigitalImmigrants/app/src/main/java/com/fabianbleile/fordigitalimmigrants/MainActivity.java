@@ -1,11 +1,11 @@
 package com.fabianbleile.fordigitalimmigrants;
 
 import android.Manifest;
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
 import android.graphics.Color;
 import android.location.Address;
 import android.location.Geocoder;
@@ -18,6 +18,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.preference.PreferenceManager;
+import android.provider.MediaStore;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -49,10 +50,12 @@ import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -145,7 +148,7 @@ public class MainActivity extends FragmentActivity implements SendScreenFragment
     @Override
     public void OnReadyButtonClicked(Uri[] fileUris) {
         mFileUris = fileUris;
-        mNfcAdapter.disableReaderMode(this);
+        handleViewIntent(mFileUris[0]);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             mNfcAdapter.invokeBeam(this);
         }
@@ -220,11 +223,13 @@ public class MainActivity extends FragmentActivity implements SendScreenFragment
             if (mNfcAdapter != null) {
                 if (mNfcAdapter.isEnabled()) {
                     // setup push complete callback
-                    PushCompleteCallback mPushCompleteCallback = new PushCompleteCallback();
+                    /*PushCompleteCallback mPushCompleteCallback = new PushCompleteCallback();
                     mNfcAdapter.setOnNdefPushCompleteCallback(mPushCompleteCallback, this);
                     // Set the dynamic callback for URI requests.
                     FileUriCallback mFileUriCallback = new FileUriCallback();
-                    mNfcAdapter.setBeamPushUrisCallback(mFileUriCallback, this);
+                    mNfcAdapter.setBeamPushUrisCallback(mFileUriCallback, this);*/
+
+                    // NdefMessage Test
                 } else {
                     startActivity(new Intent(Settings.ACTION_NFC_SETTINGS));
                 }
@@ -355,100 +360,156 @@ public class MainActivity extends FragmentActivity implements SendScreenFragment
 
     // Incoming Intent
     private Intent mIntent;
+    private File mCopiedFile = null;
 
     @Override
     protected void onNewIntent(Intent intent) {
-        super.onNewIntent(intent);
-        // Get the Intent action
-        mIntent = getIntent();
-        setIntent(mIntent);
-        String action = mIntent.getAction();
+        super.onNewIntent(intent);;
+        setIntent(intent);
+    }
 
-        /*
-         * For ACTION_VIEW, the Activity is being asked to display data.
-         * Get the URI.
-         */
-        //if (TextUtils.equals(action, Intent.ACTION_VIEW)) {
-        handleViewIntent();
-        //}
+    @Override
+    protected void onResume() {
+        super.onResume();
+        // Get the Intent action
+        Intent intent = getIntent();
+        if(TextUtils.equals(intent.getAction(), "com.fabianbleile.fordigitalimmigrants.LAUNCH")
+                || TextUtils.equals(intent.getAction(), Intent.ACTION_VIEW)){
+            mIntent = intent;
+
+            // Get the URI from the Intent
+            Uri beamUri = mIntent.getData();
+            Log.e("beamUri", beamUri +"");
+            handleViewIntent(beamUri);
+        }
     }
 
     /*
      * handleViewIntent called from onNewIntent() for a SINGLE_TOP Activity or onCreate() for a new Activity.
      * For onNewIntent(), remember to call setIntent() to store the most current Intent
      */
-    private void handleViewIntent() {
+    private void handleViewIntent(Uri beamUri) {
         //show receive Fragment (kind of a test to show the user it is going to be processed immiediately)
         mPager.setCurrentItem(2);
 
-        // Get the URI from the Intent
-        Uri beamUri = mIntent.getData();
-            /*
-             * Test for the type of URI, by getting its scheme value
-             */
+        boolean isContentUri = true;
+
         if (TextUtils.equals(beamUri.getScheme(), "file")) {
-            // Get the path part of the URI
-            String fileName = beamUri.getPath();
-            // Create a File object for this filename
-            final File copiedFile = new File(fileName);
-            String mParentPath = copiedFile.getParent();
-            //start AsyncTask to read from file
-            new readFromFileAsyncTask(mContext).execute(fileName);
-        }
-    }
-
-    private static class readFromFileAsyncTask extends AsyncTask<String, Context, String> {
-
-        @SuppressLint("StaticFieldLeak")
-        Context context;
-        readFromFileAsyncTask(Context context) {
-            this.context = context;
+            mCopiedFile = handleFileUri(beamUri);
+            isContentUri = false;
+        } else if (TextUtils.equals(beamUri.getScheme(), "content")) {
+            mCopiedFile = handleContentUri(beamUri);
+            isContentUri = true;
         }
 
-        @Override
-        protected String doInBackground(String... strings) {
-            String ret = "";
+        // setup an input stream for the file to retrieve the data
+        String jsonStringIntentData = getJsonStringFromStorage(mCopiedFile, isContentUri);
+        Log.e("jsonStringIntentData", jsonStringIntentData +"");
 
-            try {
-                InputStream inputStream = context.openFileInput(strings[0]);
-
-                if ( inputStream != null ) {
-                    InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
-                    BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
-                    String receiveString = "";
-                    StringBuilder stringBuilder = new StringBuilder();
-
-                    while ( (receiveString = bufferedReader.readLine()) != null ) {
-                        stringBuilder.append(receiveString);
-                    }
-
-                    inputStream.close();
-                    ret = stringBuilder.toString();
-                }
-            } catch (FileNotFoundException e) {
-                Log.e("readFromFileAsyncTask", "File not found: " + e.toString());
-            } catch (IOException e) {
-                Log.e("readFromFileAsyncTask", "Can not read file: " + e.toString());
-            }
-
-            return ret;
-        }
-
-        @Override
-        protected void onPostExecute(String s) {
-            super.onPostExecute(s);
-            getContactFromJsoString(s);
-        }
-
-    }
-
-    private static void getContactFromJsoString(String s){
-        // gson deserialization
-        Gson gson = new Gson();
-        Contact contact = gson.fromJson(s, Contact.class);
+        // get Contact from the Json String with Gson
+        Contact contact = getContactFromJsonString(jsonStringIntentData);
+        Log.e("Contact", contact +"");
 
         // to Reiceive Fragment
         ReceiveScreenFragment.onFileIncome(contact);
+    }
+
+    private File handleFileUri(Uri beamUri) {
+        // Get the path part of the URI
+        String fileName = beamUri.getPath();
+        // Create a File object for this filename
+        return new File(fileName);
+    }
+
+    public File handleContentUri(Uri beamUri) {
+        // Position of the filename in the query Cursor
+        int filenameIndex;
+        // File object for the filename
+        File copiedFile;
+        // The filename stored in MediaStore
+        String fileName;
+        // Test the authority of the URI
+        if (!TextUtils.equals(beamUri.getAuthority(), MediaStore.AUTHORITY)) {
+            /*
+             * Handle content URIs for other content providers
+             */
+            return null;
+            // For a MediaStore content URI
+        } else {
+            // Get the column that contains the file name
+            String[] projection = { MediaStore.MediaColumns.DATA };
+            Cursor pathCursor =
+                    getContentResolver().query(beamUri, projection,
+                            null, null, null);
+            // Check for a valid cursor
+            if (pathCursor != null &&
+                    pathCursor.moveToFirst()) {
+                // Get the column index in the Cursor
+                filenameIndex = pathCursor.getColumnIndex(
+                        MediaStore.MediaColumns.DATA);
+                // Get the full file name including path
+                fileName = pathCursor.getString(filenameIndex);
+                // Create a File object for the filename
+                copiedFile = new File(fileName);
+                copiedFile = new File(copiedFile.getPath());
+                // Return the file
+                return copiedFile;
+            } else {
+                // The query didn't work; return null
+                return null;
+            }
+        }
+    }
+
+
+
+    private String getJsonStringFromStorage(File copiedFile, boolean isContentUri) {
+        String ret = "";
+        InputStream inputStream = null;
+        FileInputStream fileInputStream = null;
+        InputStreamReader inputStreamReader;
+
+        try {
+            if(isContentUri){
+                Uri uri = android.net.Uri.parse(new java.net.URI(copiedFile.toURI().toString()).toString());
+                inputStream = getContentResolver().openInputStream(uri);
+                inputStreamReader = new InputStreamReader(inputStream);
+            } else {
+                //InputStream inputStream = mContext.openFileInput(copiedFile.getName());
+                fileInputStream = new FileInputStream(copiedFile);
+                inputStreamReader = new InputStreamReader(fileInputStream);
+            }
+
+
+            BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
+            String receiveString = "";
+            StringBuilder stringBuilder = new StringBuilder();
+
+            while ( (receiveString = bufferedReader.readLine()) != null ) {
+                stringBuilder.append(receiveString);
+            }
+
+            if(isContentUri){
+                inputStream.close();
+            } else {
+                fileInputStream.close();
+            }
+            ret = stringBuilder.toString();
+        } catch (FileNotFoundException e) {
+            Log.e("readFromFileAsyncTask", "File not found: " + e.toString() + ", " + copiedFile.toURI());
+        } catch (IOException e) {
+            Log.e("readFromFileAsyncTask", "Can not read file: " + e.toString());
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
+        }
+
+        return ret;
+    }
+
+    private Contact getContactFromJsonString(String jsonStringIntentData) {
+        // gson deserialization
+        Gson gson = new Gson();
+        return gson.fromJson(jsonStringIntentData, Contact.class);
     }
 
 

@@ -39,12 +39,12 @@ public class ContactListRecyclerViewAdapter extends RecyclerView.Adapter<Contact
     public void onBindViewHolder(final RecyclerViewHolder holder, int position) {
 
         mContact = contactModelList.get(position);
-        holder.imageView.setImageResource(iconColors[position % 7]);
+        holder.imageView.setImageResource(iconColors[mContact.getCid() % 7]);
         holder.constraintLayout.setOnClickListener(onClickListener);
         holder.constraintLayout.setOnLongClickListener(onLongClickListener);
+        holder.constraintLayout.setTag(mContact);
         holder.nameTextView.setText(mContact.getName());
         holder.captitalLetterTextView.setText(mContact.getName().substring(0,1));
-        holder.imageView.setTag(mContact.getCid());
 
     }
 
@@ -84,7 +84,6 @@ public class ContactListRecyclerViewAdapter extends RecyclerView.Adapter<Contact
             imageView = (ImageView) view.findViewById(R.id.iv_contact_item);
             captitalLetterTextView = (TextView) view.findViewById(R.id.tv_capital_icon);
             constraintLayout = (ConstraintLayout) view.findViewById(R.id.constraintLayout);
-            view.setTag(mContact);
 
         }
 
