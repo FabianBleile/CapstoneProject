@@ -33,6 +33,7 @@ import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import com.fabianbleile.fordigitalimmigrants.Fragment.ReceiveScreenFragment;
 import com.fabianbleile.fordigitalimmigrants.Fragment.SendScreenFragment;
@@ -52,7 +53,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-public class MainActivity extends FragmentActivity implements SendScreenFragment.OnReadyButtonClickedInterface, NfcAdapter.CreateNdefMessageCallback {
+public class MainActivity extends FragmentActivity implements SendScreenFragment.OnReadyButtonClickedInterface, NfcAdapter.CreateNdefMessageCallback, NfcAdapter.OnNdefPushCompleteCallback {
 
     public static final String mTagHandmade = "HANDMADETAG";
     public Context mContext;
@@ -155,20 +156,11 @@ public class MainActivity extends FragmentActivity implements SendScreenFragment
             if (mNfcAdapter != null) {
                 if (mNfcAdapter.isEnabled()) {
                     mNfcAdapter.setNdefPushMessageCallback(this, this);
-                    // NdefMessage Test
+                    mNfcAdapter.setOnNdefPushCompleteCallback(this, this);
                 } else {
                     startActivity(new Intent(Settings.ACTION_NFC_SETTINGS));
                 }
             }
-        }
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        // Check to see that the Activity started due to an Android Beam
-        if (NfcAdapter.ACTION_NDEF_DISCOVERED.equals(getIntent().getAction())) {
-            processIntent(getIntent());
         }
     }
 
@@ -178,10 +170,30 @@ public class MainActivity extends FragmentActivity implements SendScreenFragment
         setIntent(intent);
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        // Check to see that the Activity started due to an Android Beam
+        if (NfcAdapter.ACTION_NDEF_DISCOVERED.equals(getIntent().getAction())) {
+            processNfcIntent(getIntent());
+        } else if (Intent.ACTION_SEND.equals(getIntent().getAction())){
+            processWidgetIntent();
+        }
+    }
+
+    private void processWidgetIntent() {
+        mSendNdefMessage = getDefaults("defaultContactString", this);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            mNfcAdapter.invokeBeam(this);
+        } else {
+            Toast.makeText(mContext, "", Toast.LENGTH_SHORT).show();
+        }
+    }
+
     /**
      * Parses the NDEF Message from the intent and prints to the TextView
      */
-    void processIntent(Intent intent) {
+    void processNfcIntent(Intent intent) {
         Parcelable[] rawMsgs = intent.getParcelableArrayExtra(
                 NfcAdapter.EXTRA_NDEF_MESSAGES);
         // only one message sent during the beam
@@ -277,6 +289,10 @@ public class MainActivity extends FragmentActivity implements SendScreenFragment
     }
 
     //-------------------------------------------------------------------------------------------------------------------
+    @Override
+    public void onNdefPushComplete(NfcEvent nfcEvent) {
+        showSnackbarForDefaultFile();
+    }
 
     private void showSnackbarForDefaultFile() {
         Snackbar snackbar = Snackbar
@@ -285,7 +301,7 @@ public class MainActivity extends FragmentActivity implements SendScreenFragment
             @Override
             public void onClick(View view) {
                 // yes is selected, store the file as default
-                setDefaults("defaultFilePath", "-----------------------------------------------------------------", getApplicationContext());
+                setDefaults("defaultContactString", mSendNdefMessage, getApplicationContext());
             }
         });
         snackbar.setActionTextColor(Color.MAGENTA);

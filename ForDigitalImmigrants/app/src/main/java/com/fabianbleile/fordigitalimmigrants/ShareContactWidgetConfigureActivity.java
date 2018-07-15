@@ -24,6 +24,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Writer;
 import java.sql.Time;
+import java.util.ArrayList;
 import java.util.List;
 
 import static com.fabianbleile.fordigitalimmigrants.R.id.ctv_birthday_widget;
@@ -46,8 +47,7 @@ public class ShareContactWidgetConfigureActivity extends Activity {
     private static final String PREF_PREFIX_KEY = "appwidget_";
     int mAppWidgetId = AppWidgetManager.INVALID_APPWIDGET_ID;
     EditText mAppWidgetText;
-    Switch name, phonenumber, email, birthday, hometown, instagram, facebook, snapchat, twitter, location;
-    List<Switch> switches;
+    ArrayList<Switch> switches = new ArrayList<>();
     View.OnClickListener mOnClickListener = new View.OnClickListener() {
         public void onClick(View v) {
             final Context context = ShareContactWidgetConfigureActivity.this;
@@ -58,10 +58,10 @@ public class ShareContactWidgetConfigureActivity extends Activity {
 
             //When the button is clicked create a file and save it. return the uri
             Contact contact = getShareContact();
-            File requestFile = createTxtFile(contact);
-            Uri fileUri = Uri.fromFile(requestFile);
-            String fileUriString = fileUri.toString();
-            MainActivity.setDefaults("fileUriString", fileUriString, getBaseContext());
+            Gson gson = new Gson();
+            String contactString = gson.toJson(contact);
+
+            MainActivity.setDefaults("defaultContactString", contactString, getBaseContext());
 
             // It is the responsibility of the configuration activity to update the app widget
             AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
@@ -117,16 +117,16 @@ public class ShareContactWidgetConfigureActivity extends Activity {
         mAppWidgetText = findViewById(R.id.appwidget_text);
         findViewById(R.id.add_button).setOnClickListener(mOnClickListener);
 
-        name = findViewById(ctv_name_widget); switches.add(name);
-        phonenumber = findViewById(ctv_phone_number_widget); switches.add(phonenumber);
-        email = findViewById(ctv_email_widget); switches.add(email);
-        birthday = findViewById(ctv_birthday_widget); switches.add(birthday);
-        hometown = findViewById(ctv_hometown_widget); switches.add(hometown);
-        instagram = findViewById(ctv_instagram_widget); switches.add(instagram);
-        facebook = findViewById(ctv_facebook_widget); switches.add(facebook);
-        snapchat = findViewById(ctv_snapchat_widget); switches.add(snapchat);
-        twitter = findViewById(ctv_twitter_widget); switches.add(twitter);
-        location = findViewById(ctv_currentLocation_widget); switches.add(location);
+        Switch name = findViewById(ctv_name_widget); switches.add(name);
+        Switch phonenumber = findViewById(ctv_phone_number_widget); switches.add(phonenumber);
+        Switch email = findViewById(ctv_email_widget); switches.add(email);
+        Switch birthday = findViewById(ctv_birthday_widget); switches.add(birthday);
+        Switch hometown = findViewById(ctv_hometown_widget); switches.add(hometown);
+        Switch instagram = findViewById(ctv_instagram_widget); switches.add(instagram);
+        Switch facebook = findViewById(ctv_facebook_widget); switches.add(facebook);
+        Switch snapchat = findViewById(ctv_snapchat_widget); switches.add(snapchat);
+        Switch twitter = findViewById(ctv_twitter_widget); switches.add(twitter);
+        Switch location = findViewById(ctv_currentLocation_widget); switches.add(location);
 
         // Find the widget id from the intent.
         Intent intent = getIntent();
@@ -151,86 +151,40 @@ public class ShareContactWidgetConfigureActivity extends Activity {
         String shometown="";String sinstagram="";String sfacebook="";String ssnapchat="";
         String stwitter="";String slocation="";
 
-        if(name.isChecked()){
-            String key = name.getText().toString();
+        if(switches.get(0).isChecked()){
+            String key = switches.get(0).getText().toString();
             sname = MainActivity.getDefaults(key, getApplicationContext());
-        } else if (phonenumber.isChecked()){
-            String key = phonenumber.getText().toString();
+        } else if (switches.get(1).isChecked()){
+            String key = switches.get(1).getText().toString();
             sphonenumber = MainActivity.getDefaults(key, getApplicationContext());
-        } else if (email.isChecked()){
-            String key = email.getText().toString();
+        } else if (switches.get(2).isChecked()){
+            String key = switches.get(2).getText().toString();
             semail = MainActivity.getDefaults(key, getApplicationContext());
-        } else if (birthday.isChecked()){
-            String key = birthday.getText().toString();
+        } else if (switches.get(3).isChecked()){
+            String key = switches.get(3).getText().toString();
             sbirthday = MainActivity.getDefaults(key, getApplicationContext());
-        } else if (hometown.isChecked()){
-            String key = hometown.getText().toString();
+        } else if (switches.get(4).isChecked()){
+            String key = switches.get(4).getText().toString();
             shometown = MainActivity.getDefaults(key, getApplicationContext());
-        } else if (instagram.isChecked()){
-            String key = instagram.getText().toString();
+        } else if (switches.get(5).isChecked()){
+            String key = switches.get(5).getText().toString();
             sinstagram = MainActivity.getDefaults(key, getApplicationContext());
-        } else if (facebook.isChecked()){
-            String key = facebook.getText().toString();
+        } else if (switches.get(6).isChecked()){
+            String key = switches.get(6).getText().toString();
             sfacebook = MainActivity.getDefaults(key, getApplicationContext());
-        } else if (snapchat.isChecked()){
-            String key = snapchat.getText().toString();
+        } else if (switches.get(7).isChecked()){
+            String key = switches.get(7).getText().toString();
             ssnapchat = MainActivity.getDefaults(key, getApplicationContext());
-        } else if (twitter.isChecked()){
-            String key = twitter.getText().toString();
+        } else if (switches.get(8).isChecked()){
+            String key = switches.get(8).getText().toString();
             stwitter = MainActivity.getDefaults(key, getApplicationContext());
-        } else if (location.isChecked()){
-            String key = location.getText().toString();
+        } else if (switches.get(9).isChecked()){
+            String key = switches.get(9).getText().toString();
             slocation = MainActivity.getDefaults(key, getApplicationContext());
         }
 
         contact = new Contact(sname, sphonenumber, semail, sbirthday, shometown, sinstagram, sfacebook, ssnapchat, stwitter, slocation);
 
         return contact;
-    }
-
-    //create json file to send
-    public File createTxtFile(Contact contact) {
-        File pathToExternalStorage = getBaseContext().getExternalFilesDir(null);
-        //to this path add a new directory path and create new App dir (InstroList) in /documents Dir
-        File appDirectory = new File(pathToExternalStorage.getAbsolutePath()  + "/sharedPersonalData");
-        // have the object build the directory structure, if needed.
-        appDirectory.mkdirs();
-        // create new file with path and name
-        File nfcDataFile = new File (appDirectory, makeNewFileName());
-        //make gson from contactObject
-        Gson gson = new Gson();
-        String jsonString = gson.toJson(contact);
-
-        try {
-            Writer output = new BufferedWriter(new FileWriter(nfcDataFile));
-            output.write(jsonString);
-            output.close();
-            Toast.makeText(getBaseContext(), "Composition saved!", Toast.LENGTH_LONG).show();
-            Toast.makeText(getBaseContext(), "" + nfcDataFile, Toast.LENGTH_LONG).show();
-
-
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-            Log.i(MainActivity.mTagHandmade, "******* File not found. Did you" +
-                    " add a WRITE_EXTERNAL_STORAGE permission to the   manifest?");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        nfcDataFile.setReadable(true, false);
-
-        return nfcDataFile;
-    }
-
-    private String makeNewFileName() {
-        // creates a new file name
-        String fileName;
-        Time time = new Time(System.currentTimeMillis());
-        fileName = time.toString();
-        //Replace (:) with (_)
-        fileName = fileName.replaceAll(":", "_");
-        fileName = "FastContactShare" + fileName + ".txt";
-
-        return fileName;
     }
 }
