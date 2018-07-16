@@ -58,9 +58,7 @@ public class MainActivity extends FragmentActivity implements SendScreenFragment
     public static final String mTagHandmade = "HANDMADETAG";
     public Context mContext;
     public static ArrayList<Integer> mIcons = new ArrayList<>();
-
-    //Google Service
-    private FusedLocationProviderClient mFusedLocationClient;
+    private static final int REQUEST_ACCESS_CORASE_LOCATION = 1;
 
     private static final int NUM_PAGES = 3;
     private ViewPager mPager;
@@ -86,9 +84,8 @@ public class MainActivity extends FragmentActivity implements SendScreenFragment
     public NdefMessage createNdefMessage(NfcEvent nfcEvent) {
         NdefRecord ndefRecord = createTextRecord(mSendNdefMessage);
 
-        NdefMessage msg = new NdefMessage(
+        return new NdefMessage(
                 new NdefRecord[] { ndefRecord });
-        return msg;
     }
 
     private NdefRecord createTextRecord (String message)
@@ -146,9 +143,11 @@ public class MainActivity extends FragmentActivity implements SendScreenFragment
         mIcons.add(R.string.ctv_twitter);
         mIcons.add(R.string.ctv_currentLocation);
 
-        mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
         getLastKnownLocation();
+        setupNfcAdapter();
+    }
 
+    private void setupNfcAdapter(){
         if (isExternalStorageReadable() && isExternalStorageWritable()) {
             // Android Beam file transfer is available, continue
             mNfcAdapter = NfcAdapter.getDefaultAdapter(this);
@@ -177,17 +176,13 @@ public class MainActivity extends FragmentActivity implements SendScreenFragment
         if (NfcAdapter.ACTION_NDEF_DISCOVERED.equals(getIntent().getAction())) {
             processNfcIntent(getIntent());
         } else if (Intent.ACTION_SEND.equals(getIntent().getAction())){
-            processWidgetIntent();
+            //processWidgetIntent();
         }
     }
 
     private void processWidgetIntent() {
         mSendNdefMessage = getDefaults("defaultContactString", this);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            mNfcAdapter.invokeBeam(this);
-        } else {
-            Toast.makeText(mContext, "", Toast.LENGTH_SHORT).show();
-        }
+        Toast.makeText(mContext, R.string.action_pressSend, Toast.LENGTH_SHORT).show();
     }
 
     /**
@@ -215,20 +210,38 @@ public class MainActivity extends FragmentActivity implements SendScreenFragment
         JsonObject obj = parser.parse(jsonStringIntentData).getAsJsonObject();
         Gson gson = new Gson();
         Contact contact = gson.fromJson(obj.toString() , Contact.class);
-        Log.e(mTagHandmade, " " + jsonStringIntentData + ", " + obj.toString() + ", " + contact.toString());
+        int e = Log.e(mTagHandmade, " " + jsonStringIntentData + ", " + obj.toString() + ", " + contact.toString());
         return contact;
 
     }
 
 
     private void getLastKnownLocation() {
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // Permission is not granted
+            // Should we show an explanation?
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this,
+                    Manifest.permission.ACCESS_COARSE_LOCATION)) {
+                // Show an explanation to the user *asynchronously* -- don't block
+                // this thread waiting for the user's response! After the user
+                // sees the explanation, try again to request the permission.
+            } else {
+                // No explanation needed; request the permission
+                ActivityCompat.requestPermissions(this,
+                        new String[]{Manifest.permission.ACCESS_COARSE_LOCATION},
+                        REQUEST_ACCESS_CORASE_LOCATION);
+
+                // MY_PERMISSIONS_REQUEST_READ_CONTACTS is an
+                // app-defined int constant. The callback method gets the
+                // result of the request.
+        } } else {FusedLocationProviderClient mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
             mFusedLocationClient.getLastLocation()
                     .addOnSuccessListener(this, new OnSuccessListener<Location>() {
                         @Override
                         public void onSuccess(Location location) {
                             // Got last known location. In some rare situations this can be null.
                             if (location != null) {
+                                Log.e("location", location.toString());
                                 // Logic to handle location object
                                 Geocoder geocoder;
                                 geocoder = new Geocoder(getApplicationContext(), Locale.getDefault());
@@ -236,29 +249,42 @@ public class MainActivity extends FragmentActivity implements SendScreenFragment
 
                                 try {
                                     List<Address> addresses = geocoder.getFromLocation(location.getLatitude(), location.getLongitude(), 1); // Here 1 represent max location result to returned, by documents it recommended 1 to 5
-                                    String place = addresses.get(0).getFeatureName();
                                     String city = addresses.get(0).getLocality();
                                     String country = addresses.get(0).getCountryName();
-                                    Location = place + ", " + city + ", " + country;
+                                    Location = city + ", " + country;
                                 } catch (IOException e) {
                                     e.printStackTrace();
                                 }
 
-
                                 setDefaults("Location", Location, getApplicationContext());
+                            } else {
+                                startActivity(new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS));
                             }
                         }
                     });
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
         }
-
     }
 
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        switch (requestCode) {
+            case REQUEST_ACCESS_CORASE_LOCATION: {
+                // If request is cancelled, the result arrays are empty.
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    // permission was granted, yay! Do the
+                    // contacts-related task you need to do.
+                    getLastKnownLocation();
+                } else {
+                    // permission denied, boo! Disable the
+                    // functionality that depends on this permission.
+                }
+            }
+
+            // other 'case' lines to check for other
+            // permissions this app might request.
+        }
+    }
 
     //-------------------------------------------------------------------------------------------------------------------
     //This part handles all the storage in SharedPreferences

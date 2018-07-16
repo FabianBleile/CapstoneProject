@@ -39,7 +39,7 @@
 
     /*Toast Messages*/
     <string name="yes">YES</string>
-    <string name="action_pressSend">Get your devices together</string>
+    <string name="action_pressSend">Click the 'SEND'-button again.</string>
     <string name="question_setDefaultFile">Set last file as default file for a even faster access from widget?</string>
 
     /*Gson*//*Gson*/

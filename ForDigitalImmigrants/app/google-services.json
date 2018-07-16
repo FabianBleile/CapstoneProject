@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "949261946627",
+    "firebase_url": "https://fordigitalimmigrants.firebaseio.com",
+    "project_id": "fordigitalimmigrants",
+    "storage_bucket": "fordigitalimmigrants.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:949261946627:android:2ab5396b1b0c1527",
+        "android_client_info": {
+          "package_name": "com.fabianbleile.fordigitalimmigrants"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "949261946627-9n30ehpne5r2e3tbk0g5k5lqu5p137fu.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.fabianbleile.fordigitalimmigrants",
+            "certificate_hash": "c6a66d32a1255c69119df8fec0dbde8bf504fd1b"
+          }
+        },
+        {
+          "client_id": "949261946627-t23aevb24vokhgvsl1lisah7muptvrio.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDv_4JNIX04IFC67SfGH-PUdrRz6JDYnaA"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "949261946627-t23aevb24vokhgvsl1lisah7muptvrio.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
