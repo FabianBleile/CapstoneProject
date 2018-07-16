@@ -39,7 +39,8 @@
 
     /*Toast Messages*/
     <string name="yes">YES</string>
-    <string name="action_pressSend">Click the 'SEND'-button again.</string>
+    <string name="action_pressSend">Click the SEND-Button.</string>
+    <string name="action_addedToClipboard"> added to clipboard</string>
     <string name="question_setDefaultFile">Set last file as default file for a even faster access from widget?</string>
 
     /*Gson*//*Gson*/
@@ -55,8 +56,12 @@
     <string name="id_twitter" translatable="false">twitter</string>
 
 
-
+    /*Detail Activity*/
     <string name="title_activity_detail">DetailActivity</string>
+    <string name="menu_item_save_to_contacts">Save to contacts</string>
+    <string name="menu_item_switch_edit_mode">edit</string>
+
+    /*Widget*/
     <string name="appwidget_text">EXAMPLE</string>
     <string name="configure">Configure</string>
     <string name="add_widget">Add widget</string>

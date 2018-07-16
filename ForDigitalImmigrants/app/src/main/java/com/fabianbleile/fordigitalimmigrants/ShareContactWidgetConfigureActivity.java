@@ -46,15 +46,10 @@ public class ShareContactWidgetConfigureActivity extends Activity {
     private static final String PREFS_NAME = "com.fabianbleile.fordigitalimmigrants.ShareContactWidget";
     private static final String PREF_PREFIX_KEY = "appwidget_";
     int mAppWidgetId = AppWidgetManager.INVALID_APPWIDGET_ID;
-    EditText mAppWidgetText;
     ArrayList<Switch> switches = new ArrayList<>();
     View.OnClickListener mOnClickListener = new View.OnClickListener() {
         public void onClick(View v) {
             final Context context = ShareContactWidgetConfigureActivity.this;
-
-            // When the button is clicked, store the string locally
-            String widgetText = mAppWidgetText.getText().toString();
-            saveTitlePref(context, mAppWidgetId, widgetText);
 
             //When the button is clicked create a file and save it. return the uri
             Contact contact = getShareContact();
@@ -79,31 +74,6 @@ public class ShareContactWidgetConfigureActivity extends Activity {
         super();
     }
 
-    // Write the prefix to the SharedPreferences object for this widget
-    static void saveTitlePref(Context context, int appWidgetId, String text) {
-        SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_NAME, 0).edit();
-        prefs.putString(PREF_PREFIX_KEY + appWidgetId, text);
-        prefs.apply();
-    }
-
-    // Read the prefix from the SharedPreferences object for this widget.
-    // If there is no preference saved, get the default from a resource
-    static String loadTitlePref(Context context, int appWidgetId) {
-        SharedPreferences prefs = context.getSharedPreferences(PREFS_NAME, 0);
-        String titleValue = prefs.getString(PREF_PREFIX_KEY + appWidgetId, null);
-        if (titleValue != null) {
-            return titleValue;
-        } else {
-            return context.getString(R.string.appwidget_text);
-        }
-    }
-
-    static void deleteTitlePref(Context context, int appWidgetId) {
-        SharedPreferences.Editor prefs = context.getSharedPreferences(PREFS_NAME, 0).edit();
-        prefs.remove(PREF_PREFIX_KEY + appWidgetId);
-        prefs.apply();
-    }
-
     @SuppressLint("WrongViewCast")
     @Override
     public void onCreate(Bundle icicle) {
@@ -114,7 +84,6 @@ public class ShareContactWidgetConfigureActivity extends Activity {
         setResult(RESULT_CANCELED);
 
         setContentView(R.layout.share_contact_widget_configure);
-        mAppWidgetText = findViewById(R.id.appwidget_text);
         findViewById(R.id.add_button).setOnClickListener(mOnClickListener);
 
         Switch name = findViewById(ctv_name_widget); switches.add(name);
@@ -141,8 +110,6 @@ public class ShareContactWidgetConfigureActivity extends Activity {
             finish();
             return;
         }
-
-        mAppWidgetText.setText(loadTitlePref(ShareContactWidgetConfigureActivity.this, mAppWidgetId));
     }
 
     private Contact getShareContact(){

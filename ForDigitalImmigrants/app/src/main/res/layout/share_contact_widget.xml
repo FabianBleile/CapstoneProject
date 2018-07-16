@@ -9,6 +9,7 @@
         android:id="@+id/bt_sendContactFromWidget"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:contentDescription="@string/action_pressSend"
         app:srcCompat="@drawable/ic_circle_primary" />
 
 </LinearLayout>

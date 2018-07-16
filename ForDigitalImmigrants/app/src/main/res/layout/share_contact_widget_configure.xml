@@ -15,18 +15,6 @@
         android:paddingStart="32dp"
         android:text="@string/configure" />
 
-    <EditText
-        android:id="@+id/appwidget_text"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingBottom="8dp"
-        android:paddingEnd="32dp"
-        android:paddingLeft="32dp"
-        android:paddingRight="32dp"
-        android:paddingStart="32dp"
-        android:paddingTop="8dp"
-        android:inputType="text" />
-
     <android.support.v4.widget.NestedScrollView
 
         android:id="@+id/nestedScrollView"
@@ -53,7 +41,8 @@
                 android:paddingStart="32dp"
                 android:paddingTop="8dp"
                 android:text="@string/ctv_name"
-                android:textSize="18sp" />
+                android:textSize="18sp"
+                android:contentDescription="@string/ctv_name"/>
 
             <Switch
                 android:id="@+id/ctv_phone_number_widget"
@@ -66,7 +55,8 @@
                 android:paddingStart="32dp"
                 android:paddingTop="8dp"
                 android:text="@string/ctv_phone_number"
-                android:textSize="18sp" />
+                android:textSize="18sp"
+                android:contentDescription="@string/ctv_phone_number"/>
 
             <Switch
                 android:id="@+id/ctv_email_widget"
@@ -79,7 +69,8 @@
                 android:paddingStart="32dp"
                 android:paddingTop="8dp"
                 android:text="@string/ctv_email"
-                android:textSize="18sp" />
+                android:textSize="18sp"
+                android:contentDescription="@string/ctv_email"/>
 
             <Switch
                 android:id="@+id/ctv_birthday_widget"
@@ -92,7 +83,8 @@
                 android:paddingStart="32dp"
                 android:paddingTop="8dp"
                 android:text="@string/ctv_birthday"
-                android:textSize="18sp" />
+                android:textSize="18sp"
+                android:contentDescription="@string/ctv_birthday"/>
 
             <Switch
                 android:id="@+id/ctv_hometown_widget"
@@ -105,7 +97,8 @@
                 android:paddingStart="32dp"
                 android:paddingTop="8dp"
                 android:text="@string/ctv_hometown"
-                android:textSize="18sp" />
+                android:textSize="18sp"
+                android:contentDescription="@string/ctv_birthday"/>
 
             <Switch
                 android:id="@+id/ctv_instagram_widget"
@@ -118,7 +111,8 @@
                 android:paddingStart="32dp"
                 android:paddingTop="8dp"
                 android:text="@string/ctv_instagram"
-                android:textSize="18sp" />
+                android:textSize="18sp"
+                android:contentDescription="@string/ctv_instagram"/>
 
             <Switch
                 android:id="@+id/ctv_facebook_widget"
@@ -131,7 +125,8 @@
                 android:paddingStart="32dp"
                 android:paddingTop="8dp"
                 android:text="@string/ctv_facebook"
-                android:textSize="18sp" />
+                android:textSize="18sp"
+                android:contentDescription="@string/ctv_facebook"/>
 
             <Switch
                 android:id="@+id/ctv_snapchat_widget"
@@ -144,7 +139,8 @@
                 android:paddingStart="32dp"
                 android:paddingTop="8dp"
                 android:text="@string/ctv_snapchat"
-                android:textSize="18sp" />
+                android:textSize="18sp"
+                android:contentDescription="@string/ctv_snapchat"/>
 
             <Switch
                 android:id="@+id/ctv_twitter_widget"
@@ -157,7 +153,8 @@
                 android:paddingStart="32dp"
                 android:paddingTop="8dp"
                 android:text="@string/ctv_twitter"
-                android:textSize="18sp" />
+                android:textSize="18sp"
+                android:contentDescription="@string/ctv_twitter"/>
 
             <Switch
                 android:id="@+id/ctv_currentLocation_widget"
@@ -170,7 +167,8 @@
                 android:paddingStart="32dp"
                 android:paddingTop="8dp"
                 android:text="@string/ctv_currentLocation"
-                android:textSize="18sp" />
+                android:textSize="18sp"
+                android:contentDescription="@string/ctv_currentLocation"/>
 
 
         </LinearLayout>

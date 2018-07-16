@@ -72,7 +72,6 @@ public class ImageAdapter extends BaseAdapter {
             textViewCapitalIcon.setText(iconCapitalLetter);
         }
         textViewBubbleDescription.setText(iconDescription);
-        rootView.setTag(iconDescription);
 
         if(mContact != null){
             String[] mFriendsIconContentLink = {
@@ -91,6 +90,8 @@ public class ImageAdapter extends BaseAdapter {
         } else {
             textViewBubbleContent.setText(MainActivity.getDefaults(iconDescription, mContext));
         }
+        rootView.setTag(iconDescription);
+        rootView.setContentDescription(iconDescription);
 
         return rootView;
     }

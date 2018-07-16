@@ -39,6 +39,9 @@ import com.fabianbleile.fordigitalimmigrants.Fragment.ReceiveScreenFragment;
 import com.fabianbleile.fordigitalimmigrants.Fragment.SendScreenFragment;
 import com.fabianbleile.fordigitalimmigrants.Fragment.SettingsScreenFragment;
 import com.fabianbleile.fordigitalimmigrants.data.Contact;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.InterstitialAd;
+import com.google.android.gms.ads.MobileAds;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -55,11 +58,20 @@ import java.util.Locale;
 
 public class MainActivity extends FragmentActivity implements SendScreenFragment.OnReadyButtonClickedInterface, NfcAdapter.CreateNdefMessageCallback, NfcAdapter.OnNdefPushCompleteCallback {
 
+    //general
     public static final String mTagHandmade = "HANDMADETAG";
     public Context mContext;
-    public static ArrayList<Integer> mIcons = new ArrayList<>();
-    private static final int REQUEST_ACCESS_CORASE_LOCATION = 1;
 
+    //content related
+    public static ArrayList<Integer> mIcons = new ArrayList<>();
+
+    //final variables
+    private static final int REQUEST_ACCESS_CORASE_LOCATION = 1;
+    private static final String TEST_AD_UNIT_ID = "ca-app-pub-3940256099942544/1033173712";
+    private static final String MY_ADMOB_APP_ID = "ca-app-pub-6856957073988410~7948042904";
+    private static final String MY_AD_UNIT_ID = "ca-app-pub-6856957073988410/9779999321";
+
+    //viewPager with fragments
     private static final int NUM_PAGES = 3;
     private ViewPager mPager;
     private CoordinatorLayout coordinatorLayout;
@@ -68,6 +80,9 @@ public class MainActivity extends FragmentActivity implements SendScreenFragment
     NfcAdapter mNfcAdapter;
     public static String mSendNdefMessage;
     public static String mReceiveNdefMessage;
+
+    //Firebase
+    private InterstitialAd mInterstitialAd;
 
     public MainActivity() {
     }
@@ -83,11 +98,21 @@ public class MainActivity extends FragmentActivity implements SendScreenFragment
     @Override
     public NdefMessage createNdefMessage(NfcEvent nfcEvent) {
         NdefRecord ndefRecord = createTextRecord(mSendNdefMessage);
+        Log.d("TAG", "send message is set");
 
-        return new NdefMessage(
+        /*
+        mInterstitialAd.loadAd(new AdRequest.Builder().build());
+        if (mInterstitialAd.isLoaded()) {
+            mInterstitialAd.show();
+            Log.d("TAG", "The interstitial is loaded.");
+        } else {
+            Log.d("TAG", "The interstitial wasn't loaded yet.");
+        }
+         */
+        NdefMessage msg = new NdefMessage(
                 new NdefRecord[] { ndefRecord });
+        return msg;
     }
-
     private NdefRecord createTextRecord (String message)
     {
         try
@@ -120,6 +145,11 @@ public class MainActivity extends FragmentActivity implements SendScreenFragment
         setContentView(R.layout.activity_main);
 
         mContext = getApplicationContext();
+        /*
+        MobileAds.initialize(this, MY_ADMOB_APP_ID);
+        mInterstitialAd = new InterstitialAd(this);
+        mInterstitialAd.setAdUnitId(MY_AD_UNIT_ID);
+         */
 
         navigation = this.findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
@@ -144,10 +174,6 @@ public class MainActivity extends FragmentActivity implements SendScreenFragment
         mIcons.add(R.string.ctv_currentLocation);
 
         getLastKnownLocation();
-        setupNfcAdapter();
-    }
-
-    private void setupNfcAdapter(){
         if (isExternalStorageReadable() && isExternalStorageWritable()) {
             // Android Beam file transfer is available, continue
             mNfcAdapter = NfcAdapter.getDefaultAdapter(this);
@@ -172,12 +198,19 @@ public class MainActivity extends FragmentActivity implements SendScreenFragment
     @Override
     public void onResume() {
         super.onResume();
+
+        Log.d("TAG", "intent received" + getIntent().getAction()+ getIntent().getDataString());
         // Check to see that the Activity started due to an Android Beam
-        if (NfcAdapter.ACTION_NDEF_DISCOVERED.equals(getIntent().getAction())) {
+
+        if(NfcAdapter.ACTION_NDEF_DISCOVERED.equals(getIntent().getAction())){
+            Log.d("TAG", "nfc intent received");
             processNfcIntent(getIntent());
-        } else if (Intent.ACTION_SEND.equals(getIntent().getAction())){
-            //processWidgetIntent();
         }
+        /*
+        else if (Intent.ACTION_SEND.equals(getIntent().getAction())){
+            processWidgetIntent();
+        }
+         */
     }
 
     private void processWidgetIntent() {
@@ -210,7 +243,7 @@ public class MainActivity extends FragmentActivity implements SendScreenFragment
         JsonObject obj = parser.parse(jsonStringIntentData).getAsJsonObject();
         Gson gson = new Gson();
         Contact contact = gson.fromJson(obj.toString() , Contact.class);
-        int e = Log.e(mTagHandmade, " " + jsonStringIntentData + ", " + obj.toString() + ", " + contact.toString());
+        Log.e(mTagHandmade, " " + jsonStringIntentData + ", " + obj.toString() + ", " + contact.toString());
         return contact;
 
     }
@@ -258,7 +291,7 @@ public class MainActivity extends FragmentActivity implements SendScreenFragment
 
                                 setDefaults("Location", Location, getApplicationContext());
                             } else {
-                                startActivity(new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS));
+                                //startActivity(new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS));
                             }
                         }
                     });

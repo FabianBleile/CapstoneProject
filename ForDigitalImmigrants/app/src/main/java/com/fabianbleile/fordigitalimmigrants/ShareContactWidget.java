@@ -41,7 +41,7 @@ public class ShareContactWidget extends AppWidgetProvider {
     public void onDeleted(Context context, int[] appWidgetIds) {
         // When the user deletes the widget, delete the preference associated with it.
         for (int appWidgetId : appWidgetIds) {
-            ShareContactWidgetConfigureActivity.deleteTitlePref(context, appWidgetId);
+
         }
     }
 

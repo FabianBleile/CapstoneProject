@@ -36,7 +36,7 @@
                 <action android:name="com.fabianbleile.fordigitalimmigrants.LAUNCH"/>
                 <action android:name="com.fabianbleile.fordigitalimmigrants.MAIN"/>
                 <category android:name="android.intent.category.DEFAULT"/>
-                <data android:mimeType="application/vnd.com.fabianbleile.fordigitalimmigrants"/>
+                <data android:mimeType="application/com.fabianbleile.fordigitalimmigrants"/>
             </intent-filter>
         </activity>
         <activity

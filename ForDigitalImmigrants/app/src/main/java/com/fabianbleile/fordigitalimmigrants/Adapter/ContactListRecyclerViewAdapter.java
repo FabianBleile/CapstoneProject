@@ -45,6 +45,7 @@ public class ContactListRecyclerViewAdapter extends RecyclerView.Adapter<Contact
         holder.constraintLayout.setTag(mContact);
         holder.nameTextView.setText(mContact.getName());
         holder.captitalLetterTextView.setText(mContact.getName().substring(0,1));
+        holder.mView.setContentDescription(holder.captitalLetterTextView.getText());
 
     }
 
@@ -72,6 +73,7 @@ public class ContactListRecyclerViewAdapter extends RecyclerView.Adapter<Contact
         private ImageView imageView;
         private TextView captitalLetterTextView;
         private ConstraintLayout constraintLayout;
+        private View mView;
 
         public RelativeLayout viewBackground, viewForeground;
 
@@ -84,6 +86,8 @@ public class ContactListRecyclerViewAdapter extends RecyclerView.Adapter<Contact
             imageView = (ImageView) view.findViewById(R.id.iv_contact_item);
             captitalLetterTextView = (TextView) view.findViewById(R.id.tv_capital_icon);
             constraintLayout = (ConstraintLayout) view.findViewById(R.id.constraintLayout);
+
+            mView = view;
 
         }
 
