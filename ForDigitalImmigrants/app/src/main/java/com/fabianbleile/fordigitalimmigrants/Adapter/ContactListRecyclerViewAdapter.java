@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.fabianbleile.fordigitalimmigrants.R;
 import com.fabianbleile.fordigitalimmigrants.data.Contact;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ContactListRecyclerViewAdapter extends RecyclerView.Adapter<ContactListRecyclerViewAdapter.RecyclerViewHolder> {
@@ -44,8 +45,12 @@ public class ContactListRecyclerViewAdapter extends RecyclerView.Adapter<Contact
         holder.constraintLayout.setOnLongClickListener(onLongClickListener);
         holder.constraintLayout.setTag(mContact);
         holder.nameTextView.setText(mContact.getName());
-        holder.captitalLetterTextView.setText(mContact.getName().substring(0,1));
-        holder.mView.setContentDescription(holder.captitalLetterTextView.getText());
+        try{
+            holder.captitalLetterTextView.setText(mContact.getName().substring(0,1));
+        } catch (NullPointerException e){
+            holder.captitalLetterTextView.setText("E");
+        }
+        holder.mView.setContentDescription(holder.nameTextView.getText());
 
     }
 

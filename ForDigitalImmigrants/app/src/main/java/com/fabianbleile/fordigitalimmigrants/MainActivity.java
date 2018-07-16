@@ -64,6 +64,7 @@ public class MainActivity extends FragmentActivity implements SendScreenFragment
 
     //content related
     public static ArrayList<Integer> mIcons = new ArrayList<>();
+    private String message;
 
     //final variables
     private static final int REQUEST_ACCESS_CORASE_LOCATION = 1;
@@ -162,16 +163,18 @@ public class MainActivity extends FragmentActivity implements SendScreenFragment
         mPager.addOnPageChangeListener(viewPageOnPageListener);
         mPager.setCurrentItem(1);
 
-        mIcons.add(R.string.ctv_name);
-        mIcons.add(R.string.ctv_phone_number);
-        mIcons.add(R.string.ctv_email);
-        mIcons.add(R.string.ctv_birthday);
-        mIcons.add(R.string.ctv_hometown);
-        mIcons.add(R.string.ctv_instagram);
-        mIcons.add(R.string.ctv_facebook);
-        mIcons.add(R.string.ctv_snapchat);
-        mIcons.add(R.string.ctv_twitter);
-        mIcons.add(R.string.ctv_currentLocation);
+        if(mIcons.size() == 0){
+            mIcons.add(R.string.ctv_name);
+            mIcons.add(R.string.ctv_phone_number);
+            mIcons.add(R.string.ctv_email);
+            mIcons.add(R.string.ctv_birthday);
+            mIcons.add(R.string.ctv_hometown);
+            mIcons.add(R.string.ctv_instagram);
+            mIcons.add(R.string.ctv_facebook);
+            mIcons.add(R.string.ctv_snapchat);
+            mIcons.add(R.string.ctv_twitter);
+            mIcons.add(R.string.ctv_currentLocation);
+        }
 
         getLastKnownLocation();
         if (isExternalStorageReadable() && isExternalStorageWritable()) {
@@ -227,7 +230,7 @@ public class MainActivity extends FragmentActivity implements SendScreenFragment
         // only one message sent during the beam
         NdefMessage msg = (NdefMessage) rawMsgs[0];
         // record 0 contains the MIME type, record 1 is the AAR, if present
-        String message = new String(msg.getRecords()[0].getPayload());
+         message = new String(msg.getRecords()[0].getPayload());
         mReceiveNdefMessage = message;
 
         // parse String to contact object

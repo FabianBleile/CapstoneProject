@@ -86,7 +86,11 @@ public class ImageAdapter extends BaseAdapter {
                     mContact.getTwitter(),
                     mContact.getLocation()
             };
-            textViewBubbleContent.setText(mFriendsIconContentLink[position]);
+            try{
+                textViewBubbleContent.setText(mFriendsIconContentLink[position]);
+            } catch (NullPointerException e){
+                textViewBubbleContent.setText("-");
+            }
         } else {
             textViewBubbleContent.setText(MainActivity.getDefaults(iconDescription, mContext));
         }
