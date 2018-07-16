@@ -6,6 +6,7 @@
     </shared>
   </component>
   <component name="AndroidLogFilters">
+    <option name="TOOL_WINDOW_CUSTOM_FILTER" value="TAG" />
     <option name="TOOL_WINDOW_LOG_LEVEL" value="debug" />
     <option name="TOOL_WINDOW_CONFIGURED_FILTER" value="No Filters" />
   </component>
@@ -35,21 +36,23 @@
       <file leaf-file-name="MainActivity.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/fabianbleile/fordigitalimmigrants/MainActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="612">
-              <caret line="175" column="53" lean-forward="false" selection-start-line="175" selection-start-column="53" selection-end-line="175" selection-end-column="53" />
+            <state relative-caret-position="229">
+              <caret line="93" column="12" lean-forward="false" selection-start-line="93" selection-start-column="12" selection-end-line="93" selection-end-column="12" />
               <folding>
-                <element signature="e#6114#6131#0" expanded="true" />
-                <element signature="e#6157#6182#0" expanded="true" />
-                <element signature="e#6208#6226#0" expanded="true" />
-                <element signature="e#6252#6273#0" expanded="true" />
-                <element signature="e#6299#6320#0" expanded="true" />
-                <element signature="e#6346#6368#0" expanded="true" />
-                <element signature="e#6394#6415#0" expanded="true" />
-                <element signature="e#6441#6462#0" expanded="true" />
-                <element signature="e#6488#6508#0" expanded="true" />
-                <element signature="e#6534#6562#0" expanded="true" />
-                <element signature="e#14782#14783#0" expanded="true" />
-                <element signature="e#14826#14827#0" expanded="true" />
+                <element signature="e#3503#3990#0" expanded="true" />
+                <element signature="e#3989#3990#0" expanded="true" />
+                <element signature="e#6571#6588#0" expanded="true" />
+                <element signature="e#6614#6639#0" expanded="true" />
+                <element signature="e#6665#6683#0" expanded="true" />
+                <element signature="e#6709#6730#0" expanded="true" />
+                <element signature="e#6756#6777#0" expanded="true" />
+                <element signature="e#6803#6825#0" expanded="true" />
+                <element signature="e#6851#6872#0" expanded="true" />
+                <element signature="e#6898#6919#0" expanded="true" />
+                <element signature="e#6945#6965#0" expanded="true" />
+                <element signature="e#6991#7019#0" expanded="true" />
+                <element signature="e#15274#15275#0" expanded="true" />
+                <element signature="e#15318#15319#0" expanded="true" />
                 <element signature="method#onBackPressed#0;class#MainActivity#0" expanded="false" />
                 <element signature="class#ScreenSlidePagerAdapter#0;class#MainActivity#0" expanded="false" />
                 <element signature="method#getItem#0;class#ScreenSlidePagerAdapter#0;class#MainActivity#0" expanded="false" />
@@ -58,35 +61,28 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ImageAdapter.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/fabianbleile/fordigitalimmigrants/Adapter/ImageAdapter.java">
+      <file leaf-file-name="AndroidManifest.xml" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/AndroidManifest.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1337">
-              <caret line="89" column="0" lean-forward="false" selection-start-line="89" selection-start-column="0" selection-end-line="89" selection-end-column="0" />
+            <state relative-caret-position="-987">
+              <caret line="8" column="48" lean-forward="false" selection-start-line="8" selection-start-column="48" selection-end-line="8" selection-end-column="48" />
+              <folding />
+            </state>
+          </provider>
+          <provider editor-type-id="android-manifest">
+            <state />
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ReceiveScreenFragment.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/fabianbleile/fordigitalimmigrants/Fragment/ReceiveScreenFragment.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="252">
+              <caret line="96" column="35" lean-forward="false" selection-start-line="96" selection-start-column="35" selection-end-line="96" selection-end-column="35" />
               <folding>
-                <element signature="e#976#977#0" expanded="true" />
-                <element signature="e#1025#1026#0" expanded="true" />
+                <element signature="e#3503#3504#0" expanded="true" />
+                <element signature="e#3545#3546#0" expanded="true" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ContactListRecyclerViewAdapter.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/fabianbleile/fordigitalimmigrants/Adapter/ContactListRecyclerViewAdapter.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="189">
-              <caret line="48" column="0" lean-forward="false" selection-start-line="48" selection-start-column="0" selection-end-line="48" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ContactListViewModel.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/fabianbleile/fordigitalimmigrants/data/ContactListViewModel.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="281">
-              <caret line="44" column="0" lean-forward="false" selection-start-line="44" selection-start-column="0" selection-end-line="44" selection-end-column="0" />
-              <folding />
             </state>
           </provider>
         </entry>
@@ -113,6 +109,7 @@
       <find>minter</find>
       <find>mContact</find>
       <find>getView</find>
+      <find>pushcomplete</find>
     </findStrings>
   </component>
   <component name="GradleLocalSettings">
@@ -2163,12 +2160,12 @@
         <option value="$PROJECT_DIR$/app/src/main/res/layout/share_contact_widget_configure.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/fabianbleile/fordigitalimmigrants/ShareContactWidgetConfigureActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/fabianbleile/fordigitalimmigrants/ShareContactWidget.java" />
-        <option value="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/fabianbleile/fordigitalimmigrants/data/ContactListViewModel.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/fabianbleile/fordigitalimmigrants/data/ContactDao.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/fabianbleile/fordigitalimmigrants/Adapter/ContactListRecyclerViewAdapter.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/fabianbleile/fordigitalimmigrants/Fragment/ReceiveScreenFragment.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/fabianbleile/fordigitalimmigrants/Adapter/ImageAdapter.java" />
+        <option value="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/fabianbleile/fordigitalimmigrants/Fragment/ReceiveScreenFragment.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/fabianbleile/fordigitalimmigrants/MainActivity.java" />
       </list>
     </option>
@@ -2203,6 +2200,11 @@
             <path>
               <item name="ForDigitalImmigrants" type="1abcf292:AndroidViewProjectNode" />
               <item name="app" type="feadf853:AndroidModuleNode" />
+              <item name="manifests" type="f94875db:AndroidManifestsGroupNode" />
+            </path>
+            <path>
+              <item name="ForDigitalImmigrants" type="1abcf292:AndroidViewProjectNode" />
+              <item name="app" type="feadf853:AndroidModuleNode" />
               <item name="java" type="edd41e36:AndroidSourceTypeNode" />
             </path>
             <path>
@@ -2217,6 +2219,13 @@
               <item name="java" type="edd41e36:AndroidSourceTypeNode" />
               <item name="fordigitalimmigrants" type="cbb59c9e:AndroidPsiDirectoryNode" />
               <item name="data" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="ForDigitalImmigrants" type="1abcf292:AndroidViewProjectNode" />
+              <item name="app" type="feadf853:AndroidModuleNode" />
+              <item name="java" type="edd41e36:AndroidSourceTypeNode" />
+              <item name="fordigitalimmigrants" type="cbb59c9e:AndroidPsiDirectoryNode" />
+              <item name="Fragment" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="ForDigitalImmigrants" type="1abcf292:AndroidViewProjectNode" />
@@ -2428,7 +2437,7 @@
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24973147" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Device File Explorer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
       <window_info id="Theme Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.38391846" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.38391846" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -2454,7 +2463,7 @@
           <option name="timeStamp" value="16" />
         </line-breakpoint>
       </breakpoints>
-      <option name="time" value="17" />
+      <option name="time" value="22" />
     </breakpoint-manager>
     <watches-manager />
   </component>
@@ -2479,13 +2488,6 @@
         <state relative-caret-position="149">
           <caret line="24" column="50" lean-forward="false" selection-start-line="24" selection-start-column="50" selection-end-line="24" selection-end-column="50" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$USER_HOME$/AppData/Local/Android/Sdk/platforms/android-28/android.jar!/android/nfc/NfcAdapter.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="283">
-          <caret line="69" column="16" lean-forward="false" selection-start-line="69" selection-start-column="16" selection-end-line="69" selection-end-column="16" />
         </state>
       </provider>
     </entry>
@@ -2682,17 +2684,6 @@
             <element signature="e#1577#1578#0" expanded="false" />
           </folding>
         </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/AndroidManifest.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="231">
-          <caret line="38" column="56" lean-forward="false" selection-start-line="38" selection-start-column="56" selection-end-line="38" selection-end-column="56" />
-          <folding />
-        </state>
-      </provider>
-      <provider editor-type-id="android-manifest">
-        <state />
       </provider>
     </entry>
     <entry file="jar://$USER_HOME$/AppData/Local/Android/Sdk/platforms/android-28/android.jar!/android/os/Binder.class">
@@ -3456,19 +3447,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/fabianbleile/fordigitalimmigrants/Fragment/ReceiveScreenFragment.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="210">
-          <caret line="140" column="57" lean-forward="false" selection-start-line="140" selection-start-column="57" selection-end-line="140" selection-end-column="57" />
-          <folding>
-            <element signature="e#3031#3335#0" expanded="false" />
-            <element signature="e#3334#3335#0" expanded="false" />
-            <element signature="e#3419#3420#0" expanded="false" />
-            <element signature="e#3461#3462#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/fabianbleile/fordigitalimmigrants/DetailActivity.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="420">
@@ -3534,29 +3512,61 @@
         <state relative-caret-position="1337">
           <caret line="89" column="0" lean-forward="false" selection-start-line="89" selection-start-column="0" selection-end-line="89" selection-end-column="0" />
           <folding>
-            <element signature="e#976#977#0" expanded="true" />
-            <element signature="e#1025#1026#0" expanded="true" />
+            <element signature="e#976#977#0" expanded="false" />
+            <element signature="e#1025#1026#0" expanded="false" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/AndroidManifest.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-987">
+          <caret line="8" column="48" lean-forward="false" selection-start-line="8" selection-start-column="48" selection-end-line="8" selection-end-column="48" />
+          <folding />
+        </state>
+      </provider>
+      <provider editor-type-id="android-manifest">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/fabianbleile/fordigitalimmigrants/Fragment/ReceiveScreenFragment.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="252">
+          <caret line="96" column="35" lean-forward="false" selection-start-line="96" selection-start-column="35" selection-end-line="96" selection-end-column="35" />
+          <folding>
+            <element signature="e#3503#3504#0" expanded="true" />
+            <element signature="e#3545#3546#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$USER_HOME$/AppData/Local/Android/Sdk/platforms/android-28/android.jar!/android/nfc/NfcAdapter.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="189">
+          <caret line="69" column="16" lean-forward="false" selection-start-line="69" selection-start-column="16" selection-end-line="69" selection-end-column="16" />
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/fabianbleile/fordigitalimmigrants/MainActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="612">
-          <caret line="175" column="53" lean-forward="false" selection-start-line="175" selection-start-column="53" selection-end-line="175" selection-end-column="53" />
+        <state relative-caret-position="229">
+          <caret line="93" column="12" lean-forward="false" selection-start-line="93" selection-start-column="12" selection-end-line="93" selection-end-column="12" />
           <folding>
-            <element signature="e#6114#6131#0" expanded="true" />
-            <element signature="e#6157#6182#0" expanded="true" />
-            <element signature="e#6208#6226#0" expanded="true" />
-            <element signature="e#6252#6273#0" expanded="true" />
-            <element signature="e#6299#6320#0" expanded="true" />
-            <element signature="e#6346#6368#0" expanded="true" />
-            <element signature="e#6394#6415#0" expanded="true" />
-            <element signature="e#6441#6462#0" expanded="true" />
-            <element signature="e#6488#6508#0" expanded="true" />
-            <element signature="e#6534#6562#0" expanded="true" />
-            <element signature="e#14782#14783#0" expanded="true" />
-            <element signature="e#14826#14827#0" expanded="true" />
+            <element signature="e#3503#3990#0" expanded="true" />
+            <element signature="e#3989#3990#0" expanded="true" />
+            <element signature="e#6571#6588#0" expanded="true" />
+            <element signature="e#6614#6639#0" expanded="true" />
+            <element signature="e#6665#6683#0" expanded="true" />
+            <element signature="e#6709#6730#0" expanded="true" />
+            <element signature="e#6756#6777#0" expanded="true" />
+            <element signature="e#6803#6825#0" expanded="true" />
+            <element signature="e#6851#6872#0" expanded="true" />
+            <element signature="e#6898#6919#0" expanded="true" />
+            <element signature="e#6945#6965#0" expanded="true" />
+            <element signature="e#6991#7019#0" expanded="true" />
+            <element signature="e#15274#15275#0" expanded="true" />
+            <element signature="e#15318#15319#0" expanded="true" />
             <element signature="method#onBackPressed#0;class#MainActivity#0" expanded="false" />
             <element signature="class#ScreenSlidePagerAdapter#0;class#MainActivity#0" expanded="false" />
             <element signature="method#getItem#0;class#ScreenSlidePagerAdapter#0;class#MainActivity#0" expanded="false" />

@@ -13,6 +13,7 @@ import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,6 +21,7 @@ import android.widget.Toast;
 
 import com.fabianbleile.fordigitalimmigrants.Adapter.ContactListRecyclerViewAdapter;
 import com.fabianbleile.fordigitalimmigrants.DetailActivity;
+import com.fabianbleile.fordigitalimmigrants.MainActivity;
 import com.fabianbleile.fordigitalimmigrants.R;
 import com.fabianbleile.fordigitalimmigrants.data.Contact;
 import com.fabianbleile.fordigitalimmigrants.data.ContactListViewModel;

@@ -39,6 +39,7 @@ import com.fabianbleile.fordigitalimmigrants.Fragment.ReceiveScreenFragment;
 import com.fabianbleile.fordigitalimmigrants.Fragment.SendScreenFragment;
 import com.fabianbleile.fordigitalimmigrants.Fragment.SettingsScreenFragment;
 import com.fabianbleile.fordigitalimmigrants.data.Contact;
+import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.InterstitialAd;
 import com.google.android.gms.ads.MobileAds;
@@ -69,6 +70,7 @@ public class MainActivity extends FragmentActivity implements SendScreenFragment
     //final variables
     private static final int REQUEST_ACCESS_CORASE_LOCATION = 1;
     private static final String TEST_AD_UNIT_ID = "ca-app-pub-3940256099942544/1033173712";
+    private static final String TEST_ADMOB_APP_ID = "ca-app-pub-3940256099942544~3347511713";
     private static final String MY_ADMOB_APP_ID = "ca-app-pub-6856957073988410~7948042904";
     private static final String MY_AD_UNIT_ID = "ca-app-pub-6856957073988410/9779999321";
 
@@ -83,7 +85,21 @@ public class MainActivity extends FragmentActivity implements SendScreenFragment
     public static String mReceiveNdefMessage;
 
     //Firebase
-    private InterstitialAd mInterstitialAd;
+    public static InterstitialAd mInterstitialAd;
+    private AdListener mAdListener = new AdListener() {
+        @Override
+        public void onAdLoaded() {
+            super.onAdLoaded();
+            Toast.makeText(mContext, "Ad loaded!", Toast.LENGTH_LONG).show();
+            
+            if (MainActivity.mInterstitialAd.isLoaded()) {
+                Log.d("TAG", "The interstitial is loaded.");
+                MainActivity.mInterstitialAd.show();
+            } else {
+                Log.d("TAG", "The interstitial wasn't loaded yet.");
+            }
+        }
+    };
 
     public MainActivity() {
     }
@@ -101,15 +117,6 @@ public class MainActivity extends FragmentActivity implements SendScreenFragment
         NdefRecord ndefRecord = createTextRecord(mSendNdefMessage);
         Log.d("TAG", "send message is set");
 
-        /*
-        mInterstitialAd.loadAd(new AdRequest.Builder().build());
-        if (mInterstitialAd.isLoaded()) {
-            mInterstitialAd.show();
-            Log.d("TAG", "The interstitial is loaded.");
-        } else {
-            Log.d("TAG", "The interstitial wasn't loaded yet.");
-        }
-         */
         NdefMessage msg = new NdefMessage(
                 new NdefRecord[] { ndefRecord });
         return msg;
@@ -146,11 +153,13 @@ public class MainActivity extends FragmentActivity implements SendScreenFragment
         setContentView(R.layout.activity_main);
 
         mContext = getApplicationContext();
-        /*
-        MobileAds.initialize(this, MY_ADMOB_APP_ID);
+
+        MobileAds.initialize(this, TEST_ADMOB_APP_ID);
         mInterstitialAd = new InterstitialAd(this);
-        mInterstitialAd.setAdUnitId(MY_AD_UNIT_ID);
-         */
+        mInterstitialAd.setAdUnitId(TEST_AD_UNIT_ID);
+        mInterstitialAd.loadAd(new AdRequest.Builder().build());
+        mInterstitialAd.setAdListener(mAdListener);
+
 
         navigation = this.findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
@@ -225,6 +234,8 @@ public class MainActivity extends FragmentActivity implements SendScreenFragment
      * Parses the NDEF Message from the intent and prints to the TextView
      */
     void processNfcIntent(Intent intent) {
+        mPager.setCurrentItem(2);
+
         Parcelable[] rawMsgs = intent.getParcelableArrayExtra(
                 NfcAdapter.EXTRA_NDEF_MESSAGES);
         // only one message sent during the beam
