@@ -62,6 +62,7 @@
     <string name="title_activity_detail">DetailActivity</string>
     <string name="menu_item_save_to_contacts">Save to contacts</string>
     <string name="menu_item_switch_edit_mode">Edit</string>
+    <string name="action_calender_title">Birthday </string>
 
     /*Widget*/
     <string name="appwidget_text">EXAMPLE</string>

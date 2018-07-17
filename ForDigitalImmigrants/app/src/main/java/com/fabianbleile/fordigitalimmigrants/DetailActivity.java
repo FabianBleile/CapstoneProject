@@ -269,56 +269,75 @@ public class DetailActivity extends AppCompatActivity implements View.OnClickLis
         ArrayList<Intent> intentArray = new ArrayList<>();
 
         if(tagResource.equals(this.getResources().getString(R.string.ctv_facebook))){                           // facebook intent is working
-
-            try{
+            if (mContact.getFacebook() != null){
                 addToClipboard(tagResource, mContact.getFacebook());
                 intentArray.add(getPackageManager().getLaunchIntentForPackage("com.facebook.katana"));
                 String facebook = mContact.getFacebook();
                 String facebookKeyWords = facebook.replace(" ", "+");
                 intentArray.add(new Intent(Intent.ACTION_VIEW, getFacebookUri(facebookKeyWords)));
                 return intentArray;
-            }catch (NullPointerException ignored){ }
+            } else {
+                return  null;
+            }
 
-        } else if(tagResource.equals(this.getResources().getString(R.string.ctv_instagram))){                   //instagram intent is working
-
-            try{
+        } else if(tagResource.equals(this.getResources().getString(R.string.ctv_instagram))){
+            if(mContact.getInstagram() != null){
                 addToClipboard(tagResource, mContact.getInstagram());
                 intentArray.add(getPackageManager().getLaunchIntentForPackage("com.instagram.android "));
                 intentArray.add(new Intent(Intent.ACTION_VIEW, getInstagramUri(mContact.getInstagram())));
                 return intentArray;
-        }catch (NullPointerException ignored){ }
+            } else {
+                return null;
+            }
 
         }else if(tagResource.equals(this.getResources().getString(R.string.ctv_snapchat))){                         // snapchat intent ??
-
-            try{
+            if (mContact.getSnapchat() != null) {
                 addToClipboard(tagResource, mContact.getSnapchat());
                 intentArray.add(getPackageManager().getLaunchIntentForPackage("com.snapchat.android"));
                 return intentArray;
-            }catch (NullPointerException ignored){ }
+            } else {
+                return null;
+            }
 
-        }else if(tagResource.equals(this.getResources().getString(R.string.ctv_twitter))){                          // twitter intent ??
-
-            try{
+        }else if(tagResource.equals(this.getResources().getString(R.string.ctv_twitter))){
+            if(mContact.getTwitter() != null){
                 addToClipboard(tagResource, mContact.getTwitter());
                 intentArray.add(new Intent(Intent.ACTION_VIEW, getTwitterUri(mContact.getTwitter())));
                 return intentArray;
-            }catch (NullPointerException ignored){ }
-        } else if (tagResource.equals(this.getResources().getString(R.string.ctv_email))){                           // email intent ??
-            try{
+            } else {
+                return null;
+            }
+        } else if (tagResource.equals(this.getResources().getString(R.string.ctv_email))){
+            if(mContact.getEmail() != null){
                 addToClipboard(tagResource, mContact.getEmail());
-                Intent intent = new Intent(Intent.ACTION_SENDTO);
-                intent.setData(Uri.parse("mailto:")); // only email apps should handle this
-                intent.putExtra(Intent.EXTRA_EMAIL, mContact.getEmail());
+                Intent intent = new Intent(Intent.ACTION_SENDTO)
+                        .setData(Uri.parse("mailto:"))
+                        .putExtra(Intent.EXTRA_EMAIL, mContact.getEmail());
                 //intent.putExtra(Intent.EXTRA_SUBJECT, "Hey there");
                 intentArray.add(intent);
                 return intentArray;
-            }catch (NullPointerException ignored){ }
-        } else if (tagResource.equals(this.getResources().getString(R.string.ctv_birthday))){                           // birthday intent is working
+            } else {
+                return null;
+            }
+        } else if (tagResource.equals(this.getResources().getString(R.string.ctv_birthday))){
+            if (mContact.getBirthday() != null){
                 try{
                     addToClipboard(tagResource, mContact.getBirthday());
 
                     Date date = new SimpleDateFormat("dd.MM.yyyy", Locale.GERMAN).parse(mContact.getBirthday());
                     long dateMillis = date.getTime();
+
+                    String name = "";
+                    if (mContact.getName() != null){
+                        name = mContact.getName();
+                    }
+
+                    Intent intent = new Intent(Intent.ACTION_INSERT)
+                            .setData(CalendarContract.Events.CONTENT_URI)
+                            .putExtra(CalendarContract.Events.TITLE, getResources().getString(R.string.action_calender_title) + name)
+                            .putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, dateMillis)
+                            .putExtra(CalendarContract.Instances.EVENT_ID, 1);
+
                     Uri.Builder builder = CalendarContract.CONTENT_URI.buildUpon();
                     builder.appendPath("time");
                     ContentUris.appendId(builder, dateMillis);
@@ -330,6 +349,9 @@ public class DetailActivity extends AppCompatActivity implements View.OnClickLis
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
+            } else {
+                return null;
+            }
         }
         return null;
     }
