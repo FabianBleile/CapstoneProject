@@ -5,6 +5,11 @@
         android:id="@+id/switch_edit_mode"
         android:title="@string/menu_item_switch_edit_mode"
         app:actionLayout="@layout/switch_item"
-        app:showAsAction="ifRoom"
-        app:actionViewClass="android.support.v7.widget.SwitchCompat" />
+        app:actionViewClass="android.support.v7.widget.SwitchCompat"
+        app:showAsAction="ifRoom"></item>
+    <item
+        android:id="@+id/save_to_contacts"
+        android:icon="@drawable/ic_save_white_24dp"
+        android:title="@string/menu_item_save_to_contacts"
+        app:showAsAction="ifRoom" />
 </menu>

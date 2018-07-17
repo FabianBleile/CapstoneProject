@@ -81,11 +81,12 @@ public class DetailActivity extends AppCompatActivity implements View.OnClickLis
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            /*
+
             case R.id.save_to_contacts :
                 Toast.makeText(this, "Save contact to contacts", Toast.LENGTH_SHORT).show();
+                insertContact();
                 return true;
-             */
+
             case android.R.id.home:
                 NavUtils.navigateUpFromSameTask(this);
                 return true;
@@ -129,22 +130,18 @@ public class DetailActivity extends AppCompatActivity implements View.OnClickLis
     }
 
     // save to contacts
-    private void saveContactToPhone(){
-        ArrayList<ContentProviderOperation> ops =
-                new ArrayList<>();
-
-        ops.add(ContentProviderOperation.newInsert(ContactsContract.Data.CONTENT_URI)
-                //.withValue(ContactsContract.Data.RAW_CONTACT_ID, rawContactId)
-                .withValue(ContactsContract.Data.MIMETYPE, ContactsContract.CommonDataKinds.Phone.CONTENT_ITEM_TYPE)
-                .withValue(ContactsContract.CommonDataKinds.Phone.NUMBER, "1-800-GOOG-411")
-                .withValue(ContactsContract.CommonDataKinds.Phone.TYPE, ContactsContract.CommonDataKinds.Phone.TYPE_CUSTOM)
-                .withValue(ContactsContract.CommonDataKinds.Phone.LABEL, "free directory assistance")
-                .build());
-        try {
-            getContentResolver().applyBatch(ContactsContract.AUTHORITY, ops);
-        } catch (RemoteException | OperationApplicationException e) {
-            e.printStackTrace();
-        }
+    private void insertContact(){
+            Intent intent = new Intent(Intent.ACTION_INSERT)
+                    .setType(ContactsContract.Contacts.CONTENT_TYPE)
+                    .putExtra(ContactsContract.Intents.Insert.NAME, mContact.getName())
+                    .putExtra(ContactsContract.Intents.Insert.EMAIL, mContact.getEmail())
+                    .putExtra(ContactsContract.Intents.Insert.PHONE, mContact.getPhonenumber())
+                    .putExtra(ContactsContract.Intents.Insert.POSTAL, mContact.getLocation())
+                    .putExtra(ContactsContract.Intents.Insert.NOTES, mContact.getFacebook() + mContact.getInstagram() + mContact.getSnapchat() + mContact.getTwitter())
+                    ;
+            if (intent.resolveActivity(getPackageManager()) != null) {
+                startActivity(intent);
+            }
     }
     //----------------------------------------------------------------------------------------------
     //editMode activated creates AlertDialog for entering the information
