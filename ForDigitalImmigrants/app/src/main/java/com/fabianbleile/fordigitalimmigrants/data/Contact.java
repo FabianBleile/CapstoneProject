@@ -3,10 +3,12 @@ package com.fabianbleile.fordigitalimmigrants.data;
 
 import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.Index;
 import android.arch.persistence.room.PrimaryKey;
 import android.os.Parcel;
 import android.os.Parcelable;
-
+//(indices = {@Index(value = {"phonenumber"},
+//        unique = true)})
 @Entity
 public class Contact implements Parcelable{
     @PrimaryKey(autoGenerate = true)

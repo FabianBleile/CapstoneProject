@@ -2,8 +2,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.fabianbleile.fordigitalimmigrants">
 
-    <uses-sdk android:minSdkVersion="16" />
-
     <uses-permission android:name="android.permission.NFC" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <!-- Required permissions for video ads. -->
@@ -14,6 +12,7 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.WRITE_CALENDAR" />
 
     <uses-feature
         android:name="android.hardware.nfc"
@@ -37,11 +36,13 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
             <intent-filter>
-                <action android:name="android.nfc.action.NDEF_DISCOVERED"/>
-                <action android:name="com.fabianbleile.fordigitalimmigrants.LAUNCH"/>
-                <action android:name="com.fabianbleile.fordigitalimmigrants.MAIN"/>
-                <category android:name="android.intent.category.DEFAULT"/>
-                <data android:mimeType="application/vnd.com.fabianbleile.fordigitalimmigrants"/>
+                <action android:name="android.nfc.action.NDEF_DISCOVERED" />
+                <action android:name="com.fabianbleile.fordigitalimmigrants.LAUNCH" />
+                <action android:name="com.fabianbleile.fordigitalimmigrants.MAIN" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+
+                <data android:mimeType="application/vnd.com.fabianbleile.fordigitalimmigrants" />
             </intent-filter>
         </activity>
         <activity
@@ -65,10 +66,18 @@
                 android:resource="@xml/share_contact_widget_info" />
         </receiver>
 
-        <activity android:name=".ShareContactWidgetConfigureActivity">
+        <activity android:name=".Widget.ShareContactWidgetConfigureActivity">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />
             </intent-filter>
+        </activity>
+        <activity
+            android:name=".AdMobActivity"
+            android:label="@string/title_activity_ad_mob"
+            android:parentActivityName=".MainActivity"
+            android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar">
+
         </activity>
     </application>
 

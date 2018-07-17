@@ -9,6 +9,8 @@ import android.graphics.Color;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.nfc.NdefMessage;
 import android.nfc.NdefRecord;
 import android.nfc.NfcAdapter;
@@ -39,9 +41,6 @@ import com.fabianbleile.fordigitalimmigrants.Fragment.ReceiveScreenFragment;
 import com.fabianbleile.fordigitalimmigrants.Fragment.SendScreenFragment;
 import com.fabianbleile.fordigitalimmigrants.Fragment.SettingsScreenFragment;
 import com.fabianbleile.fordigitalimmigrants.data.Contact;
-import com.google.android.gms.ads.AdListener;
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.InterstitialAd;
 import com.google.android.gms.ads.MobileAds;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
@@ -62,44 +61,18 @@ public class MainActivity extends FragmentActivity implements SendScreenFragment
     //general
     public static final String mTagHandmade = "HANDMADETAG";
     public Context mContext;
-
     //content related
     public static ArrayList<Integer> mIcons = new ArrayList<>();
-    private String message;
-
     //final variables
     private static final int REQUEST_ACCESS_CORASE_LOCATION = 1;
-    private static final String TEST_AD_UNIT_ID = "ca-app-pub-3940256099942544/1033173712";
-    private static final String TEST_ADMOB_APP_ID = "ca-app-pub-3940256099942544~3347511713";
-    private static final String MY_ADMOB_APP_ID = "ca-app-pub-6856957073988410~7948042904";
-    private static final String MY_AD_UNIT_ID = "ca-app-pub-6856957073988410/9779999321";
-
     //viewPager with fragments
     private static final int NUM_PAGES = 3;
     private ViewPager mPager;
     private CoordinatorLayout coordinatorLayout;
-
     // NFC
     NfcAdapter mNfcAdapter;
     public static String mSendNdefMessage;
     public static String mReceiveNdefMessage;
-
-    //Firebase
-    public static InterstitialAd mInterstitialAd;
-    private AdListener mAdListener = new AdListener() {
-        @Override
-        public void onAdLoaded() {
-            super.onAdLoaded();
-            Toast.makeText(mContext, "Ad loaded!", Toast.LENGTH_LONG).show();
-            
-            if (MainActivity.mInterstitialAd.isLoaded()) {
-                Log.d("TAG", "The interstitial is loaded.");
-                MainActivity.mInterstitialAd.show();
-            } else {
-                Log.d("TAG", "The interstitial wasn't loaded yet.");
-            }
-        }
-    };
 
     public MainActivity() {
     }
@@ -117,9 +90,8 @@ public class MainActivity extends FragmentActivity implements SendScreenFragment
         NdefRecord ndefRecord = createTextRecord(mSendNdefMessage);
         Log.d("TAG", "send message is set");
 
-        NdefMessage msg = new NdefMessage(
+        return new NdefMessage(
                 new NdefRecord[] { ndefRecord });
-        return msg;
     }
     private NdefRecord createTextRecord (String message)
     {
@@ -154,12 +126,13 @@ public class MainActivity extends FragmentActivity implements SendScreenFragment
 
         mContext = getApplicationContext();
 
-        MobileAds.initialize(this, TEST_ADMOB_APP_ID);
-        mInterstitialAd = new InterstitialAd(this);
-        mInterstitialAd.setAdUnitId(TEST_AD_UNIT_ID);
-        mInterstitialAd.loadAd(new AdRequest.Builder().build());
-        mInterstitialAd.setAdListener(mAdListener);
+        MobileAds.initialize(this, getResources().getString(R.string.TEST_ADMOB_APP_ID));
 
+        //testing ads. move to PushCompleteCallback
+        if(isNetworkAvailable()){
+            Intent intent = new Intent(this, AdMobActivity.class);
+            startActivity(intent);
+        }
 
         navigation = this.findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
@@ -172,17 +145,9 @@ public class MainActivity extends FragmentActivity implements SendScreenFragment
         mPager.addOnPageChangeListener(viewPageOnPageListener);
         mPager.setCurrentItem(1);
 
-        if(mIcons.size() == 0){
-            mIcons.add(R.string.ctv_name);
-            mIcons.add(R.string.ctv_phone_number);
-            mIcons.add(R.string.ctv_email);
-            mIcons.add(R.string.ctv_birthday);
-            mIcons.add(R.string.ctv_hometown);
-            mIcons.add(R.string.ctv_instagram);
-            mIcons.add(R.string.ctv_facebook);
-            mIcons.add(R.string.ctv_snapchat);
-            mIcons.add(R.string.ctv_twitter);
-            mIcons.add(R.string.ctv_currentLocation);
+        if(mIcons.size() == 0){ mIcons.add(R.string.ctv_name);mIcons.add(R.string.ctv_phone_number);mIcons.add(R.string.ctv_email);
+            mIcons.add(R.string.ctv_birthday);mIcons.add(R.string.ctv_hometown);mIcons.add(R.string.ctv_instagram);mIcons.add(R.string.ctv_facebook);
+            mIcons.add(R.string.ctv_snapchat);mIcons.add(R.string.ctv_twitter);mIcons.add(R.string.ctv_currentLocation);
         }
 
         getLastKnownLocation();
@@ -217,12 +182,9 @@ public class MainActivity extends FragmentActivity implements SendScreenFragment
         if(NfcAdapter.ACTION_NDEF_DISCOVERED.equals(getIntent().getAction())){
             Log.d("TAG", "nfc intent received");
             processNfcIntent(getIntent());
-        }
-        /*
-        else if (Intent.ACTION_SEND.equals(getIntent().getAction())){
+        }else if (Intent.ACTION_SEND.equals(getIntent().getAction())){
             processWidgetIntent();
         }
-         */
     }
 
     private void processWidgetIntent() {
@@ -241,7 +203,7 @@ public class MainActivity extends FragmentActivity implements SendScreenFragment
         // only one message sent during the beam
         NdefMessage msg = (NdefMessage) rawMsgs[0];
         // record 0 contains the MIME type, record 1 is the AAR, if present
-         message = new String(msg.getRecords()[0].getPayload());
+        String message = new String(msg.getRecords()[0].getPayload());
         mReceiveNdefMessage = message;
 
         // parse String to contact object
@@ -278,9 +240,6 @@ public class MainActivity extends FragmentActivity implements SendScreenFragment
                         new String[]{Manifest.permission.ACCESS_COARSE_LOCATION},
                         REQUEST_ACCESS_CORASE_LOCATION);
 
-                // MY_PERMISSIONS_REQUEST_READ_CONTACTS is an
-                // app-defined int constant. The callback method gets the
-                // result of the request.
         } } else {FusedLocationProviderClient mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
             mFusedLocationClient.getLastLocation()
                     .addOnSuccessListener(this, new OnSuccessListener<Location>() {
@@ -359,6 +318,13 @@ public class MainActivity extends FragmentActivity implements SendScreenFragment
         String state = Environment.getExternalStorageState();
         return Environment.MEDIA_MOUNTED.equals(state) ||
                 Environment.MEDIA_MOUNTED_READ_ONLY.equals(state);
+    }
+
+    private boolean isNetworkAvailable() {
+        ConnectivityManager connectivityManager
+                = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+        return activeNetworkInfo != null && activeNetworkInfo.isConnected();
     }
 
     //-------------------------------------------------------------------------------------------------------------------

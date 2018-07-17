@@ -66,12 +66,16 @@ public class ImageAdapter extends BaseAdapter {
             imageView.setImageResource(R.drawable.ic_snapchat);
         }else if(iconDescription == mContext.getResources().getString(R.string.ctv_twitter)){
             imageView.setImageResource(R.drawable.ic_twitter);
-        }else {
+        } else {
             imageView.setImageResource(mIconImages[0]);
             String iconCapitalLetter = iconDescription.toString().substring(0,1);
             textViewCapitalIcon.setText(iconCapitalLetter);
         }
-        textViewBubbleDescription.setText(iconDescription);
+        if (iconDescription == mContext.getResources().getString(R.string.ctv_birthday)){
+            textViewBubbleDescription.setText(iconDescription + " (dd.MM.yyyy)");
+        } else {
+            textViewBubbleDescription.setText(iconDescription);
+        }
 
         if(mContact != null){
             String[] mFriendsIconContentLink = {

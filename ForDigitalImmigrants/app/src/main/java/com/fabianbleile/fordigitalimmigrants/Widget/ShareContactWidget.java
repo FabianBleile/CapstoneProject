@@ -1,4 +1,4 @@
-package com.fabianbleile.fordigitalimmigrants;
+package com.fabianbleile.fordigitalimmigrants.Widget;
 
 import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
@@ -6,6 +6,9 @@ import android.appwidget.AppWidgetProvider;
 import android.content.Context;
 import android.content.Intent;
 import android.widget.RemoteViews;
+
+import com.fabianbleile.fordigitalimmigrants.MainActivity;
+import com.fabianbleile.fordigitalimmigrants.R;
 
 /**
  * Implementation of App Widget functionality.
@@ -53,6 +56,15 @@ public class ShareContactWidget extends AppWidgetProvider {
     @Override
     public void onDisabled(Context context) {
         // Enter relevant functionality for when the last widget is disabled
+    }
+
+    public ShareContactWidget() {
+        super();
+    }
+
+    @Override
+    public void onReceive(Context context, Intent intent) {
+        super.onReceive(context, intent);
     }
 }
 

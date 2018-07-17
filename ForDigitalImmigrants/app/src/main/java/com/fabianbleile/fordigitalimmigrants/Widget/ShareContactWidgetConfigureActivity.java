@@ -1,31 +1,20 @@
-package com.fabianbleile.fordigitalimmigrants;
+package com.fabianbleile.fordigitalimmigrants.Widget;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.appwidget.AppWidgetManager;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.Switch;
-import android.widget.Toast;
 
+import com.fabianbleile.fordigitalimmigrants.MainActivity;
+import com.fabianbleile.fordigitalimmigrants.R;
 import com.fabianbleile.fordigitalimmigrants.data.Contact;
 import com.google.gson.Gson;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.Writer;
-import java.sql.Time;
 import java.util.ArrayList;
-import java.util.List;
 
 import static com.fabianbleile.fordigitalimmigrants.R.id.ctv_birthday_widget;
 import static com.fabianbleile.fordigitalimmigrants.R.id.ctv_currentLocation_widget;
@@ -43,8 +32,6 @@ import static com.fabianbleile.fordigitalimmigrants.R.id.ctv_twitter_widget;
  */
 public class ShareContactWidgetConfigureActivity extends Activity {
 
-    private static final String PREFS_NAME = "com.fabianbleile.fordigitalimmigrants.ShareContactWidget";
-    private static final String PREF_PREFIX_KEY = "appwidget_";
     int mAppWidgetId = AppWidgetManager.INVALID_APPWIDGET_ID;
     ArrayList<Switch> switches = new ArrayList<>();
     View.OnClickListener mOnClickListener = new View.OnClickListener() {
