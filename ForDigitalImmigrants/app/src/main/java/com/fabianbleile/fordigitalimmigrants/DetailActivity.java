@@ -45,6 +45,7 @@ import java.util.Locale;
 public class DetailActivity extends AppCompatActivity implements View.OnClickListener {
     private Contact mContact;
     private boolean editMode;
+    private ImageAdapter mImageAdapter;
 
     private AdapterView.OnItemLongClickListener gvOnLongClickListener = new AdapterView.OnItemLongClickListener() {
         @Override
@@ -121,12 +122,18 @@ public class DetailActivity extends AppCompatActivity implements View.OnClickLis
         if (mContact != null) {
             Log.e("Test", mContact.toString());
         }
-        ImageAdapter mImageAdapter = new ImageAdapter(this, true, mContact);
+        mImageAdapter = new ImageAdapter(this, true, mContact);
 
         GridView gridViewSettingsIcons = findViewById(R.id.gv_settings_screen);
         gridViewSettingsIcons.setAdapter(mImageAdapter);
         gridViewSettingsIcons.setOnItemClickListener(gvOnClickListener);
         gridViewSettingsIcons.setOnItemLongClickListener(gvOnLongClickListener);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        ReceiveScreenFragment.viewModel.addItem(mContact);
     }
 
     // save to contacts
@@ -160,7 +167,7 @@ public class DetailActivity extends AppCompatActivity implements View.OnClickLis
 
             public void onClick(DialogInterface dialog, int which) {
                 updateContact(i, etInsertInfo.getText().toString());
-                ReceiveScreenFragment.viewModel.addItem(mContact);
+                mImageAdapter.notifyDataChange(mContact);
             }
         });
         AlertDialog ad = dialogBuilder.create();

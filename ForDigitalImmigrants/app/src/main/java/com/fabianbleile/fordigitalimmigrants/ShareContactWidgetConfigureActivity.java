@@ -1,4 +1,4 @@
-package com.fabianbleile.fordigitalimmigrants.Widget;
+package com.fabianbleile.fordigitalimmigrants;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -9,8 +9,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Switch;
 
-import com.fabianbleile.fordigitalimmigrants.MainActivity;
-import com.fabianbleile.fordigitalimmigrants.R;
 import com.fabianbleile.fordigitalimmigrants.data.Contact;
 import com.google.gson.Gson;
 

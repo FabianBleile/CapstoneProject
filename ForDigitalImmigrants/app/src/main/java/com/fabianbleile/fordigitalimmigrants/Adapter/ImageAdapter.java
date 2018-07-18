@@ -108,4 +108,9 @@ public class ImageAdapter extends BaseAdapter {
     public Integer[] mIconImages = {
         R.drawable.ic_circle_primary
     };
+
+    public void notifyDataChange(Contact contact){
+        mContact = contact;
+        notifyDataSetChanged();
+    }
 }

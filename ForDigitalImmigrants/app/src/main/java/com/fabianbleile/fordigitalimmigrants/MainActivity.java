@@ -128,12 +128,6 @@ public class MainActivity extends FragmentActivity implements SendScreenFragment
 
         MobileAds.initialize(this, getResources().getString(R.string.TEST_ADMOB_APP_ID));
 
-        //testing ads. move to PushCompleteCallback
-        if(isNetworkAvailable()){
-            Intent intent = new Intent(this, AdMobActivity.class);
-            startActivity(intent);
-        }
-
         navigation = this.findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
@@ -331,6 +325,11 @@ public class MainActivity extends FragmentActivity implements SendScreenFragment
     @Override
     public void onNdefPushComplete(NfcEvent nfcEvent) {
         showSnackbarForDefaultFile();
+        //testing ads.
+        if(isNetworkAvailable()){
+            Intent intent = new Intent(this, AdMobActivity.class);
+            startActivity(intent);
+        }
     }
 
     private void showSnackbarForDefaultFile() {
