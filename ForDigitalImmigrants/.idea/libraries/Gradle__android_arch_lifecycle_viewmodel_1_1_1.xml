@@ -1,8 +1,8 @@
 <component name="libraryTable">
   <library name="Gradle: android.arch.lifecycle:viewmodel-1.1.1">
     <CLASSES>
-      <root url="jar://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/viewmodel-1.1.1.aar/67b0a32c2d9e5bb0ccfd7fa3f7e476ee/jars/classes.jar!/" />
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/viewmodel-1.1.1.aar/67b0a32c2d9e5bb0ccfd7fa3f7e476ee/res" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/viewmodel-1.1.1.aar/9c0d6a53eaefe10aeb92494e9a5ca4da/res" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/viewmodel-1.1.1.aar/9c0d6a53eaefe10aeb92494e9a5ca4da/jars/classes.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES>
