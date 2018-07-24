@@ -294,15 +294,6 @@ public class DetailActivity extends AppCompatActivity implements View.OnClickLis
                 return null;
             }
 
-        }else if(tagResource.equals(this.getResources().getString(R.string.ctv_snapchat))){                         // snapchat intent ??
-            if (mContact.getSnapchat() != null) {
-                addToClipboard(tagResource, mContact.getSnapchat());
-                intentArray.add(getPackageManager().getLaunchIntentForPackage("com.snapchat.android"));
-                return intentArray;
-            } else {
-                return null;
-            }
-
         }else if(tagResource.equals(this.getResources().getString(R.string.ctv_twitter))){
             if(mContact.getTwitter() != null){
                 addToClipboard(tagResource, mContact.getTwitter());
@@ -358,6 +349,19 @@ public class DetailActivity extends AppCompatActivity implements View.OnClickLis
             }
         }
         return null;
+
+        /*
+        else if(tagResource.equals(this.getResources().getString(R.string.ctv_snapchat))){                         // snapchat intent ??
+            if (mContact.getSnapchat() != null) {
+                addToClipboard(tagResource, mContact.getSnapchat());
+                intentArray.add(getPackageManager().getLaunchIntentForPackage("com.snapchat.android"));
+                return intentArray;
+            } else {
+                return null;
+            }
+
+        }
+        */
     }
     private Uri getFacebookUri(String facebookKeyWords) {
         // example link             https://  www.facebook.com       /search   /str     /prename+lastname /keywords_search
