@@ -19,8 +19,22 @@ public class LastContactWidget extends AppWidgetProvider {
     static void updateAppWidget(Context context, AppWidgetManager appWidgetManager,
                                 int appWidgetId) {
 
+        CharSequence widgetText = context.getString(R.string.appwidget_text);
+        RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.last_contact_widget);
+
+        // Set the ListWidgetService intent to act as the adapter for the GridView
+        Intent intent = new Intent(context, RemoteViewsService.class);
+        intent.putExtra(LAST_CONTACT_ID, lastContactId);
+        views.setTextViewText(R.id.tv_title, widgetText);
+        views.setRemoteAdapter(R.id.listView, intent);
+
+        // Set the PlantDetailActivity intent to launch when clicked
+        Intent appIntent = new Intent(context, MainActivity.class);
+        PendingIntent appPendingIntent = PendingIntent.getActivity(context, 0, appIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+        views.setPendingIntentTemplate(R.id.listView, appPendingIntent);
+
         // Instruct the widget manager to update the widget
-        appWidgetManager.updateAppWidget(appWidgetId, getRemoteViews(context));
+        appWidgetManager.updateAppWidget(appWidgetId, views);
     }
 
     @Override
@@ -52,19 +66,6 @@ public class LastContactWidget extends AppWidgetProvider {
         }
     }
 
-    public static RemoteViews getRemoteViews(Context context) {
-        CharSequence widgetText = context.getString(R.string.appwidget_text);
-        RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.last_contact_widget);
-        // Set the GridWidgetService intent to act as the adapter for the GridView
-        Intent intent = new Intent(context, RemoteViewsService.class);
-        intent.putExtra(LAST_CONTACT_ID, lastContactId);
-        views.setTextViewText(R.id.tv_title, widgetText);
-        views.setRemoteAdapter(R.id.listView, intent);
-        // Set the PlantDetailActivity intent to launch when clicked
-        Intent appIntent = new Intent(context, MainActivity.class);
-        PendingIntent appPendingIntent = PendingIntent.getActivity(context, 0, appIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-        views.setPendingIntentTemplate(R.id.listView, appPendingIntent);
-        return views;
-    }
+
 }
 

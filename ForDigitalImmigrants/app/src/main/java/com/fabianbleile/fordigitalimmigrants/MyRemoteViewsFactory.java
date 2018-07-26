@@ -15,8 +15,7 @@ class MyRemoteViewsFactory implements RemoteViewsService.RemoteViewsFactory {
 
     Context mContext;
     static List<Contact> contacts;
-    static Contact contact;
-    private static Integer lastContactId;
+    private static int lastContactId;
 
     public MyRemoteViewsFactory(Context applicationContext, Intent intent) {
         mContext = applicationContext;
@@ -32,11 +31,9 @@ class MyRemoteViewsFactory implements RemoteViewsService.RemoteViewsFactory {
     public void onDataSetChanged() {
         AppDatabase database = AppDatabase.getDatabase(mContext);
         int[] contactIdList = new int[1];
-        contactIdList[0] = lastContactId;
+        //contactIdList[0] = lastContactId;
+        contactIdList[0] = 7;
         contacts = database.contactDao().loadAllByIds(contactIdList);
-        if(contacts != null){
-            contact = contacts.get(0);
-        }
     }
 
     @Override
@@ -46,12 +43,13 @@ class MyRemoteViewsFactory implements RemoteViewsService.RemoteViewsFactory {
 
     @Override
     public int getCount() {
-        return contacts.size();
+        return contacts == null ? 0 : contacts.size();
     }
 
     @Override
     public RemoteViews getViewAt(int i) {
 
+        Contact contact = contacts.get(i);
         RemoteViews rv = new RemoteViews(
                 mContext.getPackageName(),
                 R.layout.contact_list_widget_item)

@@ -123,7 +123,8 @@ public class ReceiveScreenFragment extends Fragment implements View.OnLongClickL
     @Override
     public boolean onLongClick(View view) {
         if(view.getTag() instanceof Contact && view.getTag() != null){
-            createDeleteAlertDialog((Contact) view.getTag());
+            Contact contact = (Contact) view.getTag();
+            createDeleteAlertDialog(contact);
         } else {
             Toast.makeText(getContext(), "" + view.getTag(), Toast.LENGTH_SHORT).show();
         }

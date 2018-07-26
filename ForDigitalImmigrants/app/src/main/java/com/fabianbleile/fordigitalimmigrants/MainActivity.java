@@ -162,6 +162,11 @@ public class MainActivity extends FragmentActivity implements
                 }
             }
         }
+
+        int INT = 7;
+        Long output = (long) INT;
+        //sendInsertedContactId(output);
+        updateLastContactWidget();
     }
 
     @Override
@@ -225,7 +230,7 @@ public class MainActivity extends FragmentActivity implements
                 .getAppWidgetIds(new ComponentName(getApplication(), LastContactWidget.class));
         intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, ids);
         int outputInt = output.intValue();
-        intent.putExtra(LastContactWidget.LAST_CONTACT_ID, output);
+        intent.putExtra(LastContactWidget.LAST_CONTACT_ID, outputInt);
         sendBroadcast(intent);
     }
 
