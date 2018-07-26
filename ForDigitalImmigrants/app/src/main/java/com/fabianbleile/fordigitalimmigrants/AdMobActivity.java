@@ -15,9 +15,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 public class AdMobActivity extends Activity {
-    // Remove the below line after defining your own ad unit ID.
-    private static final String TOAST_TEXT = "Test ads are being shown. "
-            + "To show live ads, replace the ad unit ID in res/values/strings.xml with your own ad unit ID.";
 
     private InterstitialAd mInterstitialAd;
     private ProgressBar progressBar;
@@ -76,7 +73,7 @@ public class AdMobActivity extends Activity {
         AdRequest adRequest = new AdRequest.Builder()
                 // Add a test device to show Test Ads
                 .addTestDevice(AdRequest.DEVICE_ID_EMULATOR) // comment out when publishing
-                .addTestDevice("CC5F2C72DF2B356BBF0DA198")   // comment out when publishing
+                .addTestDevice(getResources().getString(R.string.addTestDevice))   // comment out when publishing
                 .build();
         mInterstitialAd.loadAd(adRequest);
     }

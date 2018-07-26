@@ -84,7 +84,7 @@ public class DetailActivity extends AppCompatActivity implements View.OnClickLis
         switch (item.getItemId()) {
 
             case R.id.save_to_contacts :
-                Toast.makeText(this, "Save contact to contacts", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, getResources().getString(R.string.saveContactToContacts), Toast.LENGTH_SHORT).show();
                 insertContact();
                 return true;
 
@@ -115,13 +115,10 @@ public class DetailActivity extends AppCompatActivity implements View.OnClickLis
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
 
-        Bundle b = getIntent().getBundleExtra("bundle");
+        Bundle b = getIntent().getBundleExtra(getResources().getString(R.string.bundle));
         b.setClassLoader(Contact.class.getClassLoader());
-        mContact = b.getParcelable("selectedContact");
+        mContact = b.getParcelable(getResources().getString(R.string.selectedContact));
 
-        if (mContact != null) {
-            Log.e("Test", mContact.toString());
-        }
         mImageAdapter = new ImageAdapter(this, true, mContact);
 
         GridView gridViewSettingsIcons = findViewById(R.id.gv_settings_screen);
@@ -275,7 +272,7 @@ public class DetailActivity extends AppCompatActivity implements View.OnClickLis
         if(tagResource.equals(this.getResources().getString(R.string.ctv_facebook))){                           // facebook intent is working
             if (mContact.getFacebook() != null){
                 addToClipboard(tagResource, mContact.getFacebook());
-                intentArray.add(getPackageManager().getLaunchIntentForPackage("com.facebook.katana"));
+                intentArray.add(getPackageManager().getLaunchIntentForPackage(getResources().getString(R.string.comfacebookkatana)));
                 String facebook = mContact.getFacebook();
                 String facebookKeyWords = facebook.replace(" ", "+");
                 intentArray.add(new Intent(Intent.ACTION_VIEW, getFacebookUri(facebookKeyWords)));
@@ -287,7 +284,7 @@ public class DetailActivity extends AppCompatActivity implements View.OnClickLis
         } else if(tagResource.equals(this.getResources().getString(R.string.ctv_instagram))){
             if(mContact.getInstagram() != null){
                 addToClipboard(tagResource, mContact.getInstagram());
-                intentArray.add(getPackageManager().getLaunchIntentForPackage("com.instagram.android "));
+                intentArray.add(getPackageManager().getLaunchIntentForPackage( getResources().getString(R.string.cominstagramandroid)));
                 intentArray.add(new Intent(Intent.ACTION_VIEW, getInstagramUri(mContact.getInstagram())));
                 return intentArray;
             } else {
@@ -306,7 +303,7 @@ public class DetailActivity extends AppCompatActivity implements View.OnClickLis
             if(mContact.getEmail() != null){
                 addToClipboard(tagResource, mContact.getEmail());
                 Intent intent = new Intent(Intent.ACTION_SENDTO)
-                        .setData(Uri.parse("mailto:"))
+                        .setData(Uri.parse(getResources().getString(R.string.mailto)))
                         .putExtra(Intent.EXTRA_EMAIL, mContact.getEmail());
                 //intent.putExtra(Intent.EXTRA_SUBJECT, "Hey there");
                 intentArray.add(intent);
@@ -319,7 +316,7 @@ public class DetailActivity extends AppCompatActivity implements View.OnClickLis
                 try{
                     addToClipboard(tagResource, mContact.getBirthday());
 
-                    Date date = new SimpleDateFormat("dd.MM.yyyy", Locale.GERMAN).parse(mContact.getBirthday());
+                    Date date = new SimpleDateFormat(getResources().getString(R.string.dateFromPattern), Locale.GERMAN).parse(mContact.getBirthday());
                     long dateMillis = date.getTime();
 
                     String name = "";
@@ -367,20 +364,20 @@ public class DetailActivity extends AppCompatActivity implements View.OnClickLis
         // example link             https://  www.facebook.com       /search   /str     /prename+lastname /keywords_search
         // stackoverflow example    https://  www.myawesomesite.com  /turtles  /types   ?type=1     &sort=relevance     #section-name
         Uri.Builder builder = new Uri.Builder();
-        builder.scheme("https")
-                .authority("www.facebook.com")
-                .appendPath("search")
-                .appendPath("str")
+        builder.scheme(getResources().getString(R.string.httpsScheme))
+                .authority(getResources().getString(R.string.facebookWebsite))
+                .appendPath(getResources().getString(R.string.search))
+                .appendPath(getResources().getString(R.string.str))
                 .appendPath(facebookKeyWords)
-                .appendPath("keywords_search")
+                .appendPath(getResources().getString(R.string.keywords_search))
         ;
         return builder.build();
     }
     private Uri getInstagramUri(String username){
         //https://www.instagram.com/kaddabra.ina/
         Uri.Builder builder = new Uri.Builder();
-        builder.scheme("https")
-                .authority("www.instagram.com")
+        builder.scheme(getResources().getString(R.string.httpsScheme))
+                .authority(getResources().getString(R.string.instagramWebsite))
                 .appendPath(username)
         ;
         return builder.build();
@@ -388,8 +385,8 @@ public class DetailActivity extends AppCompatActivity implements View.OnClickLis
     private Uri getTwitterUri(String username){
         //https://twitter.com/realdonaldtrump
         Uri.Builder builder = new Uri.Builder();
-        builder.scheme("https")
-                .authority("twitter.com")
+        builder.scheme(getResources().getString(R.string.httpsScheme))
+                .authority(getResources().getString(R.string.twitterWebsite))
                 .appendPath(username)
         ;
         return builder.build();

@@ -35,7 +35,7 @@
 
     /*Error Messages*/
     <string name="error_noValueDefined">No information given for </string>
-    <string name="error_couldNotPutJsonObject">Could not put JsonObject</string>
+    <string name="error_couldNotPutJsonObject" translatable="false">Could not put JsonObject</string>
 
     /*Toast Messages*/
     <string name="yes">YES</string>
@@ -59,24 +59,49 @@
 
 
     /*Detail Activity*/
-    <string name="title_activity_detail">DetailActivity</string>
+    <string name="title_activity_detail" translatable="false">DetailActivity</string>
     <string name="menu_item_save_to_contacts">Save to contacts</string>
     <string name="menu_item_switch_edit_mode">Edit</string>
     <string name="action_calender_title">Birthday </string>
 
     /*Widget*/
-    <string name="appwidget_text">EXAMPLE</string>
+    <string name="appwidget_text">Last received contact</string>
     <string name="configure">Configure</string>
     <string name="add_widget">Add widget</string>
-    <string name="title_activity_ad_mob">AdMobActivity</string>
+    <string name="title_activity_ad_mob" translatable="false">AdMobActivity</string>
 
-    <string name="action_settings">Settings</string>
+    <string name="action_settings" translatable="false">Settings</string>
 
     /*AdMob*/
     <string name="interstitial_loading_tv">Ad is loading &#8230; </string>
-    <string name="TEST_AD_UNIT_ID">ca-app-pub-3940256099942544/1033173712</string>
-    <string name="TEST_ADMOB_APP_ID">ca-app-pub-3940256099942544~3347511713</string>
-    <string name="MY_ADMOB_APP_ID">ca-app-pub-6856957073988410~7948042904</string>
-    <string name="MY_AD_UNIT_ID">ca-app-pub-6856957073988410/9779999321</string>
+    <string name="TEST_AD_UNIT_ID" translatable="false">ca-app-pub-3940256099942544/1033173712</string>
+    <string name="TEST_ADMOB_APP_ID" translatable="false">ca-app-pub-3940256099942544~3347511713</string>
+    <string name="MY_ADMOB_APP_ID" translatable="false">ca-app-pub-6856957073988410~7948042904</string>
+    <string name="MY_AD_UNIT_ID" translatable="false">ca-app-pub-6856957073988410/9779999321</string>
+    <string name="label_bt_send">send</string>
+    <string name="tv_send_message">Insert here some kind words to send ...</string>
 
+    /*Database*/
+    <string name="database_name" translatable="false">nfc_contacts_database</string>
+
+    /**/
+    <string name="selectedContact" translatable="false">selectedContact</string>
+    <string name="bundle" translatable="false">bundle</string>
+    <string name="implementInterface" translatable="false"> must implement Interface</string>
+    <string name="addTestDevice" translatable="false">CC5F2C72DF2B356BBF0DA198</string>
+    <string name="saveContactToContacts" translatable="false">Save contact to contacts</string>
+    <string name="comfacebookkatana" translatable="false">com.facebook.katana</string>
+    <string name="cominstagramandroid" translatable="false">com.instagram.android</string>
+    <string name="mailto" translatable="false">mailto:</string>
+    <string name="dateFromPattern" translatable="false">dd.MM.yyyy</string>
+    <string name="httpsScheme" translatable="false">https</string>
+    <string name="facebookWebsite" translatable="false">www.facebook.com</string>
+    <string name="instagramWebsite" translatable="false">www.instagram.com</string>
+    <string name="twitterWebsite" translatable="false">twitter.com</string>
+    <string name="search" translatable="false">search</string>
+    <string name="str" translatable="false">str</string>
+    <string name="keywords_search" translatable="false">keywords_search</string>
+    <string name="defaultContactString" translatable="false">defaultContactString</string>
+    <string name="Location" translatable="false">Location</string>
+    <string name="mimetype" translatable="false">application/vnd.com.fabianbleile.fordigitalimmigrants</string>
 </resources>

@@ -93,10 +93,6 @@ public class ReceiveScreenFragment extends Fragment implements View.OnLongClickL
         return view;
     }
 
-    public static void onFileIncome(Contact contact){
-        viewModel.addItem(contact);
-    }
-
 
     // Undo functionality
     public void onItemDeleted(Contact contact) {
@@ -139,9 +135,9 @@ public class ReceiveScreenFragment extends Fragment implements View.OnLongClickL
         Contact selectedContact = (Contact) view.getTag();
 
         Bundle b = new Bundle();
-        b.putParcelable("selectedContact", (Parcelable) selectedContact);
+        b.putParcelable(getResources().getString(R.string.selectedContact), (Parcelable) selectedContact);
         Intent intent = new Intent(getContext(), DetailActivity.class);
-        intent.putExtra("bundle",b);
+        intent.putExtra(getResources().getString(R.string.bundle),b);
         intent.setAction(Intent.ACTION_ATTACH_DATA);
 
         startActivity(intent);

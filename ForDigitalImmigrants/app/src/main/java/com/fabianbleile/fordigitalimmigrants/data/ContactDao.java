@@ -27,7 +27,7 @@ public interface ContactDao {
 
     //(onConflict = OnConflictStrategy.REPLACE)
     @Insert
-    void insertContact(Contact contact);
+    long insertContact(Contact contact);
 
     @Delete
     void delete(Contact contact);

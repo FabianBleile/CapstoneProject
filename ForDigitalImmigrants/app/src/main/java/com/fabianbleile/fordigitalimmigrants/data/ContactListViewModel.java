@@ -5,7 +5,6 @@ import android.arch.lifecycle.AndroidViewModel;
 import android.arch.lifecycle.LiveData;
 import android.os.AsyncTask;
 import android.support.annotation.NonNull;
-import android.util.Log;
 
 import java.util.List;
 
@@ -32,18 +31,22 @@ public class ContactListViewModel extends AndroidViewModel {
         new insertAsyncTask(appDatabase).execute(contact);
     }
 
-    private static class insertAsyncTask extends AsyncTask<Contact, Void, Void>{
+    private static class insertAsyncTask extends AsyncTask<Contact, Void, Long>{
         private AppDatabase db;
+        private AsyncResponse delegate = null;
 
         insertAsyncTask(AppDatabase appDatabase) {
             db = appDatabase;
         }
 
         @Override
-        protected Void doInBackground(final Contact... params) {
-            Log.e("insertAsyncTask", params[0] + "     "+db);
-            db.contactDao().insertContact(params[0]);
-            return null;
+        protected Long doInBackground(final Contact... params) {
+            return db.contactDao().insertContact(params[0]);
+        }
+
+        @Override
+        protected void onPostExecute(Long Long) {
+            delegate.onProcessFinish(Long);
         }
     }
 
@@ -63,5 +66,9 @@ public class ContactListViewModel extends AndroidViewModel {
             db.contactDao().delete(params[0]);
             return null;
         }
+    }
+
+    public interface AsyncResponse {
+        public void onProcessFinish(Long output);
     }
 }

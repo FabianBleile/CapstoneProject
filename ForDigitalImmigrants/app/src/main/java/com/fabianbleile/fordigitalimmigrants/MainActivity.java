@@ -1,6 +1,8 @@
 package com.fabianbleile.fordigitalimmigrants;
 
 import android.Manifest;
+import android.appwidget.AppWidgetManager;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -22,18 +24,17 @@ import android.os.Parcelable;
 import android.preference.PreferenceManager;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
-import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentStatePagerAdapter;
+import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
@@ -41,6 +42,7 @@ import com.fabianbleile.fordigitalimmigrants.Fragment.ReceiveScreenFragment;
 import com.fabianbleile.fordigitalimmigrants.Fragment.SendScreenFragment;
 import com.fabianbleile.fordigitalimmigrants.Fragment.SettingsScreenFragment;
 import com.fabianbleile.fordigitalimmigrants.data.Contact;
+import com.fabianbleile.fordigitalimmigrants.data.ContactListViewModel;
 import com.google.android.gms.ads.MobileAds;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
@@ -56,11 +58,15 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-public class MainActivity extends FragmentActivity implements SendScreenFragment.OnReadyButtonClickedInterface, NfcAdapter.CreateNdefMessageCallback, NfcAdapter.OnNdefPushCompleteCallback {
+public class MainActivity extends FragmentActivity implements
+        SendScreenFragment.OnReadyButtonClickedInterface,
+        NfcAdapter.CreateNdefMessageCallback,
+        NfcAdapter.OnNdefPushCompleteCallback,
+        ContactListViewModel.AsyncResponse{
 
     //general
     public static final String mTagHandmade = "HANDMADETAG";
-    public Context mContext;
+    public static Context mContext;
     //content related
     public static ArrayList<Integer> mIcons = new ArrayList<>();
     //final variables
@@ -88,7 +94,6 @@ public class MainActivity extends FragmentActivity implements SendScreenFragment
     @Override
     public NdefMessage createNdefMessage(NfcEvent nfcEvent) {
         NdefRecord ndefRecord = createTextRecord(mSendNdefMessage);
-        Log.d("TAG", "send message is set");
 
         return new NdefMessage(
                 new NdefRecord[] { ndefRecord });
@@ -110,11 +115,11 @@ public class MainActivity extends FragmentActivity implements SendScreenFragment
             payload.write(language, 0, languageSize);
             payload.write(text, 0, textLength);
 
-            return new NdefRecord(NdefRecord.TNF_MIME_MEDIA, ("application/vnd.com.fabianbleile.fordigitalimmigrants").getBytes(), new byte[0], payload.toByteArray());
+            return new NdefRecord(NdefRecord.TNF_MIME_MEDIA, (getResources().getString(R.string.mimetype)).getBytes(), new byte[0], payload.toByteArray());
         }
         catch (UnsupportedEncodingException e)
         {
-            Log.e("createTextRecord", e.getMessage());
+            //Log.e("createTextRecord", e.getMessage());
         }
         return null;
     }
@@ -128,16 +133,15 @@ public class MainActivity extends FragmentActivity implements SendScreenFragment
 
         MobileAds.initialize(this, getResources().getString(R.string.TEST_ADMOB_APP_ID));
 
-        navigation = this.findViewById(R.id.navigation);
-        navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
-
         coordinatorLayout = findViewById(R.id.coordinatorLayout);
 
         mPager = findViewById(R.id.viewPager);
-        PagerAdapter mPagerAdapter = new ScreenSlidePagerAdapter(getSupportFragmentManager());
+        PagerAdapter mPagerAdapter = new SimpleFragmentPagerAdapter(this, getSupportFragmentManager());
         mPager.setAdapter(mPagerAdapter);
-        mPager.addOnPageChangeListener(viewPageOnPageListener);
         mPager.setCurrentItem(1);
+
+        TabLayout tabLayout = this.findViewById(R.id.tabs);
+        tabLayout.setupWithViewPager(mPager);
 
         if(mIcons.size() == 0){ mIcons.add(R.string.ctv_name);mIcons.add(R.string.ctv_phone_number);mIcons.add(R.string.ctv_email);
             mIcons.add(R.string.ctv_birthday);mIcons.add(R.string.ctv_hometown);mIcons.add(R.string.ctv_instagram);mIcons.add(R.string.ctv_facebook);
@@ -170,11 +174,9 @@ public class MainActivity extends FragmentActivity implements SendScreenFragment
     public void onResume() {
         super.onResume();
 
-        Log.d("TAG", "intent received" + getIntent().getAction()+ getIntent().getDataString());
         // Check to see that the Activity started due to an Android Beam
 
         if(NfcAdapter.ACTION_NDEF_DISCOVERED.equals(getIntent().getAction())){
-            Log.d("TAG", "nfc intent received");
             processNfcIntent(getIntent());
         }else if (Intent.ACTION_SEND.equals(getIntent().getAction())){
             processWidgetIntent();
@@ -182,7 +184,7 @@ public class MainActivity extends FragmentActivity implements SendScreenFragment
     }
 
     private void processWidgetIntent() {
-        mSendNdefMessage = getDefaults("defaultContactString", this);
+        mSendNdefMessage = getDefaults(getResources().getString(R.string.defaultContactString), this);
         Toast.makeText(mContext, R.string.action_pressSend, Toast.LENGTH_SHORT).show();
     }
 
@@ -204,7 +206,35 @@ public class MainActivity extends FragmentActivity implements SendScreenFragment
         Contact contact = getContactFromJsonString(message);
 
         // add contact to room database
-        ReceiveScreenFragment.onFileIncome(contact);
+        ReceiveScreenFragment.viewModel.addItem(contact);
+        // when Asnc Task is done onProcessFinish is called
+    }
+
+    @Override
+    public void onProcessFinish(Long output) {
+        sendInsertedContactId(output);
+        updateLastContactWidget();
+    }
+
+    private void sendInsertedContactId(Long output) {
+        Intent intent = new Intent(this, LastContactWidget.class);
+        intent.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
+        // Use an array and EXTRA_APPWIDGET_IDS instead of AppWidgetManager.EXTRA_APPWIDGET_ID,
+        // since it seems the onUpdate() is only fired on that:
+        int[] ids = AppWidgetManager.getInstance(getApplication())
+                .getAppWidgetIds(new ComponentName(getApplication(), LastContactWidget.class));
+        intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, ids);
+        int outputInt = output.intValue();
+        intent.putExtra(LastContactWidget.LAST_CONTACT_ID, output);
+        sendBroadcast(intent);
+    }
+
+    private void updateLastContactWidget() {
+        AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(mContext);
+        int appWidgetIds[] = appWidgetManager.getAppWidgetIds(
+                new ComponentName(mContext, LastContactWidget.class));
+        appWidgetManager.notifyAppWidgetViewDataChanged(appWidgetIds, R.id.listView);
+        Log.e(mTagHandmade, "appWidgetManager updated");
     }
 
     private Contact getContactFromJsonString(String stringIntentData) {
@@ -241,7 +271,6 @@ public class MainActivity extends FragmentActivity implements SendScreenFragment
                         public void onSuccess(Location location) {
                             // Got last known location. In some rare situations this can be null.
                             if (location != null) {
-                                Log.e("location", location.toString());
                                 // Logic to handle location object
                                 Geocoder geocoder;
                                 geocoder = new Geocoder(getApplicationContext(), Locale.getDefault());
@@ -256,7 +285,7 @@ public class MainActivity extends FragmentActivity implements SendScreenFragment
                                     e.printStackTrace();
                                 }
 
-                                setDefaults("Location", Location, getApplicationContext());
+                                setDefaults(getResources().getString(R.string.Location), Location, getApplicationContext());
                             } else {
                                 //startActivity(new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS));
                             }
@@ -339,7 +368,7 @@ public class MainActivity extends FragmentActivity implements SendScreenFragment
             @Override
             public void onClick(View view) {
                 // yes is selected, store the file as default
-                setDefaults("defaultContactString", mSendNdefMessage, getApplicationContext());
+                setDefaults(getResources().getString(R.string.defaultContactString), mSendNdefMessage, getApplicationContext());
             }
         });
         snackbar.setActionTextColor(Color.MAGENTA);
@@ -348,56 +377,51 @@ public class MainActivity extends FragmentActivity implements SendScreenFragment
 
     //-------------------------------------------------------------------------------------------------------------------
     //This part handles all the navigation through the menu and the fragments
-    private BottomNavigationView navigation;
-    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
-            = new BottomNavigationView.OnNavigationItemSelectedListener() {
 
+    public class SimpleFragmentPagerAdapter extends FragmentPagerAdapter {
+
+        private Context mContext;
+
+        public SimpleFragmentPagerAdapter(Context context, FragmentManager fm) {
+            super(fm);
+            mContext = context;
+        }
+
+        // This determines the fragment for each tab
         @Override
-        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-            switch (item.getItemId()) {
-                case R.id.navigation_settings:
-                    mPager.setCurrentItem(0);
-                    return true;
-                case R.id.navigation_send:
-                    mPager.setCurrentItem(1);
-                    return true;
-                case R.id.navigation_receive:
-                    mPager.setCurrentItem(2);
-                    return true;
+        public Fragment getItem(int position) {
+            if (position == 0) {
+                return new SettingsScreenFragment();
+            } else if (position == 1){
+                return new SendScreenFragment();
+            } else {
+                return new ReceiveScreenFragment();
             }
-            return false;
-        }
-    };
-
-    private ViewPager.OnPageChangeListener viewPageOnPageListener = new ViewPager.OnPageChangeListener() {
-        @Override
-        public void onPageScrolled(int i, float v, int i1) {
-
         }
 
+        // This determines the number of tabs
         @Override
-        public void onPageSelected(int i) {
-            int itemId = -1;
-            switch (i) {
+        public int getCount() {
+            return NUM_PAGES;
+        }
+
+        // This determines the title for each tab
+        @Override
+        public CharSequence getPageTitle(int position) {
+            // Generate title based on item position
+            switch (position) {
                 case 0:
-                    itemId = R.id.navigation_settings;
-                    break;
+                    return mContext.getString(R.string.title_settings);
                 case 1:
-                    itemId = R.id.navigation_send;
-                    break;
+                    return mContext.getString(R.string.title_send);
                 case 2:
-                    itemId = R.id.navigation_receive;
-                    break;
+                    return mContext.getString(R.string.title_receive);
+                default:
+                    return null;
             }
-
-            navigation.setSelectedItemId(itemId);
         }
 
-        @Override
-        public void onPageScrollStateChanged(int i) {
-
-        }
-    };
+    }
 
     @Override
     public void onBackPressed() {
@@ -408,31 +432,6 @@ public class MainActivity extends FragmentActivity implements SendScreenFragment
         } else {
             // Otherwise, select the previous step.
             mPager.setCurrentItem(mPager.getCurrentItem() - 1);
-        }
-    }
-
-    private class ScreenSlidePagerAdapter extends FragmentStatePagerAdapter {
-        private ScreenSlidePagerAdapter(FragmentManager fm) {
-            super(fm);
-        }
-
-        @Override
-        public Fragment getItem(int position) {
-            switch (position) {
-                case 0:
-                    return new SettingsScreenFragment();
-                case 1:
-                    return new SendScreenFragment();
-                case 2:
-                    return new ReceiveScreenFragment();
-                default:
-                    return null;
-            }
-        }
-
-        @Override
-        public int getCount() {
-            return NUM_PAGES;
         }
     }
     //-------------------------------------------------------------------------------------------------------------------

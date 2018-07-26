@@ -58,8 +58,7 @@ public class SendScreenFragment extends android.support.v4.app.Fragment {
             } else {
                 try {
                     listCheckedSwitches.remove(switchView);
-                } catch (NullPointerException e){
-                    Log.e(getContext().toString(), "Nullpointer on Switch. " + switchView.getText());
+                } catch (NullPointerException ignored){
                 }
             }
         }
@@ -87,7 +86,7 @@ public class SendScreenFragment extends android.support.v4.app.Fragment {
         try {
             mCallback = (OnReadyButtonClickedInterface) context;
         } catch (ClassCastException e) {
-            throw new ClassCastException(context.toString() + " must implement OnHeadlineSelectedListener");
+            throw new ClassCastException(context.toString() + getResources().getString(R.string.implementInterface));
         }
     }
 
@@ -180,7 +179,6 @@ public class SendScreenFragment extends android.support.v4.app.Fragment {
         }
 
         contact = new Contact(sbirthday, semail, sfacebook, shometown, sinstagram, slocation, sname, sphonenumber, ssnapchat, stwitter);
-        Log.e("contact", contact.toString());
 
         return contact;
     }

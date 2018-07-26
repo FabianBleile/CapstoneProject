@@ -21,7 +21,6 @@ public class ImageAdapter extends BaseAdapter {
     private boolean useContact;
 
     public ImageAdapter(Context c, boolean useContact, Contact contact) {
-        Log.e("Test", contact + "");
         mContext = c;
         this.useContact = useContact;
         if(this.useContact){
