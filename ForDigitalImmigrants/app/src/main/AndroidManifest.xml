@@ -60,7 +60,7 @@
             android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize"
             android:label="@string/title_activity_ad_mob"
             android:parentActivityName=".MainActivity"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar"></activity>
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
 
         <receiver android:name=".LastContactWidget">
             <intent-filter>
@@ -71,6 +71,12 @@
                 android:name="android.appwidget.provider"
                 android:resource="@xml/last_contact_widget_info" />
         </receiver>
+
+        <service
+            android:name=".RemoteViewsService"
+            android:enabled="true"
+            android:exported="true"
+            android:permission="android.permission.BIND_REMOTEVIEWS"/>
     </application>
 
 </manifest>

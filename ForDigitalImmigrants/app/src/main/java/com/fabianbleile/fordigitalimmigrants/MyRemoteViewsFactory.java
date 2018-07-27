@@ -1,5 +1,6 @@
 package com.fabianbleile.fordigitalimmigrants;
 
+import android.arch.lifecycle.LiveData;
 import android.arch.persistence.room.Database;
 import android.content.Context;
 import android.content.Intent;
@@ -14,6 +15,7 @@ import java.util.List;
 class MyRemoteViewsFactory implements RemoteViewsService.RemoteViewsFactory {
 
     Context mContext;
+    static LiveData<List<Contact>> contactsLiveData;
     static List<Contact> contacts;
     private static int lastContactId;
 
@@ -30,10 +32,14 @@ class MyRemoteViewsFactory implements RemoteViewsService.RemoteViewsFactory {
     @Override
     public void onDataSetChanged() {
         AppDatabase database = AppDatabase.getDatabase(mContext);
+        contactsLiveData = database.contactDao().getAll();
+        contacts = (List<Contact>) contactsLiveData;
+        /*
         int[] contactIdList = new int[1];
-        //contactIdList[0] = lastContactId;
+        contactIdList[0] = lastContactId;
         contactIdList[0] = 7;
         contacts = database.contactDao().loadAllByIds(contactIdList);
+         */
     }
 
     @Override

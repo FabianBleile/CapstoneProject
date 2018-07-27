@@ -86,7 +86,7 @@ public class MainActivity extends FragmentActivity implements
     @Override
     public void OnReadyButtonClicked(String NdefMessage) {
         mSendNdefMessage = NdefMessage;
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && mNfcAdapter != null) {
             mNfcAdapter.invokeBeam(this);
         }
     }
