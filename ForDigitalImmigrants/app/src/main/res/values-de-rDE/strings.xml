@@ -24,7 +24,7 @@
     <string name="menu_item_save_to_contacts">Zu Kontakten hinzufügen</string>
     <string name="menu_item_switch_edit_mode">Bearbeiten</string>
     <string name="action_calender_title">Geburtstag</string>
-    <string name="appwidget_text">BEISPIEL</string>
+    <string name="appwidget_text">Letzter empfangener Kontakt</string>
     <string name="configure">Einrichten</string>
     <string name="add_widget">Widget hinzufügen</string>
     <string name="interstitial_loading_tv">Werbebanner lädt ...</string>

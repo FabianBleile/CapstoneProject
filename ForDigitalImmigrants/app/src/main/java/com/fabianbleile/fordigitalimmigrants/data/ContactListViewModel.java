@@ -27,16 +27,17 @@ public class ContactListViewModel extends AndroidViewModel {
         return contactList;
     }
 
-    public void addItem(Contact contact){
-        new insertAsyncTask(appDatabase).execute(contact);
+    public void addItem(Contact contact, AsyncResponse asyncResponse){
+        new insertAsyncTask(appDatabase, asyncResponse).execute(contact);
     }
 
     private static class insertAsyncTask extends AsyncTask<Contact, Void, Long>{
         private AppDatabase db;
         private AsyncResponse delegate = null;
 
-        insertAsyncTask(AppDatabase appDatabase) {
+        insertAsyncTask(AppDatabase appDatabase, AsyncResponse asyncResponse) {
             db = appDatabase;
+            delegate = asyncResponse;
         }
 
         @Override

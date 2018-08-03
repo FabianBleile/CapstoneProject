@@ -12,11 +12,20 @@ import android.widget.RemoteViews;
  */
 public class LastContactWidget extends AppWidgetProvider {
 
+    public static String LAST_CONTACT_ID = "lastContactId";
+    public static int lastContactId;
+
     static void updateAppWidget(Context context, AppWidgetManager appWidgetManager,
                                 int appWidgetId) {
 
-        // Instruct the widget manager to update the widget
+
+
+
+
         appWidgetManager.updateAppWidget(appWidgetId, getRemoteViews(context));
+
+        // Instruct the widget manager to update the widget
+        //appWidgetManager.updateAppWidget(appWidgetId, getRemoteViews(context));
     }
 
     @Override
@@ -37,15 +46,25 @@ public class LastContactWidget extends AppWidgetProvider {
         // Enter relevant functionality for when the last widget is disabled
     }
 
-    private static RemoteViews getRemoteViews(Context context) {
+    /*
+    @Override
+    public void onReceive(Context context, Intent intent) {
+        if (TextUtils.equals(intent.getAction(), AppWidgetManager.ACTION_APPWIDGET_UPDATE)){
+            lastContactId = (int) intent.getIntExtra(LAST_CONTACT_ID, -1);
+        } else {
+            super.onReceive(context, intent);
+        }
+     }
+     */
 
+    private static RemoteViews getRemoteViews(Context context){
         CharSequence widgetText = context.getString(R.string.appwidget_text);
         RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.last_contact_widget);
 
         // Set the ListWidgetService intent to act as the adapter for the GridView
         Intent intent = new Intent(context, RemoteViewsService.class);
         //intent.putExtra(LAST_CONTACT_ID, lastContactId);
-        views.setTextViewText(R.id.appwidget_text, widgetText);
+        views.setTextViewText(R.id.tv_title, widgetText);
         views.setRemoteAdapter(R.id.listView, intent);
 
         // Set the PlantDetailActivity intent to launch when clicked
@@ -56,4 +75,3 @@ public class LastContactWidget extends AppWidgetProvider {
         return views;
     }
 }
-

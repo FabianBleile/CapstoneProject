@@ -13,7 +13,6 @@ import android.widget.TextView;
 import com.fabianbleile.fordigitalimmigrants.R;
 import com.fabianbleile.fordigitalimmigrants.data.Contact;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class ContactListRecyclerViewAdapter extends RecyclerView.Adapter<ContactListRecyclerViewAdapter.RecyclerViewHolder> {
@@ -87,7 +86,7 @@ public class ContactListRecyclerViewAdapter extends RecyclerView.Adapter<Contact
         RecyclerViewHolder(View view) {
             super(view);
 
-            nameTextView = (TextView) view.findViewById(R.id.name);
+            nameTextView = (TextView) view.findViewById(R.id.tv_textView);
             imageView = (ImageView) view.findViewById(R.id.iv_contact_item);
             captitalLetterTextView = (TextView) view.findViewById(R.id.tv_capital_icon);
             constraintLayout = (ConstraintLayout) view.findViewById(R.id.constraintLayout);

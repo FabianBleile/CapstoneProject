@@ -61,8 +61,7 @@ import java.util.Locale;
 public class MainActivity extends FragmentActivity implements
         SendScreenFragment.OnReadyButtonClickedInterface,
         NfcAdapter.CreateNdefMessageCallback,
-        NfcAdapter.OnNdefPushCompleteCallback,
-        ContactListViewModel.AsyncResponse{
+        NfcAdapter.OnNdefPushCompleteCallback{
 
     //general
     public static final String mTagHandmade = "HANDMADETAG";
@@ -162,11 +161,6 @@ public class MainActivity extends FragmentActivity implements
                 }
             }
         }
-
-        int INT = 7;
-        Long output = (long) INT;
-        //sendInsertedContactId(output);
-        updateLastContactWidget();
     }
 
     @Override
@@ -211,30 +205,15 @@ public class MainActivity extends FragmentActivity implements
         Contact contact = getContactFromJsonString(message);
 
         // add contact to room database
-        ReceiveScreenFragment.viewModel.addItem(contact);
+        ReceiveScreenFragment.viewModel.addItem(contact, new ContactListViewModel.AsyncResponse() {
+            @Override
+            public void onProcessFinish(Long output) {
+                updateLastContactWidget();
+            }
+        });
         // when Asnc Task is done onProcessFinish is called
     }
-
-    @Override
-    public void onProcessFinish(Long output) {
-        sendInsertedContactId(output);
-        updateLastContactWidget();
-    }
-
-    private void sendInsertedContactId(Long output) {
-        Intent intent = new Intent(this, LastContactWidget.class);
-        intent.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
-        // Use an array and EXTRA_APPWIDGET_IDS instead of AppWidgetManager.EXTRA_APPWIDGET_ID,
-        // since it seems the onUpdate() is only fired on that:
-        int[] ids = AppWidgetManager.getInstance(getApplication())
-                .getAppWidgetIds(new ComponentName(getApplication(), LastContactWidget.class));
-        intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, ids);
-        int outputInt = output.intValue();
-        intent.putExtra(LastContactWidget.LAST_CONTACT_ID, outputInt);
-        sendBroadcast(intent);
-    }
-
-    private void updateLastContactWidget() {
+    private static void updateLastContactWidget() {
         AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(mContext);
         int appWidgetIds[] = appWidgetManager.getAppWidgetIds(
                 new ComponentName(mContext, LastContactWidget.class));

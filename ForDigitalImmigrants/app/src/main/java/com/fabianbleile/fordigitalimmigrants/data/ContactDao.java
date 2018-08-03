@@ -14,6 +14,9 @@ public interface ContactDao {
     @Query("SELECT * FROM contact")
     LiveData<List<Contact>> getAll();
 
+    @Query("SELECT * FROM contact")
+    List<Contact> getAllForWidget();
+
     @Query("SELECT * FROM contact WHERE cid IN (:contactIds)")
     List<Contact> loadAllByIds(int[] contactIds);
 

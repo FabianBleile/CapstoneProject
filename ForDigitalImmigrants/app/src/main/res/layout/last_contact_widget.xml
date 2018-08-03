@@ -11,7 +11,7 @@
         android:background="@color/colorPrimaryDark">
 
         <TextView
-            android:id="@+id/tv_title"
+            android:id="@+id/appwidget_text"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_margin="@dimen/text_margin"

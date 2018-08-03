@@ -78,6 +78,7 @@
     <string name="TEST_ADMOB_APP_ID" translatable="false">ca-app-pub-3940256099942544~3347511713</string>
     <string name="MY_ADMOB_APP_ID" translatable="false">ca-app-pub-6856957073988410~7948042904</string>
     <string name="MY_AD_UNIT_ID" translatable="false">ca-app-pub-6856957073988410/9779999321</string>
+    <string name="addTestDevice" translatable="false">CC5F2C72DF2B356BBF0DA198</string>
     <string name="label_bt_send">send</string>
     <string name="tv_send_message">Insert here some kind words to send ...</string>
 
@@ -88,7 +89,6 @@
     <string name="selectedContact" translatable="false">selectedContact</string>
     <string name="bundle" translatable="false">bundle</string>
     <string name="implementInterface" translatable="false"> must implement Interface</string>
-    <string name="addTestDevice" translatable="false">CC5F2C72DF2B356BBF0DA198</string>
     <string name="saveContactToContacts" translatable="false">Save contact to contacts</string>
     <string name="comfacebookkatana" translatable="false">com.facebook.katana</string>
     <string name="cominstagramandroid" translatable="false">com.instagram.android</string>

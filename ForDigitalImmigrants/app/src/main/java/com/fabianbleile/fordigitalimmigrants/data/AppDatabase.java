@@ -19,6 +19,8 @@ public abstract class AppDatabase extends RoomDatabase {
             INSTANCE =
                     Room.databaseBuilder(context.getApplicationContext(), AppDatabase.class, "nfc_contacts_database")
                             .addMigrations(MIGRATION_1_2)
+                            // recreate the database if necessary
+                            .fallbackToDestructiveMigration()
                             .build();
         }
         return INSTANCE;

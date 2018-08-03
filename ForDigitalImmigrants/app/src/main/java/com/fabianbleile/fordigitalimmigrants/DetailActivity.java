@@ -34,6 +34,7 @@ import android.widget.Toolbar;
 import com.fabianbleile.fordigitalimmigrants.Adapter.ImageAdapter;
 import com.fabianbleile.fordigitalimmigrants.Fragment.ReceiveScreenFragment;
 import com.fabianbleile.fordigitalimmigrants.data.Contact;
+import com.fabianbleile.fordigitalimmigrants.data.ContactListViewModel;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -130,7 +131,12 @@ public class DetailActivity extends AppCompatActivity implements View.OnClickLis
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        ReceiveScreenFragment.viewModel.addItem(mContact);
+        ReceiveScreenFragment.viewModel.addItem(mContact, new ContactListViewModel.AsyncResponse() {
+            @Override
+            public void onProcessFinish(Long output) {
+                //
+            }
+        });
     }
 
     // save to contacts

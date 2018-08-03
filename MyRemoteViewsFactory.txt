@@ -31,9 +31,9 @@ class MyRemoteViewsFactory implements RemoteViewsService.RemoteViewsFactory {
 
     @Override
     public void onDataSetChanged() {
-        AppDatabase database = AppDatabase.getDatabase(mContext);
-        contactsLiveData = database.contactDao().getAll();
-        contacts = (List<Contact>) contactsLiveData;
+        //AppDatabase database = AppDatabase.getDatabase(mContext);
+        //contactsLiveData = database.contactDao().getAll();
+        //contacts = (List<Contact>) contactsLiveData;
         /*
         int[] contactIdList = new int[1];
         contactIdList[0] = lastContactId;
@@ -60,6 +60,7 @@ class MyRemoteViewsFactory implements RemoteViewsService.RemoteViewsFactory {
                 mContext.getPackageName(),
                 R.layout.contact_list_widget_item)
                 ;
+
         rv.setTextViewText(R.id.name, contact.getName());
         rv.setTextViewText(R.id.number, contact.getPhonenumber());
         rv.setTextViewText(R.id.email, contact.getEmail());
