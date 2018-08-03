@@ -65,7 +65,7 @@ public class MainActivity extends FragmentActivity implements
 
     //general
     public static final String mTagHandmade = "HANDMADETAG";
-    public static Context mContext;
+    public Context mContext;
     //content related
     public static ArrayList<Integer> mIcons = new ArrayList<>();
     //final variables
@@ -213,7 +213,7 @@ public class MainActivity extends FragmentActivity implements
         });
         // when Asnc Task is done onProcessFinish is called
     }
-    private static void updateLastContactWidget() {
+    private void updateLastContactWidget() {
         AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(mContext);
         int appWidgetIds[] = appWidgetManager.getAppWidgetIds(
                 new ComponentName(mContext, LastContactWidget.class));
