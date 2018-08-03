@@ -5,7 +5,7 @@ android {
         config {
             keyAlias 'Upload Key (Capstone Project) 07/2018'
             keyPassword 'Dq7wVWIIPhogICzMYlL8'
-            storeFile file('ForDigitalImmigrants/appUploadKey.jks')
+            storeFile file('${rootDir}/appUploadKey.jks')
             storePassword 'OutAnmUJNBwRSL77cJEN'
         }
     }
