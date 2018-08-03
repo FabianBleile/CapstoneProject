@@ -218,7 +218,6 @@ public class MainActivity extends FragmentActivity implements
         int appWidgetIds[] = appWidgetManager.getAppWidgetIds(
                 new ComponentName(mContext, LastContactWidget.class));
         appWidgetManager.notifyAppWidgetViewDataChanged(appWidgetIds, R.id.listView);
-        Log.e(mTagHandmade, "appWidgetManager updated");
     }
 
     private Contact getContactFromJsonString(String stringIntentData) {
