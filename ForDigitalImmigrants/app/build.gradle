@@ -3,10 +3,10 @@ apply plugin: 'com.android.application'
 android {
     signingConfigs {
         config {
-            keyAlias 'Upload Key (Capstone Project) 07/2018'
-            keyPassword 'Dq7wVWIIPhogICzMYlL8'
-            storeFile file('../appUploadKey.jks')
-            storePassword 'OutAnmUJNBwRSL77cJEN'
+            keyAlias 'key0'
+            keyPassword '123456'
+            storeFile file('../signing.jks')
+            storePassword '123456'
         }
     }
     compileSdkVersion 27
